@@ -59,6 +59,9 @@ class User extends Authenticatable
     }
 
     public function departmets() {
-    	return $this->belongsToMany('App\Models\Department');
+    	return $this->belongsTo('App\Models\Department');
+    }
+    public function departmet() {
+    	return $this->hasOne('App\Models\Department');
     }
 }

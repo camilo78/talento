@@ -34,7 +34,7 @@
                     <td class="pt-1 pb-1 align-middle">{{ $user->functional }}</td>
                     <td class="pt-1 pb-1 align-middle">{{ $user->nominal }}</td>
                     <td class="pt-1 pb-1 align-middle">{{ $user->type }}</td>
-                    <td class="pt-1 pb-1 align-middle">{{$user->departmets->first()->name ?? ''}}</td>
+                    <td class="pt-1 pb-1 align-middle">{{$user->departmet->name ?? ''}}</td>
                     <td class="pt-1 pb-1 align-middle">
                         <div class="d-flex justify-content-center">
                             <a href="{{ route('user.show', $user->id) }}" class="btn btn-sm btn-info mr-2"><i
@@ -140,6 +140,7 @@
                     ]
                 }
         });
+        $( ".pagination" ).addClass( "justify-content-end" );
     </script>
 @endpush
 @push('css')

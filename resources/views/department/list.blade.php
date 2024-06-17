@@ -25,7 +25,7 @@
                 <tr>
                     <td class="text-center pt-1 pb-1 align-middle" scope="row">{{ $loop->iteration }}</td>
                     <td class="pt-1 pb-1 align-middle">{{ $department->name }}</td>
-                    <td class="pt-1 pb-1 align-middle">{{ $department->users->first()->fullname ?? 'Sin Jefe Asignado' }}
+                    <td class="pt-1 pb-1 align-middle">{{ $department->user->fullname ?? 'Sin Jefe Asignado' }}
                     </td>
                     <td class="pt-1 pb-1 align-middle">
                         <div class="d-flex justify-content-center">
@@ -131,6 +131,7 @@
             }
 
         });
+        $( ".pagination" ).addClass( "justify-content-end" );
     </script>
 @endpush
 @push('css')

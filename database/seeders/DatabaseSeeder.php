@@ -15,8 +15,22 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        $user = User::create([
+            'name' => 'Camilo Gabriel',
+
+            'last_name' => 'Alvarado Ramírez',
+            'email' => 'camilo.alvarado0501@gmail.com',
+            'dni' => '0501197809263',
+            'functional' => 'Subdirector de Gestión de Recursos',
+            'nominal' => '',
+            'type' => 'Contrato',
+            'email_verified_at' => now(),
+            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+        ]);
+
         Department::create([
             'name' => 'Subdirección de Recursos',
+            'user_id' => '1',
         ]);
         Department::create([
             'name' => 'Emergencia de Cirugía y Ortopedia',
@@ -43,19 +57,9 @@ class DatabaseSeeder extends Seeder
             'name' => 'Sala de Hospitalización de Cirugía de Mujeres',
         ]);
 
-        User::create([
-            'name' => 'Camilo Gabriel',
-            'last_name' => 'Alvarado Ramírez',
-            'email' => 'camilo.alvarado0501@gmail.com',
-            'dni' => '0501197809263',
-            'functional' => 'Subdirector de Gestión de Recursos',
-            'nominal' => '',
-            'type' => 'Contrato',
-            'email_verified_at' => now(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-        ]);
 
-        $user = User::find(1);
-        $user->departmets()->attach(1);
+        $user->department_id = '1';
+        $user->save();
+
     }
 }

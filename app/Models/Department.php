@@ -21,6 +21,9 @@ class Department extends Model
     ];
 
     public function users() {
-    	return $this->belongsToMany('App\Models\User');
+    	return $this->hasMany('App\Models\User');
+    }
+    public function user() {
+    	return $this->hasOne('App\Models\User');
     }
 }
