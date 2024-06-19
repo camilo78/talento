@@ -7,6 +7,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Department;
 
 
 class User extends Authenticatable
@@ -29,6 +30,7 @@ class User extends Authenticatable
         'functional',
         'nominal',
         'type',
+        'department_id'
     ];
 
     /**
@@ -58,10 +60,10 @@ class User extends Authenticatable
         return "{$this->name} {$this->last_name}";
     }
 
-/*     public function departmets() {
-    	return $this->belongsTo('App\Models\Department');
-    } */
-    public function departmet() {
-    	return $this->belongsTo('App\Models\Department');
+    public function departments() {
+    	return $this->belongsTo(Department::class);
+    }
+    public function department() {
+    	return $this->belongsTo(Department::class);
     }
 }

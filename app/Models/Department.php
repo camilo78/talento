@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
 
 class Department extends Model
 {
@@ -20,10 +21,10 @@ class Department extends Model
         'user_id'
     ];
 
-    // public function users() {
-    // 	return $this->hasMany('App\Models\User');
-    // }
+    public function users() {
+     	return $this->hasMany(User::class);
+    }
     public function user() {
-    	return $this->hasOne('App\Models\User');
+    	return $this->hasOne(User::class);
     }
 }
