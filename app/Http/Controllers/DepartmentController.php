@@ -39,8 +39,9 @@ class DepartmentController extends Controller
 
         $department = new Department();
         $department->name = $request->input('name');
+        $department->user_id = $request->input('user_id');
         $department->save();
-        $department->users()->attach($request->user_id);
+
 
         return to_intended_route('department.index')->with('message', __("Department added successfully!"));
 

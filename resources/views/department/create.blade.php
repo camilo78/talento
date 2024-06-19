@@ -25,7 +25,8 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="user_id">{{ __('Responsible') }}</label>
-                            <select class="form-control" name="user_id" value="{{ old('user_id') }}">
+                            <select class="form-control" data-live-search="true" name="user_id"
+                                value="{{ old('user_id') }}">
                                 @foreach (\App\Models\User::orderBy('name')->get() as $user)
                                     <option value="{{ $user->id }}">
                                         {{ $user->fullname }}
@@ -37,7 +38,23 @@
                             @enderror
                         </div>
                     </div>
-                    <div class="col-md-12">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="user_id">{{ __('Personal de la Sala') }}</label>
+                            <select class="form-control" data-live-search="true" name="user_id"
+                                value="{{ old('user_id') }}">
+                                @foreach (\App\Models\User::orderBy('name')->get() as $user)
+                                    <option value="{{ $user->id }}">
+                                        {{ $user->fullname }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('name')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="col-md-6">
                         <div class="d-flex flex-row-reverse">
                             <button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i>
                                 {{ __('Save') }}</button>
@@ -46,9 +63,10 @@
                         </div>
                     </div>
                 </div>
-            </form>
-        </div>
+            </div>
+        </form>
     </div>
+
 
     <!-- End of Main Content -->
 @endsection
@@ -77,4 +95,19 @@
             {{ session('status') }}
         </div>
     @endif
+@endpush
+
+@push('css')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
+    <style>
+        .filter-option {
+            position: relative !important;
+        }
+    </style>
+@endpush
+@push('js')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+    <script>
+        $('select').selectpicker();
+    </script>
 @endpush

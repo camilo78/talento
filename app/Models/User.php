@@ -58,10 +58,10 @@ class User extends Authenticatable
         return "{$this->name} {$this->last_name}";
     }
 
-    public function departmets() {
+/*     public function departmets() {
     	return $this->belongsTo('App\Models\Department');
-    }
+    } */
     public function departmet() {
-    	return $this->hasOne('App\Models\Department');
+    	return $this->belongsTo('App\Models\Department');
     }
 }

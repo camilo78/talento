@@ -20,9 +20,9 @@ class Department extends Model
         'user_id'
     ];
 
-    public function users() {
-    	return $this->hasMany('App\Models\User');
-    }
+    // public function users() {
+    // 	return $this->hasMany('App\Models\User');
+    // }
     public function user() {
     	return $this->hasOne('App\Models\User');
     }

@@ -58,8 +58,8 @@ class DatabaseSeeder extends Seeder
         ]);
 
 
-        $user->department_id = '1';
-        $user->save();
+        // $user->department_id = '1';
+        // $user->save();
 
     }
 }
