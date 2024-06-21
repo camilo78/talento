@@ -27,7 +27,8 @@ class DepartmentController extends Controller
     {
         return view('department.create', [
             'title' => __('New Departament'),
-            'users' => User::orderBy('name', 'asc')->get()
+            'users_r' => User::orderBy('name', 'asc')->get(),
+            'users_m' => User::orderBy('name', 'asc')->get(),
         ]);
     }
 
@@ -61,7 +62,7 @@ class DepartmentController extends Controller
     public function edit(Department $department)
     {
         return view('department.edit', [
-            'title' => 'Edit Department',
+            'title' => __('Edit Department'),
             'users' => User::orderBy('name', 'asc')->get(),
             'department' => $department
         ]);
