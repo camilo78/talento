@@ -25,9 +25,9 @@
                 <tr>
                     <td class="text-center pt-1 pb-1 align-middle" scope="row">{{ $loop->iteration }}</td>
                     <td class="pt-1 pb-1 align-middle">{{ $department->name }}</td>
-                    <td class="pt-1 pb-1 align-middle {{ $department->users->where('boss', '1')->last()->fullname ?? 'text-warning' }}">{{$department->users->where('boss', '1')->last()->fullname  ?? 'Sin Jefe Asignado' }}
-                    </td>
-                    <td class="pt-1 pb-1 align-middle">
+                    <td class="pt-1 pb-1 align-middle {{ $department->usersY ?? 'text-warning' }}">{{$department->users->where('boss', '1')->last()->fullname  ?? 'Sin Jefe Asignado' }}
+
+                <td class="pt-1 pb-1 align-middle">
                         <div class="d-flex justify-content-center">
                             <a href="{{ route('department.edit', $department->id) }}" class="btn btn-sm btn-primary mr-2"><i
                                     class="fa-solid fa-pen-to-square"></i></a>

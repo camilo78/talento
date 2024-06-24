@@ -25,31 +25,31 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="user_id">{{ __('Responsible') }}</label>
-                            <select class="form-control" data-live-search="true" name="user_id"
+                            <select class="form-control selectpicker" data-live-search="true" name="user_id"
                                 value="{{ old('user_id') }}">
-                                @foreach (\App\Models\User::orderBy('name')->get() as $user)
+                                @foreach ($users_r as $user)
                                     <option value="{{ $user->id }}">
                                         {{ $user->fullname }}
                                     </option>
                                 @endforeach
                             </select>
-                            @error('name')
+                            @error('user_id')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="user_id">{{ __('Personal de la Sala') }}</label>
-                            <select class="form-control" data-live-search="true" name="user_id"
-                                value="{{ old('user_id') }}">
-                                @foreach (\App\Models\User::orderBy('name')->get() as $user)
+                            <label for="users_m">{{ __('Personal de la Sala') }}</label>
+                            <select class="form-control selectpicker" id="miSelect" title="Ingresa los empleados de esta sala o servicio" multiple data-live-search="true" name="users_m"
+                                value="{{ old('users_m') }}">
+                                @foreach ($users_m as $user)
                                     <option value="{{ $user->id }}">
                                         {{ $user->fullname }}
                                     </option>
                                 @endforeach
                             </select>
-                            @error('name')
+                            @error('users_m')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
@@ -61,6 +61,8 @@
                             <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn btn-secondary mr-2"><i
                                     class="fa-solid fa-arrow-left"></i> {{ __('Back') }}</a>
                         </div>
+                    </div>
+                    <div class="col-md-6" id="resultado">
                     </div>
                 </div>
             </div>
@@ -103,11 +105,26 @@
         .filter-option {
             position: relative !important;
         }
+        .btn-light{
+            height: 40px !important;
+            padding: 4px 8px 4px 6px !important;
+            border: 1px solid #cbd5e0 !important;
+
+        }
     </style>
 @endpush
 @push('js')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
     <script>
         $('select').selectpicker();
+        const selectElement = document.getElementById('miSelect');
+        const resultadoDiv = document.getElementById('resultado');
+
+        selectElement.addEventListener('change', () => {
+            const opcionesSeleccionadas = Array.from(selectElement.selectedOptions).map(option => option.textContent);
+            resultadoDiv.innerHTML = `<b>Seleccionaste como personal de la sala a:</b> <br> ${opcionesSeleccionadas.join('<br> ')}`;
+        });
+
     </script>
+
 @endpush
