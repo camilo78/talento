@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
     {
         $user = User::create([
             'name' => 'Camilo Gabriel',
-
+            'boss'=> '1',
             'last_name' => 'Alvarado Ramírez',
             'email' => 'camilo.alvarado0501@gmail.com',
             'dni' => '0501197809263',
@@ -30,7 +30,6 @@ class DatabaseSeeder extends Seeder
 
         Department::create([
             'name' => 'Subdirección de Recursos',
-            'user_id' => '1',
         ]);
         Department::create([
             'name' => 'Emergencia de Cirugía y Ortopedia',
@@ -58,8 +57,8 @@ class DatabaseSeeder extends Seeder
         ]);
 
 
-        // $user->department_id = '1';
-        // $user->save();
+        $user->department_id = '1';
+        $user->save();
 
     }
 }

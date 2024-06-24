@@ -26,6 +26,7 @@ class UserFactory extends Factory
     {
         return [
             'name' => fake()->name(),
+            //'department_id'=>  Department::inRandomOrder()->first(),
             'last_name' => fake()->lastname(),
             'email' => fake()->unique()->safeEmail(),
             'dni' => fake()->numerify('##############'),

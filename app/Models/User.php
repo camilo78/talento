@@ -8,7 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Models\Department;
-
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class User extends Authenticatable
 {
@@ -60,10 +60,14 @@ class User extends Authenticatable
         return "{$this->name} {$this->last_name}";
     }
 
-    public function departments() {
-    	return $this->belongsTo(Department::class);
+    /**
+     * Get the user that owns the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function department(): BelongsTo
+    {
+        return $this->belongsTo(Department::class);
     }
-    public function department() {
-    	return $this->belongsTo(Department::class);
-    }
+
 }
