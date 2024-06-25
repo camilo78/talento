@@ -34,7 +34,7 @@
                     <td class="pt-1 pb-1 align-middle">{{ $user->functional }}</td>
                     <td class="pt-1 pb-1 align-middle">{{ $user->nominal }}</td>
                     <td class="pt-1 pb-1 align-middle">{{ $user->type }}</td>
-                    <td class="pt-1 pb-1 align-middle {{ $user->department->name ?? 'text-warning small' }}">{{ $user->department->name ?? 'Asignar a una Unidad o Departemento'}}</td>
+                    <td class="pt-1 pb-1 align-middle {{ $user->department->name ?? 'text-warning small' }}">{{ $user->department->name ?? 'Asignar a una Unidad o Departemento'}} @if($user->boss == 1)<span class="badge badge-pill badge-success">Jefe</span>@endif</td>
                     <td class="pt-1 pb-1 align-middle">
                         <div class="d-flex justify-content-center">
                             <a href="{{ route('user.show', $user->id) }}" class="btn btn-sm btn-info mr-2"><i
