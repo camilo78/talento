@@ -19,33 +19,39 @@
             <form action="{{ route('user.update', $user->id) }}" method="post">
                 <div class="row">
                     <div class="col-md-6">
-                        @csrf
-                        @method('put')
                         <div class="form-group">
-                            <label for="name">{{ __('Name') }}</label>
+                            <label for="name">Nombres</label>
                             <input type="text" class="form-control @error('name') is-invalid @enderror" name="name"
-                                id="name" placeholder="{{ __('First Name') }}" autocomplete="off"
-                                value="{{ old('name') ?? $user->name }}">
+                                id="name" placeholder="Ingrese los nombres del usuario" autocomplete="off"
+                                value="{{ old('name', $user->name) }}">
                             @error('name')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-
                         <div class="form-group">
                             <label for="last_name">{{ __('Last Name') }}</label>
                             <input type="text" class="form-control @error('last_name') is-invalid @enderror"
-                                name="last_name" id="last_name" placeholder="{{ __('Last Name') }}" autocomplete="off"
-                                value="{{ old('last_name') ?? $user->last_name }}">
+                                name="last_name" id="last_name" placeholder="Ingrese los apellidos del usuario" autocomplete="off"
+                                value="{{ old('last_name', $user->last_name) }}">
                             @error('last_name')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-
+                        <div class="form-group">
+                            <label for="gender">{{ __('Gender') }}</label>
+                            <select name="gender" title="Seleccione el sexo del usuario" class="form-select form-control" aria-label="Default select">
+                                <option value="0">Mujer</option>
+                                <option value="1">Hombre</option>
+                            </select>
+                            @error('gender')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
                         <div class="form-group">
                             <label for="email">{{ __('Email') }}</label>
                             <input type="email" class="form-control @error('email') is-invalid @enderror" name="email"
-                                id="email" placeholder="{{ __('Email') }}" autocomplete="off"
-                                value="{{ old('email') ?? $user->email }}">
+                                id="email" placeholder="Ingrese el correo electrónico" autocomplete="off"
+                                value="{{ old('email') }}">
                             @error('email')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -53,15 +59,17 @@
                         <div class="form-group">
                             <label for="dni">{{ __('DNI') }}</label>
                             <input type="text" class="form-control @error('dni') is-invalid @enderror" name="dni"
-                                id="dni" placeholder="{{ __('DNI') }}" autocomplete="off"
-                                value="{{ old('dni') ?? $user->dni }}">
+                                id="dni" placeholder="Ingrese su DNI" autocomplete="off"
+                                value="{{ old('dni') }}">
                             @error('dni')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
+                    </div>
+                    <div class="col-md-6">
                         <div class="form-group">
-                            <label for="user_id">{{ __('Department') }}</label>
-                            <select class="form-control" name="user_id" value="{{ old('user_id') }}">
+                            <label for="user_id">{{ __('Departamento o Unidad') }}</label>
+                            <select class="form-control" title="Departamento o Unidad" name="user_id" value="{{ old('user_id') }}">
                                 @foreach (\App\Models\Department::orderBy('name')->get() as $department)
                                     <option value="{{ $department->id }}">
                                         {{ $department->name }}
@@ -72,44 +80,36 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-                    </div>
-                    <div class="col-md-6">
                         <div class="form-group">
                             <label for="functional">{{ __('Functional Charge') }}</label>
                             <input type="text" class="form-control @error('functional') is-invalid @enderror"
-                                name="functional" id="functional" placeholder="{{ __('Functional Charge') }}" autocomplete="off"
-                                value="{{ old('functional') ?? $user->functional }}">
+                                name="functional" id="functional" placeholder="Ingrese cargo funcional"
+                                autocomplete="off" value="{{ old('functional') }}">
                             @error('functional')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
                         <div class="form-group">
                             <label for="nominal">{{ __('Nominal Charge') }}</label>
-                            <input type="text" class="form-control @error('nominal') is-invalid @enderror"
-                                name="nominal" id="nominal" placeholder="{{ __('Nominal Charge') }}" autocomplete="off"
-                                value="{{ old('nominal') ?? $user->nominal }}">
+                            <input type="text" class="form-control @error('nominal') is-invalid @enderror" name="nominal"
+                                id="nominal" placeholder="{{ __('Nominal Charge') }}" autocomplete="off"
+                                value="{{ old('nominal') }}">
                             @error('nominal')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
                         <div class="form-group">
                             <label for="type">{{ __('Tipo de Contratación') }}</label>
-                            <select name="type" class="form-select form-control" aria-label="Default select">
-                                <option selected>{{ $user->type }}</option>
-                                @if ( $user->type != "Permanente")
+                            <select name="type" title="Seleccione Tipo de Contratación" class="form-select form-control" aria-label="Default select">
                                 <option value="Permanente">Permanente</option>
-                                @endif
-                                @if($user->type != "Contrato")
                                 <option value="Contrato">Contrato</option>
-                                @endif
-                                @if($user->type != "Interinato")
                                 <option value="Interinato">Interinato</option>
-                                @endif
                             </select>
                             @error('type')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
+
                         <div class="form-group">
                             <label for="password">{{ __('Password') }}</label>
                             <input type="password" class="form-control @error('password') is-invalid @enderror"
@@ -157,4 +157,33 @@
             {{ session('status') }}
         </div>
     @endif
+@endpush
+@push('css')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
+    <style>
+        .filter-option {
+            position: relative !important;
+        }
+        .btn-light{
+            height: 40px !important;
+            padding: 4px 8px 4px 6px !important;
+            border: 1px solid #cbd5e0 !important;
+
+        }
+    </style>
+@endpush
+@push('js')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+    <script>
+        $('select').selectpicker();
+        const selectElement = document.getElementById('miSelect');
+        const resultadoDiv = document.getElementById('resultado');
+
+        selectElement.addEventListener('change', () => {
+            const opcionesSeleccionadas = Array.from(selectElement.selectedOptions).map(option => option.textContent);
+            resultadoDiv.innerHTML = `<b>Seleccionaste como personal de la sala a:</b> <br> ${opcionesSeleccionadas.join('<br> ')}`;
+        });
+
+    </script>
+
 @endpush
