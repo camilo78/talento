@@ -26,12 +26,13 @@ class AddUserRequest extends FormRequest
         return [
             'name' => 'required',
             'last_name' => 'required',
+            'gender'=>'required',
             'email' => 'required|email',
-            'dni' => 'required|min:13',
+            'dni' => 'required|min:13|numeric',
             'functional' => 'nullable',
             'nominal' => 'nullable',
             'type' => 'required',
-            'password' => 'nullable|min:8'
+            'password' => 'min:8'
         ];
     }
 }
