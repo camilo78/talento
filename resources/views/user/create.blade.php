@@ -32,7 +32,7 @@
                         </div>
                         <div class="form-group">
                             <label for="gender">{{ __('Gender') }}</label>
-                            <select name="gender" title="Seleccione el sexo del usuario" class="form-select form-control" aria-label="Default select">
+                            <select name="gender" title="Seleccione el sexo del usuario" class="form-select form-control @error('password') is-invalid @enderror" aria-label="Default select">
                                 <option value="0">Mujer</option>
                                 <option value="1">Hombre</option>
                             </select>
@@ -62,7 +62,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="user_id">{{ __('Departamento o Unidad') }}</label>
-                            <select class="form-control" title="Departamento o Unidad" name="user_id" value="{{ old('user_id') }}">
+                            <select class="form-control @error('password') is-invalid @enderror" title="Departamento o Unidad" name="user_id" value="{{ old('user_id') }}">
                                 @foreach (\App\Models\Department::orderBy('name')->get() as $department)
                                     <option value="{{ $department->id }}">
                                         {{ $department->name }}
@@ -93,7 +93,7 @@
                         </div>
                         <div class="form-group">
                             <label for="type">{{ __('Tipo de Contratación') }}</label>
-                            <select name="type" title="Seleccione Tipo de Contratación" class="form-select form-control" aria-label="Default select">
+                            <select name="type" title="Seleccione Tipo de Contratación @error('password') is-invalid @enderror" class="form-select form-control" aria-label="Default select">
                                 <option value="Permanente" {{ old('type') == 'Permanente' ? 'selected' : '' }}>Permanente</option>
                                 <option value="Contrato" {{ old('type') == 'Contrato' ? 'selected' : '' }}>Contrato</option>
                                 <option value="Interinato" {{ old('type') == 'Interinato' ? 'selected' : '' }}>Interinato</option>
@@ -161,7 +161,6 @@
         .btn-light{
             height: 40px !important;
             padding: 4px 8px 4px 6px !important;
-            border: 1px solid #cbd5e0 !important;
 
         }
     </style>
