@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
         $user = User::create([
             'name' => 'Camilo Gabriel',
             'boss'=> '1',
+            'gender'=> '1',
             'last_name' => 'Alvarado Ramírez',
             'email' => 'camilo.alvarado0501@gmail.com',
             'dni' => '0501197809263',

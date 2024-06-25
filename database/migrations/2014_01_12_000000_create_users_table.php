@@ -19,6 +19,7 @@ class CreateUsersTable extends Migration
             $table->foreign('department_id')
                 ->references('id')->on('departments');
             $table->string('name');
+            $table->boolean('gender');
             $table->boolean('boss')->nullable();
             $table->string('last_name');
             $table->string('email')->unique();
