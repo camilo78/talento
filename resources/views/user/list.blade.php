@@ -20,7 +20,7 @@
                 <th class="text-center pt-1 pb-1 align-middle">{{ __('Functional') }}</th>
                 <th class="text-center pt-1 pb-1 align-middle">{{ __('Nominal') }}</th>
                 <th class="text-center pt-1 pb-1 align-middle">{{ __('Type') }}</th>
-                <th class="text-center pt-1 pb-1 align-middle">{{ __('Jefatura') }}</th>
+                <th class="text-center pt-1 pb-1 align-middle">{{ __('Departamento') }}</th>
                 <th class="text-center pt-1 pb-1 align-middle">{{ __('Actions') }}</th>
             </tr>
         </thead>
@@ -34,7 +34,7 @@
                     <td class="pt-1 pb-1 align-middle">{{ $user->functional }}</td>
                     <td class="pt-1 pb-1 align-middle">{{ $user->nominal }}</td>
                     <td class="pt-1 pb-1 align-middle">{{ $user->type }}</td>
-                    <td class="pt-1 pb-1 align-middle">{{ $user->department}}</td>
+                    <td class="pt-1 pb-1 align-middle {{ $user->department->name ?? 'text-warning small' }}">{{ $user->department->name ?? 'Asignar a una Unidad o Departemento'}}</td>
                     <td class="pt-1 pb-1 align-middle">
                         <div class="d-flex justify-content-center">
                             <a href="{{ route('user.show', $user->id) }}" class="btn btn-sm btn-info mr-2"><i

@@ -25,7 +25,7 @@
                 <tr>
                     <td class="text-center pt-1 pb-1 align-middle" scope="row">{{ $loop->iteration }}</td>
                     <td class="pt-1 pb-1 align-middle">{{ $department->name }}</td>
-                    <td class="pt-1 pb-1 align-middle {{ $department->usersY ?? 'text-warning' }}">{{$department->users->where('boss', '1')->last()->fullname  ?? 'Sin Jefe Asignado' }}
+                    <td class="pt-1 pb-1 align-middle {{ $department->users->where('boss', '1')->last()->fullname  ?? 'text-warning small' }}">{{$department->users->where('boss', '1')->last()->fullname  ?? 'Sin Jefe Asignado' }}
 
                 <td class="pt-1 pb-1 align-middle">
                         <div class="d-flex justify-content-center">
