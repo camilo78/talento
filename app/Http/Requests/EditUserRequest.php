@@ -33,5 +33,14 @@ class EditUserRequest extends FormRequest
             'type' => 'required',
             'password' => 'nullable|min:8'
         ];
+
     }
+
+    public function attributes(): array
+{
+    return [
+        'name' => 'Nombres',
+        'last_name' => 'Apellidos',
+    ];
+}
 }
