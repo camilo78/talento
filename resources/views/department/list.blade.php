@@ -131,7 +131,7 @@
             }
 
         });
-        $( ".pagination" ).addClass( "justify-content-end" );
+
     </script>
 @endpush
 @push('css')
@@ -144,6 +144,10 @@
 
         table {
             width: 100%;
+        }
+        .pagination{
+            /* Alinear items desde el final */
+            justify-content: flex-end !important;
         }
     </style>
 @endpush
