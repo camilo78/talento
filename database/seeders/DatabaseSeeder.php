@@ -48,13 +48,13 @@ class DatabaseSeeder extends Seeder
             'name' => 'Sala de Hospitalización de Medicina Interna Hombres',
         ]);
         Department::create([
-            'name' => 'Sala de Hospitalización de Cirugía de Hombres',
+            'name' => 'Sala de Hospitalización de Cirugía Hombres',
         ]);
         Department::create([
             'name' => 'Sala de Hospitalización de Medicina Interna Mujeres',
         ]);
         Department::create([
-            'name' => 'Sala de Hospitalización de Cirugía de Mujeres',
+            'name' => 'Sala de Hospitalización de Cirugía Mujeres',
         ]);
 
 
