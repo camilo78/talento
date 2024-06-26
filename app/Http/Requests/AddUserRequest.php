@@ -25,14 +25,36 @@ class AddUserRequest extends FormRequest
     {
         return [
             'name' => 'required',
+            'department_id'=> 'required',
             'last_name' => 'required',
-            'gender'=>'required',
+            'gender'=> 'required',
             'email' => 'required|email',
             'dni' => 'required|min:13|numeric',
             'functional' => 'nullable',
             'nominal' => 'nullable',
             'type' => 'required',
             'password' => 'min:8'
+        ];
+    }
+
+    /**
+     * Get custom attributes for validator errors.
+     *
+     * @return array<string, string>
+     */
+    public function attributes(): array
+    {
+        return [
+            'name' => 'nombres',
+            'last_name' => 'apellidos',
+            'gender'=>'género',
+            'email' => 'correo electrónico',
+            'dni' => 'DNI',
+            'department_id'=> 'departamento o unidad',
+            'functional' => 'cargo funcional',
+            'nominal' => 'cargo nominal',
+            'type' => 'tipo de contratación',
+            'password' => 'contraseña'
         ];
     }
 }

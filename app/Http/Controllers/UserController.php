@@ -52,7 +52,10 @@ class UserController extends Controller
             'dni' => $request->dni,
             'functional' => $request->functional,
             'nominal' => $request->nominal,
-            'type' => $request->type
+            'type' => $request->type,
+            'gender' => $request->gender,
+            'department_id' => $request->department_id,
+            'boss' => $request->boss,
         ]);
 
         return to_intended_route('user.index')->with('message', __("User added successfully!"));
