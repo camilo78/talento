@@ -31,7 +31,8 @@ class User extends Authenticatable
         'functional',
         'nominal',
         'type',
-        'department_id'
+        'department_id',
+        'boss'
     ];
 
     /**

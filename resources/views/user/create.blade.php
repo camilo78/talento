@@ -60,7 +60,7 @@
                                         <label class="form-check-label">
                                             <input type="checkbox"
                                                 class="form-check-input @error('boss') border border-warning @enderror"
-                                                value="true" {{ old('boss')=="1" ? 'checked='.'"'.'checked'.'"' : '' }} name="boss"><span
+                                                value="1" {{ old('boss')=="1" ? 'checked='.'"'.'checked'.'"' : '' }} name="boss"><span
                                                 class="@error('boss') text-danger @enderror">Es Jefe o Jefa</span>
                                         </label>
                                     </div>

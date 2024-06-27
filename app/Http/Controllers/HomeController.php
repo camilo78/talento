@@ -30,7 +30,9 @@ class HomeController extends Controller
             'users' => $users,
             //...
         ];
+        notify()->preset('common-notification', ['title' => 'This is the overridden title']);
 
         return view('home', compact('widget'));
+
     }
 }

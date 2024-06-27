@@ -18,7 +18,8 @@
         "laravel/legacy-factories": "^1.0",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^4.0",
-        "laraveles/spanish": "^1.5"
+        "laraveles/spanish": "^1.5",
+        "mckenziearts/laravel-notify": "^2.5"
     },
     "require-dev": {
         "spatie/laravel-ignition": "^2.0",

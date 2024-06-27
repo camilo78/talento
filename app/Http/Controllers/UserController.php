@@ -44,6 +44,7 @@ class UserController extends Controller
      */
     public function store(AddUserRequest $request)
     {
+
         User::create([
             'name' => $request->name,
             'last_name' => $request->last_name,
