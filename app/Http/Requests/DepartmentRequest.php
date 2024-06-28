@@ -23,7 +23,6 @@ class DepartmentRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'user_id' => 'required',
         ];
     }
 }

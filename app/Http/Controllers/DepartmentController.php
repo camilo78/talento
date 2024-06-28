@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Department;
 use App\Http\Requests\DepartmentRequest;
 use App\Models\User;
+use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Http\Request;
 
 class DepartmentController extends Controller
@@ -40,11 +41,10 @@ class DepartmentController extends Controller
 
         $department = new Department();
         $department->name = $request->input('name');
-        $department->user_id = $request->input('user_id');
         $department->save();
 
-
-        return to_intended_route('department.index')->with('message', __("¡Departamento agregado!"));
+        Alert::toast('El usuario ha sido creado correctamente','success');
+        return to_intended_route('department.index');
 
     }
 
