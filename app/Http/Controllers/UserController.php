@@ -8,6 +8,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use RealRashid\SweetAlert\Facades\Alert;
+
 
 class UserController extends Controller
 {
@@ -19,7 +21,7 @@ class UserController extends Controller
     public function index()
     {
         return view('user.list', [
-            'title' => 'Users',
+            'title' => 'Usuarios',
             'users' => User::all()
         ]);
     }
@@ -32,7 +34,7 @@ class UserController extends Controller
     public function create()
     {
         return view('user.create', [
-            'title' => __('New User'),
+            'title' => __('Nuevo Usuario'),
         ]);
     }
 
@@ -59,7 +61,7 @@ class UserController extends Controller
             'boss' => $request->boss,
         ]);
 
-        return to_intended_route('user.index')->with('message', __("User added successfully!"));
+        return to_intended_route('user.index')->notify()->success('Laravel Notify is awesome!');
     }
 
     /**
@@ -71,7 +73,6 @@ class UserController extends Controller
     public function show($id)
     {
         return view('user.show', ['user' => User::findOrFail($id)]);
-
     }
 
     /**
@@ -83,7 +84,7 @@ class UserController extends Controller
     public function edit(User $user)
     {
         return view('user.edit', [
-            'title' => 'Edit User',
+            'title' => 'Editar Usuario',
             'user' => $user
         ]);
     }
@@ -97,7 +98,9 @@ class UserController extends Controller
      */
     public function update(EditUserRequest $request, User $user)
     {
-        if($request->filled('password')) {
+
+
+        if ($request->filled('password')) {
             $user->password = Hash::make($request->password);
         }
         $user->name = $request->name;
@@ -107,9 +110,14 @@ class UserController extends Controller
         $user->functional = $request->functional;
         $user->nominal = $request->nominal;
         $user->type = $request->type;
-        $user->save();
+        $user->gender = $request->gender;
+        $user->department_id = $request->department_id;
 
-        return redirect()->route('user.edit', $user->id)->with('message', __("User updated successfully!"));
+        if ($user->save()) {
+            Alert()->success('El usuario a sido actualizado correctamente')->toToast();
+        }
+
+        return redirect()->route('user.edit', $user->id);
     }
 
     /**

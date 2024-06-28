@@ -30,47 +30,6 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="gender">Género</label><br>
-                                    <div class="form-check">
-                                        <label class="form-check-label">
-                                            <input type="radio"
-                                                class="form-check-input @error('gender') border border-warning @enderror"
-                                                value="1" {{ old('gender')=="1" ? 'checked='.'"'.'checked'.'"' : '' }}  name="gender"><span
-                                                class="@error('gender') text-danger @enderror">Hombre</span>
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <label class="form-check-label">
-                                            <input type="radio" class="form-check-input" value="0" {{ old('gender')=="0" ? 'checked='.'"'.'checked'.'"' : '' }} name="gender"><span
-                                                class="@error('gender') text-danger @enderror">Mujer</span>
-                                        </label>
-                                    </div>
-                                    @error('gender')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="gender">Jefe de Unidad o Departamento</label><br>
-                                    <div class="form-check">
-                                        <label class="form-check-label">
-                                            <input type="checkbox"
-                                                class="form-check-input @error('boss') border border-warning @enderror"
-                                                value="1" {{ old('boss')=="1" ? 'checked='.'"'.'checked'.'"' : '' }} name="boss"><span
-                                                class="@error('boss') text-danger @enderror">Es Jefe o Jefa</span>
-                                        </label>
-                                    </div>
-                                    @error('boss')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                            </div>
-                        </div>
-
                         <div class="form-group">
                             <label for="email">{{ __('Email') }}</label>
                             <input type="email" class="form-control @error('email') is-invalid @enderror" name="email"
@@ -88,14 +47,13 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-                    </div>
-                    <div class="col-md-6">
                         <div class="form-group">
                             <label for="department_id">{{ __('Departamento o Unidad') }}</label>
                             <select class="form-control @error('department_id') is-invalid @enderror"
                                 title="Departamento o Unidad" name="department_id" value="{{ old('department_id') }}">
                                 @foreach (\App\Models\Department::orderBy('name')->get() as $department)
-                                    <option value="{{ $department->id }}" {{ old('department_id') ==  $department->id  ? "selected" : " "}}>
+                                    <option value="{{ $department->id }}"
+                                        {{ old('department_id') == $department->id ? 'selected' : ' ' }}>
                                         {{ $department->name }}
                                     </option>
                                 @endforeach
@@ -104,29 +62,52 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="gender">Género</label><br>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input type="radio"
+                                        class="form-check-input @error('gender') border border-warning @enderror"
+                                        value="1" {{ old('gender') == '1' ? 'checked=' . '"' . 'checked' . '"' : '' }}
+                                        name="gender"><span class="@error('gender') text-danger @enderror">Hombre</span>
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input type="radio" class="form-check-input" value="0"
+                                        {{ old('gender') == '0' ? 'checked=' . '"' . 'checked' . '"' : '' }} name="gender"><span
+                                        class="@error('gender') text-danger @enderror">Mujer</span>
+                                </label>
+                            </div>
+                            @error('gender')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
                         <div class="form-group">
                             <label for="functional">{{ __('Functional Charge') }}</label>
                             <input type="text" class="form-control @error('functional') is-invalid @enderror"
-                                name="functional" id="functional" placeholder="Ingrese cargo funcional"
-                                autocomplete="off" value="{{ old('functional') }}">
+                                name="functional" id="functional" placeholder="Ingrese cargo funcional" autocomplete="off"
+                                value="{{ old('functional') }}">
                             @error('functional')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
                         <div class="form-group">
                             <label for="nominal">{{ __('Nominal Charge') }}</label>
-                            <input type="text" class="form-control @error('nominal') is-invalid @enderror"
-                                name="nominal" id="nominal" placeholder="{{ __('Nominal Charge') }}"
-                                autocomplete="off" value="{{ old('nominal') }}">
+                            <input type="text" class="form-control @error('nominal') is-invalid @enderror" name="nominal"
+                                id="nominal" placeholder="{{ __('Nominal Charge') }}" autocomplete="off"
+                                value="{{ old('nominal') }}">
                             @error('nominal')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
                         <div class="form-group">
                             <label for="type">{{ __('Tipo de Contratación') }}</label>
-                            <select name="type"
-                                title="Seleccione Tipo de Contratación"
-                                class="form-select form-control @error('type') is-invalid @enderror" aria-label="Default select">
+                            <select name="type" title="Seleccione Tipo de Contratación"
+                                class="form-select form-control @error('type') is-invalid @enderror"
+                                aria-label="Default select">
                                 <option value="Permanente" {{ old('type') == 'Permanente' ? 'selected' : '' }}>Permanente
                                 </option>
                                 <option value="Contrato" {{ old('type') == 'Contrato' ? 'selected' : '' }}>Contrato
@@ -138,7 +119,6 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-
                         <div class="form-group">
                             <label for="password">{{ __('Password') }}</label>
                             <input type="password" class="form-control @error('password') is-invalid @enderror"

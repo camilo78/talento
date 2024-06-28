@@ -30,8 +30,7 @@ class HomeController extends Controller
             'users' => $users,
             //...
         ];
-        notify()->preset('common-notification', ['title' => 'This is the overridden title']);
-
+        alert('Title','Lorem Lorem Lorem', 'success');
         return view('home', compact('widget'));
 
     }

@@ -26,7 +26,7 @@ class DepartmentController extends Controller
     public function create()
     {
         return view('department.create', [
-            'title' => __('New Departament'),
+            'title' => __('Nuevo Departamento'),
             'users_r' => User::orderBy('name', 'asc')->get(),
             'users_m' => User::orderBy('name', 'asc')->get(),
         ]);
@@ -44,7 +44,7 @@ class DepartmentController extends Controller
         $department->save();
 
 
-        return to_intended_route('department.index')->with('message', __("Department added successfully!"));
+        return to_intended_route('department.index')->with('message', __("¡Departamento agregado!"));
 
     }
 
@@ -62,7 +62,7 @@ class DepartmentController extends Controller
     public function edit(Department $department)
     {
         return view('department.edit', [
-            'title' => __('Edit Department'),
+            'title' => __('Editar Departamento'),
             'users' => User::orderBy('name', 'asc')->get(),
             'department' => $department
         ]);
