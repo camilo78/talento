@@ -102,7 +102,7 @@
                             <label for="functional">{{ __('Functional Charge') }}</label>
                             <input type="text" class="form-control @error('functional') is-invalid @enderror"
                                 name="functional" id="functional" placeholder="Ingrese cargo funcional" autocomplete="off"
-                                value="{{ old('functional', $user->funcional) }}">
+                                value="{{ old('functional', $user->functional) }}">
                             @error('functional')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -149,6 +149,8 @@
                             <a href="{{ route('user.index') }}" class="btn btn-secondary"><i
                                     class="fa-solid fa-arrow-left"></i> {{ __('Back') }}</a>
                         </div>
+                    </div>
+                </div>
             </form>
         </div>
     </div>

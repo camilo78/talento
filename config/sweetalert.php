@@ -104,7 +104,7 @@ return [
     | for particular modal just use the padding() helper method.
     */
 
-    'padding' => env('SWEET_ALERT_PADDING', '2.25rem'),
+    'padding' => env('SWEET_ALERT_PADDING', '1.25rem'),
 
     /*
     |--------------------------------------------------------------------------
@@ -198,7 +198,7 @@ return [
     |
     */
 
-    'timer_progress_bar' => env('SWEET_ALERT_TIMER_PROGRESS_BAR', true),
+    'timer_progress_bar' => env('SWEET_ALERT_TIMER_PROGRESS_BAR', false),
 
     /*
     |--------------------------------------------------------------------------

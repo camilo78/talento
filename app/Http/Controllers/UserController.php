@@ -60,8 +60,8 @@ class UserController extends Controller
             'department_id' => $request->department_id,
             'boss' => $request->boss,
         ]);
-
-        return to_intended_route('user.index')->notify()->success('Laravel Notify is awesome!');
+        Alert::toast('El usuario ha sido creado correctamente','success');
+        return to_intended_route('user.index');
     }
 
     /**
@@ -114,7 +114,7 @@ class UserController extends Controller
         $user->department_id = $request->department_id;
 
         if ($user->save()) {
-            Alert()->success('El usuario a sido actualizado correctamente')->toToast();
+            Alert::toast('El usuario ha sido actualizado correctamente','success');
         }
 
         return redirect()->route('user.edit', $user->id);
@@ -128,10 +128,15 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
+
         if (Auth::id() == $user->getKey()) {
-            return redirect()->route('user.index')->with('warning', __("Can not delete yourself!"));
+            Alert::toast('No puedes borrarte a ti mismo', 'info');
+            return redirect()->route('user.index');
+        }else{
+            $user->delete();
+            Alert::toast('El usuario ha sido creado correctamente', 'success');
+
         }
-        $user->delete();
-        return to_intended_route('user.index')->with('success', __("User deleted successfully!"));
+        return to_intended_route('user.index');
     }
 }

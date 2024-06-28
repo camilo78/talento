@@ -370,14 +370,6 @@
         </div>
     </div>
     <style>
-        .alert {
-            position: fixed;
-            bottom: 18px;
-            right: 20px;
-            z-index: 9999;
-            border-radius: 0px;
-            opacity: 0.9
-        }
 
         table.table-bordered {
             border: 1px solid #4e73df;
@@ -393,15 +385,14 @@
         }
     </style>
     <!-- Scripts -->
-
     <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
     <script src="{{ asset('vendor/bootstrap/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('vendor/jquery-easing/jquery.easing.min.js') }}"></script>
     <script src="{{ asset('js/sb-admin-2.min.js') }}"></script>
+
     @stack('js')
     @include('sweetalert::alert')
-
 </body>
 
 </html>
