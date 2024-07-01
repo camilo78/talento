@@ -36,7 +36,7 @@
                             <label for="user_id">{{ __('Responsible') }}</label>
                             <select class="form-control" name="user_id" value="{{ old('user_id') }}">
                                 @foreach (\App\Models\User::orderBy('name')->get() as $user)
-                                    <option   {{ ($department->user_id == $user->id) ?  "selected" : "" }} value="{{ $user->id }}">
+                                    <option   {{ ($department->user == $user->id) ?  "selected" : "" }} value="{{ $user->id }}">
                                         {{ $user->fullname }}
                                     </option>
                                 @endforeach

@@ -19,19 +19,16 @@
             <div class="card shadow mb-4">
                 <div class="card-profile-image mt-4">
                     <figure class="rounded-circle avatar avatar font-weight-bold"
-                        style="font-size: 60px; height: 180px; width: 180px;" data-initial="{{ $user->name[0] }}"></figure>
+                        style="font-size: 50px; height: 180px; width: 180px;" data-initial="{{ $user->name[0].' '. $user->last_name[0] }}"></figure>
                 </div>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="text-center">
                                 <h5 class="font-weight-bold">{{ $user->fullName }}</h5>
-                                @if ($user->functional != null)
-                                <p>{{ $user->functional }}</p>
-                                @else
-                                <p>{{ $user->nominal }}</p>
+                                @if($user->boss == '1')
+                                <b>Jefe de {{ $user->department->name }}</b>
                                 @endif
-
                             </div>
                         </div>
                     </div>

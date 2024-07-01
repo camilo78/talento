@@ -76,9 +76,13 @@ class DepartmentController extends Controller
      */
     public function update(DepartmentRequest $request, Department $department)
     {
+
+        $user = User::find($request->input('user_id'));
+        $user->department_id = $department->id;
+        $user->boss = '1';
         $department->name = $request->name;
-        $department->user_id = $request->user_id;
         $department->save();
+        $user->save();
 
         return redirect()->route('department.edit', $department->id)->with('message', __("Department updated successfully!"));
     }
