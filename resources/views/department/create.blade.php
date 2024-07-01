@@ -10,7 +10,8 @@
         <div class="card-body">
             <form action="{{ route('department.store') }}" method="post">
                 @csrf
-                <div class="row">
+                <input type="hidden" value="{{ $create }}">
+                <div class="row justify-content-center">
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="name">{{ __('Name of Department') }}</label>
@@ -21,8 +22,8 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-                    </div>
-                    <div class="col-md-6">
+
+                        {{--                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="user_id">{{ __('Responsible') }}</label>
                             <select class="form-control selectpicker" data-live-search="true" name="user_id"
@@ -53,8 +54,8 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-                    </div>
-                    <div class="col-md-6">
+                    </div> --}}
+
                         <div class="d-flex flex-row-reverse">
                             <button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i>
                                 {{ __('Save') }}</button>
@@ -62,11 +63,13 @@
                                     class="fa-solid fa-arrow-left"></i> {{ __('Back') }}</a>
                         </div>
                     </div>
-                    <div class="col-md-6" id="resultado">
-                    </div>
                 </div>
-            </div>
-        </form>
+
+        {{--                     <div class="col-md-6" id="resultado">
+                    </div> --}}
+
+    </div>
+    </form>
     </div>
 
 
@@ -105,7 +108,8 @@
         .filter-option {
             position: relative !important;
         }
-        .btn-light{
+
+        .btn-light {
             height: 40px !important;
             padding: 4px 8px 4px 6px !important;
             border: 1px solid #cbd5e0 !important;
@@ -121,10 +125,10 @@
         const resultadoDiv = document.getElementById('resultado');
 
         selectElement.addEventListener('change', () => {
-            const opcionesSeleccionadas = Array.from(selectElement.selectedOptions).map(option => option.textContent);
-            resultadoDiv.innerHTML = `<b>Seleccionaste como personal de la sala a:</b> <br> ${opcionesSeleccionadas.join('<br> ')}`;
+            const opcionesSeleccionadas = Array.from(selectElement.selectedOptions).map(option => option
+                .textContent);
+            resultadoDiv.innerHTML =
+                `<b>Seleccionaste como personal de la sala a:</b> <br> ${opcionesSeleccionadas.join('<br> ')}`;
         });
-
     </script>
-
 @endpush

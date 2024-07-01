@@ -8,6 +8,8 @@ use App\Models\User;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Http\Request;
 
+use function PHPUnit\Framework\isNull;
+
 class DepartmentController extends Controller
 {
     /**
@@ -28,8 +30,9 @@ class DepartmentController extends Controller
     {
         return view('department.create', [
             'title' => __('Nuevo Departamento'),
-            'users_r' => User::orderBy('name', 'asc')->get(),
-            'users_m' => User::orderBy('name', 'asc')->get(),
+            'create'=> '1',
+            //'users_r' => User::orderBy('name', 'asc')->whereNull('boss')->get(),
+            //'users_m' => User::orderBy('name', 'asc')->whereNull('department_id')->get(),
         ]);
     }
 
@@ -43,7 +46,7 @@ class DepartmentController extends Controller
         $department->name = $request->input('name');
         $department->save();
 
-        Alert::toast('El usuario ha sido creado correctamente','success');
+        Alert::toast('Ahora debes asignarle un jefe y agregar los miembros','info');
         return to_intended_route('department.index');
 
     }
