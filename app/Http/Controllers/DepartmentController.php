@@ -66,7 +66,7 @@ class DepartmentController extends Controller
     {
         return view('department.edit', [
             'title' => __('Editar Departamento'),
-            'users' => User::orderBy('name', 'asc')->get(),
+            'users' => User::orderBy('name', 'asc')->whereNull('boss')->get(),
             'department' => $department
         ]);
     }
