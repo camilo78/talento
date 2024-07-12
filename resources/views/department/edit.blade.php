@@ -36,7 +36,7 @@
                             <label for="user_id">{{ __('Responsible') }}</label>
                             <select class="form-control" name="user_id" value="{{ old('user_id') }}">
                                 @foreach ($users as $user)
-                                    <option
+                                    <option value="{{ $user->id }}"
                                     {{ old('id', $user->id) == $department->id ? 'selected' : ' ' }}>
                                         {{ $user->fullname }}
                                     </option>

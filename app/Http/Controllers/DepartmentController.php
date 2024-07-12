@@ -76,8 +76,9 @@ class DepartmentController extends Controller
      */
     public function update(DepartmentRequest $request, Department $department)
     {
-
+        //dd($department->id);
         $user = User::find($request->input('user_id'));
+        //dd($request->input('user_id'));
         $user->department_id = $department->id;
         $user->boss = '1';
         $department->name = $request->name;
