@@ -33,14 +33,14 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="user_id">{{ __('Responsible') }} {{ $department }}</label>
-                            <select class="form-control" name="user_id" value="{{ old('user_id') }}">
+                            <label for="user_id">{{ __('Responsible') }}</label>
+                            <select class="form-control" name="user_id">
                                 @foreach ($users as $user)
-                                    <option value="{{ $user->id }}"
-                                    {{ old('id', $user->id) == $department->id ? 'selected' : ' ' }}>
-                                        {{ $user->fullname }}
-                                    </option>
-                                @endforeach
+                                <option value="{{ $user->id }}"
+                                    {{ $department->user->id ?? 'selected' }}>
+                                    {{ $user->fullname }}
+                                </option>
+                            @endforeach
                             </select>
                             @error('name')
                                 <span class="text-danger">{{ $message }}</span>
