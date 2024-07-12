@@ -73,9 +73,6 @@ class User extends Authenticatable
         return $this->belongsTo(Department::class);
     }
 
-    public function users(): HasMany
-    {
-        return $this->hasMany(User::class);
-    }
+
 
 }

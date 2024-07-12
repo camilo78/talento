@@ -66,8 +66,10 @@ class DepartmentController extends Controller
     {
         return view('department.edit', [
             'title' => __('Editar Departamento'),
-            'users' => User::orderBy('name', 'asc')->get(),
-            'department' => $department
+            'users' => User::orderBy('name', 'desc')->get(),
+            'department' => $department,
+            'users_r' => User::orderBy('name', 'asc')->whereNull('boss')->get(),
+            'users_m' => User::orderBy('name', 'asc')->whereNull('department_id')->get(),
         ]);
     }
 
@@ -76,22 +78,27 @@ class DepartmentController extends Controller
      */
     public function update(DepartmentRequest $request, Department $department)
     {
-        //dd($department->user->id);
         if ($department->user){
-            //dd(User::find($department->user->id));
+            // Se elimina el antiguo Usuario relacionado al departamento
             $old_user = User::find($department->user->id);
             $old_user->boss = Null;
             $old_user->department_id = Null;
+            $old_user->save();
+            // Se relaciona el actual nuevo Usuario al departamento
             $user = User::find($request->input('user_id'));
             $user->boss = 1;
             $user->department_id = $department->id;
-            $old_user->save();
             $user->save();
-
-            Alert::toast('El departamento ha sido actualizado correctamente','success');
         }else {
-            Alert::toast('Es Nulo','success');
+            $user = User::find($request->input('user_id'));
+            $user->boss = 1;
+            $user->department_id = $department->id;
+            $user->save();
         }
+        // Se actualiza el nombre del depatamento
+        $department->name = $request->name;
+        $department->save();
+        Alert::toast('El departamento ha sido actualizado correctamente','success');
 
         //dd($department->id);
         // $user = User::find($request->input('user_id'));
@@ -104,7 +111,7 @@ class DepartmentController extends Controller
         // $department->save();
         // $user->save();
 
-        return redirect()->route('department.edit', $department->id)->with('message', __("Department updated successfully!"));
+        return redirect()->route('department.edit', $department->id);
     }
 
     /**
