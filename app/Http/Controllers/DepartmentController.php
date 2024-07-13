@@ -70,6 +70,7 @@ class DepartmentController extends Controller
             'department' => $department,
             'users_r' => User::orderBy('name', 'asc')->whereNull('boss')->get(),
             'users_m' => User::orderBy('name', 'asc')->whereNull('department_id')->get(),
+            'users_d' => User::orderBy('name', 'asc')->where('department_id', $department->id)->get(),
         ]);
     }
 
@@ -99,6 +100,7 @@ class DepartmentController extends Controller
         $department->name = $request->name;
         $department->save();
         Alert::toast('El departamento ha sido actualizado correctamente','success');
+
 
         //dd($department->id);
         // $user = User::find($request->input('user_id'));

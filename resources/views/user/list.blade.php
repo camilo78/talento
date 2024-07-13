@@ -10,7 +10,7 @@
 
     <h1 class="h3 text-gray-800">{{ __($title) ?? __('Blank Page') }}</h1>
 
-    <table class="table table table-striped table-bordered bg-white shadow mt-1" id="users">
+    <table class="table table table-striped table table-bordered border-primary bg-white shadow mt-1" id="users">
         <thead>
             <tr>
                 <th class="text-center pt-1 pb-1 align-middle">{{ __('No.') }}</th>
@@ -28,8 +28,8 @@
             @foreach ($users as $user)
                 <tr>
                     <td class="text-center pt-1 pb-1 align-middle small" scope="row">{{ $loop->iteration }}</td>
-                    <td class="pt-1 pb-1 align-middle small">{{ $user->fullname }}</td>
-                    <td class="pt-1 pb-1 align-middle small">{{ $user->email }}</td>
+                    <td class="pt-1 pb-1 align-middle small"><a href="{{ route('user.show', $user->id) }}">{{ $user->fullname }} </a></td>
+                    <td class="pt-1 pb-1 align-middle small"><a href="mailto:{{ $user->email }}">{{ $user->email }}</a></td>
                     <td class="pt-1 pb-1 align-middle small">{{ $user->dni }}</td>
                     <td class="pt-1 pb-1 align-middle small">{{ $user->functional }}</td>
                     <td class="pt-1 pb-1 align-middle small">{{ $user->nominal }}</td>
@@ -37,8 +37,6 @@
                     <td class="pt-1 pb-1 align-middle small {{ $user->department->name ?? 'text-warning small' }}">{{ $user->department->name ?? 'Asignar a una Unidad o Departemento'}} @if($user->boss == 1)<span class="badge badge-pill text-white bg-gradient-success pb-1">(@if ($user->gender==1) Jefa @else Jefe @endif)</span>@endif</td>
                     <td class="pt-1 pb-1 align-middle">
                         <div class="d-flex justify-content-center">
-                            <a href="{{ route('user.show', $user->id) }}" class="btn btn-sm btn-info mr-2"><i
-                                    class="fa-solid fa-eye"></i></a>
                             <a href="{{ route('user.edit', $user->id) }}" class="btn btn-sm btn-primary mr-2"><i
                                     class="fa-solid fa-pen-to-square"></i></a>
                             <form action="{{ route('user.destroy', $user->id) }}" method="post">

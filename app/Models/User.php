@@ -33,7 +33,7 @@ class User extends Authenticatable
         'nominal',
         'type',
         'department_id',
-        'boos'
+        'boss'
     ];
 
     /**
