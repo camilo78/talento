@@ -79,7 +79,7 @@ class DepartmentController extends Controller
      */
     public function update(DepartmentRequest $request, Department $department)
     {
-        if ($department->user){
+
             // Se elimina el antiguo Usuario relacionado al departamento
             $old_user = User::find($department->user->id);
             $old_user->boss = Null;
@@ -90,12 +90,6 @@ class DepartmentController extends Controller
             $user->boss = 1;
             $user->department_id = $department->id;
             $user->save();
-        }else {
-            $user = User::find($request->input('user_id'));
-            $user->boss = 1;
-            $user->department_id = $department->id;
-            $user->save();
-        }
         // Se actualiza el nombre del depatamento
         $department->name = $request->name;
         $department->save();

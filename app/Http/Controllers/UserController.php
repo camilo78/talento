@@ -111,7 +111,7 @@ class UserController extends Controller
         $user->nominal = $request->nominal;
         $user->type = $request->type;
         $user->gender = $request->gender;
-        $user->department_id = $request->department_id;
+        $user->departments()->attach($request->department_id);
 
         if ($user->save()) {
             Alert::toast('El usuario ha sido actualizado correctamente','success');

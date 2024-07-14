@@ -8,8 +8,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Models\Department;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends Authenticatable
 {
@@ -32,7 +32,6 @@ class User extends Authenticatable
         'functional',
         'nominal',
         'type',
-        'department_id',
         'boss'
     ];
 
@@ -64,7 +63,17 @@ class User extends Authenticatable
     }
 
     /**
-     * Get the user that owns the User
+     * The departments that belong to the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function departments(): BelongsToMany
+    {
+        return $this->belongsToMany(Department::class, 'user_department', 'user_id', 'department_id');
+    }
+
+    /**
+     * Get the depart that owns the User
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -72,7 +81,5 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Department::class);
     }
-
-
 
 }

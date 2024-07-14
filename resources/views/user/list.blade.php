@@ -34,7 +34,19 @@
                     <td class="pt-1 pb-1 align-middle small">{{ $user->functional }}</td>
                     <td class="pt-1 pb-1 align-middle small">{{ $user->nominal }}</td>
                     <td class="pt-1 pb-1 align-middle small">{{ $user->type }}</td>
-                    <td class="pt-1 pb-1 align-middle small {{ $user->department->name ?? 'text-warning small' }}">{{ $user->department->name ?? 'Asignar a una Unidad o Departemento'}} @if($user->boss == 1)<span class="badge badge-pill text-white bg-gradient-success pb-1">(@if ($user->gender==1) Jefa @else Jefe @endif)</span>@endif</td>
+                    <td class="pt-1 pb-1 align-middle small' }}">
+                        @if($user->departments()->count() and  collect($user->departments->where('user_id', $user->id))->pluck('user_id')->first() == $user->id)
+                        {{collect($user->departments->where('user_id', $user->id))->pluck('name')->first()  }}
+                            @if($user->gender == 1)
+                            <span class="badge badge-pill badge-success">Jefe</span>
+                            @else
+                            <span class="badge badge-pill badge-success">Jefa</span>
+                            @endif
+                        @else
+                            {{ collect($user->departments)->pluck('name')->first() }}
+                        @endif
+
+                    </td>
                     <td class="pt-1 pb-1 align-middle">
                         <div class="d-flex justify-content-center">
                             <a href="{{ route('user.edit', $user->id) }}" class="btn btn-sm btn-primary mr-2"><i
