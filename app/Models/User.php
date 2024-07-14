@@ -9,7 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Models\Department;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class User extends Authenticatable
 {
@@ -32,7 +32,6 @@ class User extends Authenticatable
         'functional',
         'nominal',
         'type',
-        'boss'
     ];
 
     /**
@@ -77,9 +76,9 @@ class User extends Authenticatable
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function department(): BelongsTo
+    public function department(): HasOne
     {
-        return $this->belongsTo(Department::class);
+        return $this->hasOne(Department::class);
     }
 
 }

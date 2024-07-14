@@ -26,7 +26,7 @@
                         <div class="col-lg-12">
                             <div class="text-center">
                                 <h5 class="font-weight-bold">{{ $user->fullName }}</h5>
-                                @if($user->boss == '1')
+                                @if($user->department)
                                 <b>Jefe de {{ $user->department->name }}</b>
                                 @endif
                             </div>

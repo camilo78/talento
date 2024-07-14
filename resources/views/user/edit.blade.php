@@ -63,7 +63,7 @@
                                 title="Departamento o Unidad" name="department_id" value="{{ old('department_id') }}">
                                 @foreach (\App\Models\Department::orderBy('name')->get() as $department)
                                     <option value="{{ $department->id }}"
-                                        {{ old('department_id', $user->department_id) == $department->id ? 'selected' : ' ' }}>
+                                        {{ old('department_id', $user->departments->pluck('id')->first()) == $department->id ? 'selected' : ' ' }}>
                                         {{ $department->name }}
                                     </option>
                                 @endforeach

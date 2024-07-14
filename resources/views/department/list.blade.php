@@ -26,8 +26,12 @@
                 <tr>
                     <td class="text-center pt-1 pb-1 align-middle" scope="row">{{ $loop->iteration }}</td>
                     <td class="pt-1 pb-1 align-middle">{{ $department->name }}</td>
-                    <td class="pt-1 pb-1 align-middle {{ $department->user->id  ?? 'text-warning small' }}">{{$department->user->fullname ?? 'Sin Jefe Asignado' }}
-                    <td class="pt-1 pb-1 align-middle">{{ App\Models\User::where('department_id', $department->id )->count() }}</td>
+                    <td class="pt-1 pb-1 align-middle">
+
+                        {{$department->user()->pluck('name')->first().' '.  $department->user()->pluck('last_name')->first()}}
+
+                    </td>
+                    <td class="pt-1 pb-1 align-middle">{{ 'hola' }}</td>
                     <td class="pt-1 pb-1 align-middle">
                         <div class="d-flex justify-content-center">
                             <a href="{{ route('department.edit', $department->id) }}" class="btn btn-sm btn-primary mr-2"><i

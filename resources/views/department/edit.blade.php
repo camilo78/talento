@@ -89,12 +89,12 @@
                             <tr>
                                 <th class="text-center align-middle">{{ __('No.') }}</th>
                                 <th class="text-center align-middle">{{ __('Full Name') }}</th>
+                                <th class="text-center align-middle">Sexo</th>
                                 <th class="text-center align-middle">{{ __('Email') }}</th>
                                 <th class="text-center align-middle">{{ __('DNI') }}</th>
                                 <th class="text-center align-middle">{{ __('Functional') }}</th>
                                 <th class="text-center align-middle">{{ __('Nominal') }}</th>
                                 <th class="text-center align-middle">Tipo de Contratación</th>
-                                <th class="text-center align-middle">{{ __('Departamento') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -103,21 +103,20 @@
                                     <td class="align-middle small" scope="row">{{ $loop->iteration }}</td>
                                     <td class="align-middle small"><a
                                             href="{{ route('user.show', $user->id) }}">{{ $user->fullname }} </a></td>
+                                            <td class="pt-1 pb-1 align-middle small">
+                                                @if($user->gender == 1)
+                                                    Hombre
+                                                @else
+                                                    Mujer
+                                                @endif
+                                            </td>
                                     <td class="align-middle small"><a
                                             href="mailto:{{ $user->email }}">{{ $user->email }}</a></td>
                                     <td class="align-middle small">{{ $user->dni }}</td>
                                     <td class="align-middle small">{{ $user->functional }}</td>
                                     <td class="align-middle small">{{ $user->nominal }}</td>
                                     <td class="align-middle small">{{ $user->type }}</td>
-                                    <td class="align-middle small {{ $user->department->name ?? 'text-warning small' }}">
-                                        {{ $user->department->name ?? 'Asignar a una Unidad o Departemento' }} @if ($user->boss == 1)
-                                            <span class="badge badge-pill text-white bg-gradient-success pb-1">(@if ($user->gender == 1)
-                                                    Jefa
-                                                @else
-                                                    Jefe
-                                                @endif)</span>
-                                        @endif
-                                    </td>
+
                                 </tr>
                             @endforeach
                         </tbody>

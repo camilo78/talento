@@ -15,6 +15,7 @@
             <tr>
                 <th class="text-center pt-1 pb-1 align-middle">{{ __('No.') }}</th>
                 <th class="text-center pt-1 pb-1 align-middle">{{ __('Full Name') }}</th>
+                <th class="text-center pt-1 pb-1 align-middle">Sexo</th>
                 <th class="text-center pt-1 pb-1 align-middle">{{ __('Email') }}</th>
                 <th class="text-center pt-1 pb-1 align-middle">{{ __('DNI') }}</th>
                 <th class="text-center pt-1 pb-1 align-middle">{{ __('Functional') }}</th>
@@ -28,13 +29,20 @@
             @foreach ($users as $user)
                 <tr>
                     <td class="text-center pt-1 pb-1 align-middle small" scope="row">{{ $loop->iteration }}</td>
-                    <td class="pt-1 pb-1 align-middle small"><a href="{{ route('user.show', $user->id) }}">{{ $user->fullname }} </a></td>
+                    <td class="pt-1 pb-1 align-middle small ancho"><a href="{{ route('user.show', $user->id) }}">{{ $user->fullname }} </a></td>
+                    <td class="pt-1 pb-1 align-middle small">
+                        @if($user->gender == 1)
+                            Hombre
+                        @else
+                            Mujer
+                        @endif
+                    </td>
                     <td class="pt-1 pb-1 align-middle small"><a href="mailto:{{ $user->email }}">{{ $user->email }}</a></td>
                     <td class="pt-1 pb-1 align-middle small">{{ $user->dni }}</td>
                     <td class="pt-1 pb-1 align-middle small">{{ $user->functional }}</td>
                     <td class="pt-1 pb-1 align-middle small">{{ $user->nominal }}</td>
                     <td class="pt-1 pb-1 align-middle small">{{ $user->type }}</td>
-                    <td class="pt-1 pb-1 align-middle small' }}">
+                    <td class="pt-1 pb-1 align-middle small">
                         @if($user->departments()->count() and  collect($user->departments->where('user_id', $user->id))->pluck('user_id')->first() == $user->id)
                         {{collect($user->departments->where('user_id', $user->id))->pluck('name')->first()  }}
                             @if($user->gender == 1)
@@ -49,12 +57,12 @@
                     </td>
                     <td class="pt-1 pb-1 align-middle">
                         <div class="d-flex justify-content-center">
-                            <a href="{{ route('user.edit', $user->id) }}" class="btn btn-sm btn-primary mr-2"><i
+                            <a href="{{ route('user.edit', $user->id) }}" class="btn btn-sm btn-outline-primary mr-2"><i
                                     class="fa-solid fa-pen-to-square"></i></a>
                             <form action="{{ route('user.destroy', $user->id) }}" method="post">
                                 @csrf
                                 @method('delete')
-                                <button type="submit" class="btn btn-sm btn-danger"
+                                <button type="submit" class="btn btn-sm btn-outline-danger"
                                     onclick="return confirm('¿Quiere eliminar este registro?')"><i
                                         class="fa-solid fa-trash"></i></button>
                             </form>
@@ -166,6 +174,9 @@
         .pagination{
             /* Alinear items desde el final */
             justify-content: flex-end !important;
+        }
+        .ancho{
+            width: 100%;
         }
     </style>
 @endpush

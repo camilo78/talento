@@ -68,9 +68,11 @@ class DepartmentController extends Controller
             'title' => __('Editar Departamento'),
             'users' => User::orderBy('name', 'desc')->get(),
             'department' => $department,
-            'users_r' => User::orderBy('name', 'asc')->whereNull('boss')->get(),
-            'users_m' => User::orderBy('name', 'asc')->whereNull('department_id')->get(),
-            'users_d' => User::orderBy('name', 'asc')->where('department_id', $department->id)->get(),
+            'users_r' => User::orderBy('name', 'asc'),
+            'users_m' => User::orderBy('name', 'asc'),
+            'users_d' => User::whereHas('departments', function ($query) use ($department) {
+                $query->where('department_id', $department->id);
+            })->get(),
         ]);
     }
 
@@ -82,7 +84,6 @@ class DepartmentController extends Controller
 
             // Se elimina el antiguo Usuario relacionado al departamento
             $old_user = User::find($department->user->id);
-            $old_user->boss = Null;
             $old_user->department_id = Null;
             $old_user->save();
             // Se relaciona el actual nuevo Usuario al departamento

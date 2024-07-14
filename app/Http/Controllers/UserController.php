@@ -47,7 +47,7 @@ class UserController extends Controller
     public function store(AddUserRequest $request)
     {
 
-        User::create([
+        $user = User::create([
             'name' => $request->name,
             'last_name' => $request->last_name,
             'email' => $request->email,
@@ -57,9 +57,10 @@ class UserController extends Controller
             'nominal' => $request->nominal,
             'type' => $request->type,
             'gender' => $request->gender,
-            'department_id' => $request->department_id,
-            'boss' => $request->boss,
+
         ]);
+        $user->departments()->attach($request->department_id);
+
         Alert::toast('El usuario ha sido creado correctamente','success');
         return to_intended_route('user.index');
     }
