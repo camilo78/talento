@@ -40,7 +40,7 @@
                         </div>
                         <div class="form-group">
                             <label for="department_id">{{ __('Departamento o Unidad') }}</label>
-                            <select class="form-control @error('department_id') is-invalid @enderror" multiple data-live-search="true"
+                            <select class="form-control @error('department_id') is-invalid @enderror" data-live-search="true"
                                 title="Departamento o Unidad" name="department_id" value="{{ old('department_id') }}">
                                 @foreach (\App\Models\Department::orderBy('name')->get() as $department)
                                     <option value="{{ $department->id }}"
