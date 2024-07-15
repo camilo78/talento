@@ -35,12 +35,13 @@
                         <div class="form-group">
                             <label for="user_id">{{ __('Responsible') }} {{ is_null($department->user) }}</label>
                             <select class="form-control" name="user_id" data-live-search="true">
-                                @foreach ($users as $user)
+                                @foreach ($department->users as $user)
                                     <option value="{{ $user->id }}"
                                         @if (is_null($department->user)) {{ old('user_id') ? 'selected' : '' }}>
                                     @else
                                     {{ old('user_id', $user->id) == $department->user->id ? 'selected' : '' }}> @endif
-                                        {{ $user->fullname }} </option>
+                                        {{ $user->fullname }}
+                                    </option>
                                 @endforeach
                             </select>
                             @error('name')
@@ -53,7 +54,7 @@
                             <label for="users_m">{{ __('Personal de la Sala') }}</label>
                             <select class="form-control selectpicker" id="miSelect"
                                 title="Ingresa los empleados de esta sala o servicio" multiple data-live-search="true"
-                                name="users_m" value="{{ old('users_m') }}">
+                                name="users_m[]" value="{{ old('users_m') }}">
                                 @foreach ($users_m as $user)
                                     <option value="{{ $user->id }}">
                                         {{ $user->fullname }}
@@ -98,7 +99,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($users_d as $user)
+                            @foreach ($department->users as $user)
                                 <tr>
                                     <td class="align-middle small" scope="row">{{ $loop->iteration }}</td>
                                     <td class="align-middle small"><a
@@ -272,7 +273,7 @@
                 const opcionesSeleccionadas = Array.from(selectElement.selectedOptions).map(option => option
                     .textContent);
                 resultadoDiv.innerHTML =
-                    `<b>Seleccionaste al siguiente personal para agregarlo a la sala:</b> <br> ${opcionesSeleccionadas.join('<br> ')}`;
+                    `<b>Seleccionaste al siguiente personal para agregar a la sala:</b> <br> ${opcionesSeleccionadas.join('<br> ')}`;
             });
         </script>
     @endpush

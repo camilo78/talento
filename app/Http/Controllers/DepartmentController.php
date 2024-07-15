@@ -68,11 +68,7 @@ class DepartmentController extends Controller
             'title' => __('Editar Departamento'),
             'users' => User::orderBy('name', 'desc')->get(),
             'department' => $department,
-            'users_r' => User::orderBy('name', 'asc'),
-            'users_m' => User::orderBy('name', 'asc'),
-            'users_d' => User::whereHas('departments', function ($query) use ($department) {
-                $query->where('department_id', $department->id);
-            })->get(),
+            'users_m' => User::whereDoesntHave('departments')->get(),
         ]);
     }
 
@@ -81,19 +77,13 @@ class DepartmentController extends Controller
      */
     public function update(DepartmentRequest $request, Department $department)
     {
-
-            // Se elimina el antiguo Usuario relacionado al departamento
-            $old_user = User::find($department->user->id);
-            $old_user->department_id = Null;
-            $old_user->save();
-            // Se relaciona el actual nuevo Usuario al departamento
-            $user = User::find($request->input('user_id'));
-            $user->boss = 1;
-            $user->department_id = $department->id;
-            $user->save();
-        // Se actualiza el nombre del depatamento
+         //dd($request->users_m);
+        $department->user_id = $request->user_id;
         $department->name = $request->name;
         $department->save();
+        $users_id = $request->users_m;
+        $department->users()->attach($users_id);
+
         Alert::toast('El departamento ha sido actualizado correctamente','success');
 
 

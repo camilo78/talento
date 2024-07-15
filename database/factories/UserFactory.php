@@ -27,7 +27,6 @@ class UserFactory extends Factory
         return [
             'name' => fake()->name(),
             'gender'=> fake()->boolean(),
-            'last_name' => fake()->lastname(),
             'email' => fake()->unique()->safeEmail(),
             'dni' => fake()->numerify('##############'),
             'functional' => 'Enfermera Auxiliar',

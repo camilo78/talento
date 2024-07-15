@@ -22,15 +22,6 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label for="last_name">{{ __('Last Name') }}</label>
-                            <input type="text" class="form-control @error('last_name') is-invalid @enderror"
-                                name="last_name" id="last_name" placeholder="Ingrese los apellidos del usuario"
-                                autocomplete="off" value="{{ old('last_name') }}">
-                            @error('last_name')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <div class="form-group">
                             <label for="email">{{ __('Email') }}</label>
                             <input type="email" class="form-control @error('email') is-invalid @enderror" name="email"
                                 id="email" placeholder="Ingrese el correo electrónico" autocomplete="off"

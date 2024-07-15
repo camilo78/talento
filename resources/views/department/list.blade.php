@@ -28,10 +28,12 @@
                     <td class="pt-1 pb-1 align-middle">{{ $department->name }}</td>
                     <td class="pt-1 pb-1 align-middle">
 
-                        {{$department->user()->pluck('name')->first().' '.  $department->user()->pluck('last_name')->first()}}
+                        {{$department->user()->pluck('name')->first()}}
 
                     </td>
-                    <td class="pt-1 pb-1 align-middle">{{ 'hola' }}</td>
+                    <td class="pt-1 pb-1 align-middle">{{ App\Models\User::whereHas('departments', function ($query) use ($department) {
+                        $query->where('department_id', $department->id);
+                    })->count(),}}</td>
                     <td class="pt-1 pb-1 align-middle">
                         <div class="d-flex justify-content-center">
                             <a href="{{ route('department.edit', $department->id) }}" class="btn btn-sm btn-primary mr-2"><i

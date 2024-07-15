@@ -49,7 +49,6 @@ class UserController extends Controller
 
         $user = User::create([
             'name' => $request->name,
-            'last_name' => $request->last_name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'dni' => $request->dni,
@@ -105,7 +104,6 @@ class UserController extends Controller
             $user->password = Hash::make($request->password);
         }
         $user->name = $request->name;
-        $user->last_name = $request->last_name;
         $user->email = $request->email;
         $user->dni = $request->dni;
         $user->functional = $request->functional;

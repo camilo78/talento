@@ -29,7 +29,7 @@
             @foreach ($users as $user)
                 <tr>
                     <td class="text-center pt-1 pb-1 align-middle small" scope="row">{{ $loop->iteration }}</td>
-                    <td class="pt-1 pb-1 align-middle small ancho"><a href="{{ route('user.show', $user->id) }}">{{ $user->fullname }} </a></td>
+                    <td class="pt-1 pb-1 align-middle small ancho"><a href="{{ route('user.show', $user->id) }}">{{ $user->name }} </a></td>
                     <td class="pt-1 pb-1 align-middle small">
                         @if($user->gender == 1)
                             Hombre

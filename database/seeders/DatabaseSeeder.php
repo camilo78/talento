@@ -16,9 +16,8 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $user = User::create([
-            'name' => 'Camilo Gabriel',
+            'name' => 'Camilo Gabriel Alvarado Ramírez',
             'gender'=> '1',
-            'last_name' => 'Alvarado Ramírez',
             'email' => 'camilo.alvarado0501@gmail.com',
             'dni' => '0501197809263',
             'functional' => 'Subdirector de Gestión de Recursos',
@@ -28,13 +27,9 @@ class DatabaseSeeder extends Seeder
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
         ]);
 
-        //$user->department_id = '1';
+
         $user->save();
 
-        Department::create([
-            'name' => 'Sin Unidad o departamento',
-            'user_id' => 1,
-        ]);
         Department::create([
             'name' => 'Subdirección de Gestión de Recursos',
         ]);
@@ -62,9 +57,6 @@ class DatabaseSeeder extends Seeder
         Department::create([
             'name' => 'Sala de Hospitalización de Cirugía Mujeres',
         ]);
-
-
-
 
     }
 }
