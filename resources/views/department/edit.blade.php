@@ -54,7 +54,7 @@
                             <select class="form-control selectpicker" id="miSelect"
                                 title="Ingresa los empleados de esta sala o servicio" multiple data-live-search="true"
                                 name="users_m[]" value="{{ old('users_m') }}">
-                                @foreach ($users_m as $user)
+                                @foreach ($users as $user)
                                     <option value="{{ $user->id }}">
                                         {{ $user->name }}
                                     </option>

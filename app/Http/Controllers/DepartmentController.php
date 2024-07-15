@@ -66,7 +66,6 @@ class DepartmentController extends Controller
             'title' => __('Editar Departamento'),
             'users' => User::orderBy('name', 'desc')->get(),
             'department' => $department,
-            'users_m' => User::whereDoesntHave('departments')->get(),
         ]);
     }
 
@@ -75,7 +74,6 @@ class DepartmentController extends Controller
      */
     public function update(DepartmentRequest $request, Department $department)
     {
-         //dd($request->users_m);
         $department->user_id = $request->user_id;
         $department->name = $request->name;
         $department->save();
