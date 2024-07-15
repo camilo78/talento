@@ -19,13 +19,13 @@
             <div class="card shadow mb-4">
                 <div class="card-profile-image mt-4">
                     <figure class="rounded-circle avatar avatar font-weight-bold"
-                        style="font-size: 50px; height: 180px; width: 180px;" data-initial="{{ $user->name[0].' '. $user->last_name[0] }}"></figure>
+                        style="font-size: 50px; height: 180px; width: 180px;" data-initial="{{ $user->name[0] }}"></figure>
                 </div>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="text-center">
-                                <h5 class="font-weight-bold">{{ $user->fullName }}</h5>
+                                <h5 class="font-weight-bold">{{ $user->name }}</h5>
                                 @if($user->department)
                                 <b>Jefe de {{ $user->department->name }}</b>
                                 @endif
@@ -52,7 +52,7 @@
         <div class="col-lg-8 order-lg-1">
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">{{ $user->fullname }}</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">{{ $user->name }}</h6>
                 </div>
                 <div class="card-body">
                     <h6 class="text-primary mb-4"><i class="fa-solid fa-2x fa-circle-info mr-2"></i> {{ __('User information') }}</h6>
@@ -63,29 +63,29 @@
                                 <p>{{ $user->name }}</p>
                             </div>
                             <div class="col-lg-4">
-                                <b>{{ __('Last Name') }}</b>
-                                <p>{{ $user->last_name }}</p>
+                                <b>Sexo</b>
+                                <p>{{ $user->gender == 1  ?  'Hombre' : 'Mujer'}}</p>
                             </div>
                             <div class="col-lg-4">
                                 <b>{{ __('Email') }}</b>
                                 <p>{{ $user->email }}</p>
                             </div>
-                        </div>
-                        <div class="row">
                             <div class="col-lg-4">
                                 <b>{{ __('DNI') }}</b>
                                 <p>{{ $user->dni }}</p>
                             </div>
+                            @if($user->functional)
                             <div class="col-lg-4">
                                 <b>{{ __('Functional Charge') }}</b>
                                 <p>{{ $user->functional }}</p>
                             </div>
+                            @endif
+                            @if($user->nominal)
                             <div class="col-lg-4">
                                 <b>{{ __('Nominal Charge') }}</b>
                                 <p>{{ $user->nominal }}</p>
                             </div>
-                        </div>
-                        <div class="row">
+                            @endif
                             <div class="col-lg-4">
                                 <b>{{ __('Type of Contract') }}</b>
                                 <p>{{ $user->type }}</p>

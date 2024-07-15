@@ -22,40 +22,6 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-
-                        {{--                     <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="user_id">{{ __('Responsible') }}</label>
-                            <select class="form-control selectpicker" data-live-search="true" name="user_id"
-                                value="{{ old('user_id') }}">
-                                @foreach ($users_r as $user)
-                                    <option value="{{ $user->id }}">
-                                        {{ $user->fullname }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            @error('user_id')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="users_m">{{ __('Personal de la Sala') }}</label>
-                            <select class="form-control selectpicker" id="miSelect" title="Ingresa los empleados de esta sala o servicio" multiple data-live-search="true" name="users_m"
-                                value="{{ old('users_m') }}">
-                                @foreach ($users_m as $user)
-                                    <option value="{{ $user->id }}">
-                                        {{ $user->fullname }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            @error('users_m')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                    </div> --}}
-
                         <div class="d-flex flex-row-reverse">
                             <button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i>
                                 {{ __('Save') }}</button>

@@ -40,8 +40,7 @@
                                         @if (is_null($department->user)) {{ old('user_id') ? 'selected' : '' }}>
                                     @else
                                     {{ old('user_id', $user->id) == $department->user->id ? 'selected' : '' }}> @endif
-                                        {{ $user->fullname }}
-                                    </option>
+                                        {{ $user->name }} </option>
                                 @endforeach
                             </select>
                             @error('name')
@@ -57,7 +56,7 @@
                                 name="users_m[]" value="{{ old('users_m') }}">
                                 @foreach ($users_m as $user)
                                     <option value="{{ $user->id }}">
-                                        {{ $user->fullname }}
+                                        {{ $user->name }}
                                     </option>
                                 @endforeach
                             </select>
@@ -65,9 +64,10 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
+                        <div class="col-md-12 rounded" style="background-color: lightgoldenrodyellow" id="resultado"></div>
                     </div>
                     <div class="col-md-6 mt-4">
-                        <div class="d-flex flex-row-reverse">
+                        <div class="d-flex flex-row-reverse flex-column">
                             <button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i>
                                 {{ __('Save') }}</button>
                             <a href="{{ route('department.index') }}" class="btn btn-secondary mr-2"><i
@@ -76,8 +76,6 @@
                     </div>
                 </div>
             </form>
-            <div class="col-md-12" id="resultado"></div>
-
         </div>
     </div>
     <div class="mt-2 card">
@@ -103,29 +101,25 @@
                                 <tr>
                                     <td class="align-middle small" scope="row">{{ $loop->iteration }}</td>
                                     <td class="align-middle small"><a
-                                            href="{{ route('user.show', $user->id) }}">{{ $user->fullname }} </a></td>
-                                            <td class="pt-1 pb-1 align-middle small">
-                                                @if($user->gender == 1)
-                                                    Hombre
-                                                @else
-                                                    Mujer
-                                                @endif
-                                            </td>
+                                            href="{{ route('user.show', $user->id) }}">{{ $user->name }} </a></td>
+                                    <td class="pt-1 pb-1 align-middle small">
+                                        @if ($user->gender == 1)
+                                            Hombre
+                                        @else
+                                            Mujer
+                                        @endif
+                                    </td>
                                     <td class="align-middle small"><a
                                             href="mailto:{{ $user->email }}">{{ $user->email }}</a></td>
                                     <td class="align-middle small">{{ $user->dni }}</td>
                                     <td class="align-middle small">{{ $user->functional }}</td>
                                     <td class="align-middle small">{{ $user->nominal }}</td>
                                     <td class="align-middle small">{{ $user->type }}</td>
-
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
-
-
                 </div>
-
             </div>
         </div>
         <!-- End of Main Content -->
@@ -183,7 +177,6 @@
             .btn-light {
                 height: 40px !important;
                 padding: 4px 8px 4px 6px !important;
-
             }
         </style>
     @endpush
@@ -210,6 +203,10 @@
                 },
                 responsive: true,
                 stateSave: true,
+                "bPaginate": false,
+                scrollY:        400,
+                deferRender:    true,
+                scroller:       true,
                 language: {
                     "sProcessing": "Procesando...",
                     "sLengthMenu": "Mostrar _MENU_ registros",
@@ -273,7 +270,7 @@
                 const opcionesSeleccionadas = Array.from(selectElement.selectedOptions).map(option => option
                     .textContent);
                 resultadoDiv.innerHTML =
-                    `<b>Seleccionaste al siguiente personal para agregar a la sala:</b> <br> ${opcionesSeleccionadas.join('<br> ')}`;
+                    `<p class="pt-2 font-weight-bold mb-1">Seleccionaste al siguiente personal para agregar a la sala:</p> <p class="pb-2">${opcionesSeleccionadas.join('<br> ')}</p>`;
             });
         </script>
     @endpush

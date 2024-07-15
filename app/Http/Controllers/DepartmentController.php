@@ -19,7 +19,7 @@ class DepartmentController extends Controller
     {
         return view('department.list', [
             'title' => 'Departments',
-            'departments' => Department::all()
+            'departments' => Department::orderBy('name', 'desc')->get()
         ]);
     }
 
@@ -31,8 +31,6 @@ class DepartmentController extends Controller
         return view('department.create', [
             'title' => __('Nuevo Departamento'),
             'create'=> '1',
-            //'users_r' => User::orderBy('name', 'asc')->whereNull('boss')->get(),
-            //'users_m' => User::orderBy('name', 'asc')->whereNull('department_id')->get(),
         ]);
     }
 
@@ -46,7 +44,7 @@ class DepartmentController extends Controller
         $department->name = $request->input('name');
         $department->save();
 
-        Alert::toast('Ahora debes asignarle un jefe y agregar los miembros','info');
+        Alert::toast('Ahora debes agregar los miembros y asignar un jefe para esta Unidad O departamento ','info');
         return to_intended_route('department.index');
 
     }
@@ -85,19 +83,6 @@ class DepartmentController extends Controller
         $department->users()->attach($users_id);
 
         Alert::toast('El departamento ha sido actualizado correctamente','success');
-
-
-        //dd($department->id);
-        // $user = User::find($request->input('user_id'));
-        //dd($request->input('user_id'));
-        // $user->department_id = $department->id;
-
-        //$department->name = $request->name;
-        // $department->name = $request->name;
-
-        // $department->save();
-        // $user->save();
-
         return redirect()->route('department.edit', $department->id);
     }
 

@@ -50,21 +50,27 @@
                         </div>
                         <div class="form-group">
                             <label for="department_id">{{ __('Departamento o Unidad') }}</label>
-                            <select class="form-control @error('department_id') is-invalid @enderror"
+                            <select class="form-control @error('department_id') is-invalid @enderror" multiple data-live-search="true"
                                 title="Departamento o Unidad" name="department_id" value="{{ old('department_id') }}">
                                 @foreach (\App\Models\Department::orderBy('name')->get() as $department)
-                                    <option value="{{ $department->id }}"
-                                        {{ old('department_id', $user->departments->pluck('id')->first()) == $department->id ? 'selected' : ' ' }}>
-                                        {{ $department->name }}
-                                    </option>
+                                @if($user->departments->first() == Null)
+                                <option value="{{ $department->id }}"
+                                    {{ old('department_id') == $department->id ? 'selected' : ' ' }}>
+                                    {{ $department->name }}
+                                </option>
+                                @else
+                                <option value="{{ $department->id }}"
+                                    {{ old('department_id', $user->departments->first()->id ) == $department->id ? 'selected' : ' ' }}>
+                                    {{ $department->name }}
+                                </option>
+                                @endif
+
                                 @endforeach
                             </select>
                             @error('department_id')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-                    </div>
-                    <div class="col-md-6">
                         <div class="form-group">
                             <label for="gender">Género</label><br>
                             <div class="form-check">
@@ -89,6 +95,9 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
+                    </div>
+                    <div class="col-md-6">
+
                         <div class="form-group">
                             <label for="functional">{{ __('Functional Charge') }}</label>
                             <input type="text" class="form-control @error('functional') is-invalid @enderror"
@@ -134,7 +143,7 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-                        <div class="d-flex flex-row-reverse">
+                        <div class="d-flex flex-row-reverse mt-5">
                             <button type="submit" class="btn btn-primary ml-2"><i class="fa-solid fa-floppy-disk"></i>
                                 {{ __('Save') }}</button>
                             <a href="{{ route('user.index') }}" class="btn btn-secondary"><i
@@ -194,14 +203,5 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
     <script>
         $('select').selectpicker();
-        const selectElement = document.getElementById('miSelect');
-        const resultadoDiv = document.getElementById('resultado');
-
-        selectElement.addEventListener('change', () => {
-            const opcionesSeleccionadas = Array.from(selectElement.selectedOptions).map(option => option
-                .textContent);
-            resultadoDiv.innerHTML =
-                `<b>Seleccionaste como personal de la sala a:</b> <br> ${opcionesSeleccionadas.join('<br> ')}`;
-        });
     </script>
 @endpush

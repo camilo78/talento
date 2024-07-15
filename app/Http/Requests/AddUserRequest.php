@@ -25,8 +25,6 @@ class AddUserRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'department_id'=> 'required',
-            'last_name' => 'required',
             'gender'=> 'required',
             'email' => 'required|email',
             'dni' => 'required|min:13|numeric',
@@ -50,7 +48,6 @@ class AddUserRequest extends FormRequest
             'gender'=>'género',
             'email' => 'correo electrónico',
             'dni' => 'DNI',
-            'department_id'=> 'departamento o unidad',
             'functional' => 'cargo funcional',
             'nominal' => 'cargo nominal',
             'type' => 'tipo de contratación',

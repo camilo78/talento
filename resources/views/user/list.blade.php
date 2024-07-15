@@ -57,12 +57,12 @@
                     </td>
                     <td class="pt-1 pb-1 align-middle">
                         <div class="d-flex justify-content-center">
-                            <a href="{{ route('user.edit', $user->id) }}" class="btn btn-sm btn-outline-primary mr-2"><i
+                            <a href="{{ route('user.edit', $user->id) }}" class="btn btn-sm btn-primary mr-2"><i
                                     class="fa-solid fa-pen-to-square"></i></a>
                             <form action="{{ route('user.destroy', $user->id) }}" method="post">
                                 @csrf
                                 @method('delete')
-                                <button type="submit" class="btn btn-sm btn-outline-danger"
+                                <button type="submit" class="btn btn-sm btn-danger"
                                     onclick="return confirm('¿Quiere eliminar este registro?')"><i
                                         class="fa-solid fa-trash"></i></button>
                             </form>

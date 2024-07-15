@@ -22,7 +22,7 @@ class UserController extends Controller
     {
         return view('user.list', [
             'title' => 'Usuarios',
-            'users' => User::all()
+            'users' => User::orderBy('name', 'desc')->get()
         ]);
     }
 
@@ -46,7 +46,6 @@ class UserController extends Controller
      */
     public function store(AddUserRequest $request)
     {
-
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -98,8 +97,6 @@ class UserController extends Controller
      */
     public function update(EditUserRequest $request, User $user)
     {
-
-
         if ($request->filled('password')) {
             $user->password = Hash::make($request->password);
         }
@@ -110,7 +107,7 @@ class UserController extends Controller
         $user->nominal = $request->nominal;
         $user->type = $request->type;
         $user->gender = $request->gender;
-        $user->departments()->attach($request->department_id);
+        $user->departments()->sync($request->department_id);
 
         if ($user->save()) {
             Alert::toast('El usuario ha sido actualizado correctamente','success');
