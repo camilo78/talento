@@ -45,6 +45,24 @@
                                 <span class="description">Permisos en el Año</span>
                             </div>
                         </div>
+                        <div class="col-lg-12">
+                            <table class="table table-bordered table-responsive">
+                                <thead class="thead-inverse">
+                                    <tr>
+                                        <th>Departamento</th>
+                                        <th>Responsable</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($user->departments as $department )
+                                        <tr>
+                                            <td class="small">{{ $department->name }}</td>
+                                            <td class="small">{{ $department->user->namee }}</td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -89,24 +107,6 @@
                             <div class="col-lg-4">
                                 <b>{{ __('Type of Contract') }}</b>
                                 <p>{{ $user->type }}</p>
-                            </div>
-                            <div class="col-lg-4">
-                                <table class="table table-bordered table-responsive">
-                                    <thead class="thead-inverse">
-                                        <tr>
-                                            <th>Departamento</th>
-                                            <th>Responsable</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($user->departments as $department )
-                                            <tr>
-                                                <td>{{ $department->name }}</td>
-                                                <td></td>
-                                            </tr>
-                                            @endforeach
-                                        </tbody>
-                                </table>
                             </div>
                         </div>
                         <div class="row">
