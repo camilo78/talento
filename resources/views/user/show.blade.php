@@ -18,8 +18,7 @@
         <div class="col-lg-4 order-lg-2">
             <div class="card shadow mb-4">
                 <div class="card-profile-image mt-4">
-                    <figure class="rounded-circle avatar avatar font-weight-bold"
-                        style="font-size: 50px; height: 180px; width: 180px;" data-initial="{{ $user->name[0] }}"></figure>
+                    <img class="rounded-circle" src="{{Gravatar::get(Auth::user()->email, ['size'=>200])}}" alt="{{Auth::user()->name}}">
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -57,7 +56,7 @@
                                         @foreach ($user->departments as $department )
                                         <tr>
                                             <td class="small">{{ $department->name }}</td>
-                                            <td class="small">{{ $department->user->namee }}</td>
+                                            <td class="small">{{ $department->user->name ??  '' }}</td>
                                         </tr>
                                         @endforeach
                                     </tbody>

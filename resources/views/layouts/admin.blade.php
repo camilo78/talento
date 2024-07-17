@@ -284,8 +284,7 @@
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span
                                     class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->name }}</span>
-                                <figure class="img-profile rounded-circle avatar font-weight-bold"
-                                    data-initial="{{ Auth::user()->name[0] }}"></figure>
+                                    <img  class="img-profile rounded-circle avatar" src="{{Gravatar::get(Auth::user()->email)}}" alt="{{ Auth::user()->name }}">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
