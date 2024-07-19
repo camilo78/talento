@@ -19,11 +19,11 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(User $user)
     {
 
         $title = 'Eliminar Usuario';
-        $text = "¿Seguro quieres eliminarlo?";
+        $text = "¿Seguro quieres eliminar este usuario?, esta acción no puede recuperarse.";
         confirmDelete($title, $text);
 
         return view('user.list', [
@@ -135,10 +135,16 @@ class UserController extends Controller
             Alert::toast('No puedes borrarte a ti mismo', 'info');
             return redirect()->route('user.index');
         }else{
-            $user->delete();
-            Alert::toast('El usuario ha sido eliminado correctamente', 'success');
-        }
+            if (is_null($user->department)) {
+                $user->delete();
+                Alert::toast('El usuario ha sido eliminado correctamente', 'success');
+            }else{
+                Alert::toast( $user->gender == 1 ? "No se puede eliminar a $user->name ya que es jefe de " : "No se puede eliminar a $user->name ya que es jefa de "  . $user->department->name .", primero debes quitarla de su cargo." , 'warning');
 
+            }
+
+        }
+        return to_intended_route('user.index');
     }
     // app/Http/Controllers/UserController.php
     public function detachDepartment(User $user, Department $department)

@@ -17,6 +17,9 @@ class DepartmentController extends Controller
      */
     public function index()
     {
+        $title = 'Eliminar Departamento';
+        $text = "¿Seguro quieres eliminar este Departamento?, esta acción no puede recuperarse.";
+        confirmDelete($title, $text);
         return view('department.list', [
             'title' => 'Departments',
             'departments' => Department::orderBy('name', 'desc')->get()
@@ -62,6 +65,9 @@ class DepartmentController extends Controller
      */
     public function edit(Department $department)
     {
+        $title = 'Desvincular Usuario';
+        $text = "¿Seguro quieres desvincular este usuario?";
+        confirmDelete($title, $text);
         return view('department.edit', [
             'title' => __('Editar Departamento'),
             'users' => User::orderBy('name', 'desc')->get(),
@@ -91,9 +97,9 @@ class DepartmentController extends Controller
      */
     public function destroy(Department $department)
     {
-        $department->delete();
-        Alert::toast('El departamento ha sido eliminado correctamente', 'success');
-
+        if ($department->delete()) {
+            Alert::toast('El departamento ha sido eliminado correctamente', 'success');
+        }
         return to_intended_route('department.index');
     }
 }

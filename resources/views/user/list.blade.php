@@ -29,7 +29,7 @@
             @foreach ($users as $user)
                 <tr>
                     <td class="text-center pt-1 pb-1 align-middle small" scope="row">{{ $loop->iteration }}</td>
-                    <td class="pt-1 pb-1 align-middle small ancho"><a href="{{ route('user.show', $user->id) }}">{{ $user->name }} </a></td>
+                    <td class="pt-1 pb-1 align-middle small"><a href="{{ route('user.show', $user->id) }}">{{ $user->name }} </a></td>
                     <td class="pt-1 pb-1 align-middle small">
                         @if($user->gender == 1)
                             Hombre
@@ -57,14 +57,8 @@
                     </td>
                     <td class="pt-1 pb-1 align-middle">
                         <div class="d-flex justify-content-center">
-                            <a href="{{ route('user.edit', $user->id) }}" class="btn btn-sm btn-primary mr-2"><i
-                                    class="fa-solid fa-pen-to-square"></i></a>
-                            <form action="{{ route('user.destroy', $user->id) }}" method="post">
-                                @csrf
-                                @method('delete')
-                                <button type="button" class="btn btn-sm btn-danger" data-confirm-delete="true"><i
-                                        class="fa-solid fa-trash"></i></button>
-                            </form>
+                            <a href="{{ route('user.edit', $user->id) }}" class="btn btn-sm btn-primary mr-2"><i class="fa-solid fa-pen-to-square"></i></a>
+                            <a href="{{ route('user.destroy', $user->id) }}" class="btn btn-sm btn-danger" data-confirm-delete="true"><i class="fa-solid fa-trash"></i></a>
                         </div>
                     </td>
                 </tr>
@@ -88,6 +82,7 @@
     <script src="https://cdn.datatables.net/responsive/3.0.0/js/responsive.bootstrap4.js"></script>
     <script>
         new DataTable('#users', {
+            lengthMenu: [25, 50, 75, 100],
             dom: "<'row'<'col-sm-12  col-md-4'B><'col-sm-12 col-md-4 text-center'l><'col-sm-12 col-md-4 text-right'f>>" +
                     "<'row'<'col-sm-12'tr>>" +
                     "<'row small'<'col-sm-12 col-md-6'i><'col-sm-12 col-md-6'p>>",

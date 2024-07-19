@@ -119,11 +119,8 @@
                                     <td class="align-middle small">{{ $user->nominal }}</td>
                                     <td class="align-middle small">{{ $user->type }}</td>
                                     <td>
-                                        <form action="{{ route('usuarios.desvincular', ['user' => $user->id, 'department' => $department->id]) }}" method="POST">
-                                        @csrf
-                                        @method('POST')
-                                        <button type="submit" class="btn btn-sm btn-warning small" > Desvincular</button>
-                                    </form>
+                                    <a href="{{route('usuarios.desvincular', ['user' => $user->id, 'department' => $department->id]) }}" class="btn btn-sm btn-warning small" data-confirm-delete="true">Desvincular</a>
+
                                     </td>
                                 </tr>
                             @endforeach
