@@ -62,8 +62,7 @@
                             <form action="{{ route('user.destroy', $user->id) }}" method="post">
                                 @csrf
                                 @method('delete')
-                                <button type="submit" class="btn btn-sm btn-danger"
-                                    onclick="return confirm('¿Quiere eliminar este registro?')"><i
+                                <button type="button" class="btn btn-sm btn-danger" data-confirm-delete="true"><i
                                         class="fa-solid fa-trash"></i></button>
                             </form>
                         </div>

@@ -34,6 +34,7 @@ Route::get('/blank', function () {
 
 Route::middleware('auth')->group(function() {
     Route::resource('user', UserController::class);
+    Route::post('/usuarios/{user}/desvincular/{department}', 'UserController@detachDepartment')->name('usuarios.desvincular');
     Route::resource('department', DepartmentController::class);
     Route::resource('permission', PermissionController::class);
 });

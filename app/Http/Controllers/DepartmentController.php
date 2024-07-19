@@ -65,6 +65,7 @@ class DepartmentController extends Controller
         return view('department.edit', [
             'title' => __('Editar Departamento'),
             'users' => User::orderBy('name', 'desc')->get(),
+            'users_m' => User::has('departments', '<', 2)->get(),
             'department' => $department,
         ]);
     }
@@ -74,6 +75,7 @@ class DepartmentController extends Controller
      */
     public function update(DepartmentRequest $request, Department $department)
     {
+
         $department->user_id = $request->user_id;
         $department->name = $request->name;
         $department->save();
@@ -87,8 +89,11 @@ class DepartmentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Department $department)
     {
-        //
+        $department->delete();
+        Alert::toast('El departamento ha sido eliminado correctamente', 'success');
+
+        return to_intended_route('department.index');
     }
 }

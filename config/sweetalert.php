@@ -129,7 +129,7 @@ return [
     */
 
     'animation' => [
-        'enable' => env('SWEET_ALERT_ANIMATION_ENABLE', false),
+        'enable' => env('SWEET_ALERT_ANIMATION_ENABLE', true),
     ],
 
     'animatecss' => env('SWEET_ALERT_ANIMATECSS', 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css'),
@@ -173,7 +173,7 @@ return [
 
     'button_text' => [
         'confirm' => env('SWEET_ALERT_CONFIRM_BUTTON_TEXT', 'OK'),
-        'cancel' => env('SWEET_ALERT_CANCEL_BUTTON_TEXT', 'Cancel'),
+        'cancel' => env('SWEET_ALERT_CANCEL_BUTTON_TEXT', 'Cancelar'),
     ],
 
     /*
@@ -254,10 +254,10 @@ return [
     |
     */
 
-    'confirm_delete_confirm_button_text' => env('SWEET_ALERT_CONFIRM_DELETE_CONFIRM_BUTTON_TEXT', 'Yes, delete it!'),
+    'confirm_delete_confirm_button_text' => env('SWEET_ALERT_CONFIRM_DELETE_CONFIRM_BUTTON_TEXT', '¡Sí, elimínelo!'),
     'confirm_delete_confirm_button_color' => env('SWEET_ALERT_CONFIRM_DELETE_CONFIRM_BUTTON_COLOR'),
     'confirm_delete_cancel_button_color' => env('SWEET_ALERT_CONFIRM_DELETE_CANCEL_BUTTON_COLOR', '#d33'),
-    'confirm_delete_cancel_button_text' => env('SWEET_ALERT_CONFIRM_DELETE_CANCEL_BUTTON_TEXT', 'Cancel'),
+    'confirm_delete_cancel_button_text' => env('SWEET_ALERT_CONFIRM_DELETE_CANCEL_BUTTON_TEXT', 'Cancelar'),
     'confirm_delete_show_cancel_button' => env('SWEET_ALERT_CONFIRM_DELETE_SHOW_CANCEL_BUTTON', true),
     'confirm_delete_show_close_button' => env('SWEET_ALERT_CONFIRM_DELETE_SHOW_CLOSE_BUTTON', false),
     'confirm_delete_icon' => env('SWEET_ALERT_CONFIRM_DELETE_ICON', 'warning'),

@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use RealRashid\SweetAlert\Facades\Alert;
+use App\Models\Department;
 
 
 class UserController extends Controller
@@ -20,6 +21,11 @@ class UserController extends Controller
      */
     public function index()
     {
+
+        $title = 'Eliminar Usuario';
+        $text = "¿Seguro quieres eliminarlo?";
+        confirmDelete($title, $text);
+
         return view('user.list', [
             'title' => 'Usuarios',
             'users' => User::orderBy('name', 'desc')->get()
@@ -130,9 +136,18 @@ class UserController extends Controller
             return redirect()->route('user.index');
         }else{
             $user->delete();
-            Alert::toast('El usuario ha sido creado correctamente', 'success');
-
+            Alert::toast('El usuario ha sido eliminado correctamente', 'success');
         }
-        return to_intended_route('user.index');
+
+    }
+    // app/Http/Controllers/UserController.php
+    public function detachDepartment(User $user, Department $department)
+    {
+        // Desvincula al usuario del departamento
+        $department->users()->detach($user->id);
+
+        // Redirige o muestra un mensaje de éxito
+        Alert::toast('El usuario ha sido desvinculado correctamente del departamento', 'success');
+        return redirect()->route('department.edit', $department->id);
     }
 }

@@ -33,7 +33,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="user_id">{{ __('Responsible') }} {{ is_null($department->user) }}</label>
+                            <label for="user_id">{{ __('Responsible') }}</label>
                             <select class="form-control" name="user_id" data-live-search="true">
                                 @foreach ($department->users as $user)
                                     <option value="{{ $user->id }}"
@@ -54,7 +54,7 @@
                             <select class="form-control selectpicker" id="miSelect"
                                 title="Ingresa los empleados de esta sala o servicio" multiple data-live-search="true"
                                 name="users_m[]" value="{{ old('users_m') }}">
-                                @foreach ($users as $user)
+                                @foreach ($users_m as $user)
                                     <option value="{{ $user->id }}">
                                         {{ $user->name }}
                                     </option>
@@ -94,14 +94,17 @@
                                 <th class="text-center align-middle">{{ __('Functional') }}</th>
                                 <th class="text-center align-middle">{{ __('Nominal') }}</th>
                                 <th class="text-center align-middle">Tipo de Contratación</th>
+                                <th class="text-center align-middle">
+                                    Acciones
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($department->users as $user)
                                 <tr>
                                     <td class="align-middle small" scope="row">{{ $loop->iteration }}</td>
-                                    <td class="align-middle small"><a
-                                            href="{{ route('user.show', $user->id) }}">{{ $user->name }} </a></td>
+                                    <td class="align-middle small position-relative"><a
+                                            href="{{ route('user.show', $user->id) }}">{{ $user->name }} <span class="{{$user->departments()->wherePivot('department_id', $department->id)->count() >  1 ? 'text-danger overlay' : 'd-none'; }}">Usuario agregado dos veces</span></a></td>
                                     <td class="pt-1 pb-1 align-middle small">
                                         @if ($user->gender == 1)
                                             Hombre
@@ -115,6 +118,13 @@
                                     <td class="align-middle small">{{ $user->functional }}</td>
                                     <td class="align-middle small">{{ $user->nominal }}</td>
                                     <td class="align-middle small">{{ $user->type }}</td>
+                                    <td>
+                                        <form action="{{ route('usuarios.desvincular', ['user' => $user->id, 'department' => $department->id]) }}" method="POST">
+                                        @csrf
+                                        @method('POST')
+                                        <button type="submit" class="btn btn-sm btn-warning small" > Desvincular</button>
+                                    </form>
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -165,6 +175,17 @@
             .pagination {
                 /* Alinear items desde el final */
                 justify-content: flex-end !important;
+            }
+            .overlay {
+                position: absolute;
+                top: 0;
+                left: 0;
+                background-color: rgba(255, 255, 255, 0.4); /* Fondo semi-transparente */
+                padding: 4px; /* Espacio alrededor del texto */
+                font-size: 20px;
+            }
+            .position-relative {
+                position: relative;
             }
         </style>
         <link rel="stylesheet"
