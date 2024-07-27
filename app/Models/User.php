@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Models\Department;
+use App\Models\License;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
@@ -69,6 +70,10 @@ class User extends Authenticatable
     public function department(): HasOne
     {
         return $this->hasOne(Department::class);
+    }
+    public function license(): HasOne
+    {
+        return $this->hasOne(License::class);
     }
 
 }

@@ -33,7 +33,6 @@ class DepartmentController extends Controller
     {
         return view('department.create', [
             'title' => __('Nuevo Departamento'),
-            'create'=> '1',
         ]);
     }
 

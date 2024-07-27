@@ -11,12 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('permissions', function (Blueprint $table) {
+        Schema::create('licenses', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->foreign("user_id")->references("id")->on("users");
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->string('reason');
             $table->unsignedBigInteger('department_id');
-            $table->foreign("department_id")->references("id")->on("departments");
+            $table->foreign('department_id')->references('id')->on('departments');
+            $table->date('beginning')->format('d/m/Y');
+            $table->date('end')->format('d/m/Y');
+            $table->string('days');
+            $table->string('boss');
             $table->timestamps();
         });
     }
@@ -26,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('permissions');
+        Schema::dropIfExists('licenses');
     }
 };

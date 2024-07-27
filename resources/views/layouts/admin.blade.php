@@ -82,10 +82,10 @@
                     <span>{{ __('Department') }}</span>
                 </a>
             </li>
-            <li class="nav-item {{ Nav::isRoute('user.permission') }} {{ Nav::isRoute('user.permission') }} {{ Nav::isRoute('user.permission') }}">
-                <a class="nav-link" href="{{ route('permission.index') }}">
+            <li class="nav-item {{ Nav::isRoute('license.index') }} {{ Nav::isRoute('license.create') }} {{ Nav::isRoute('license.edit') }}">
+                <a class="nav-link" href="{{ route('license.index') }}">
                     <i class="fa-solid fa-door-open"></i>
-                    <span>{{ __('Permissions') }}</span>
+                    <span>Permisos</span>
                 </a>
             </li>
             <!-- Divider -->

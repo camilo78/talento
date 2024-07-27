@@ -43,18 +43,7 @@
                                         {{ $user->name }} </option>
                                 @endforeach
                             </select>
-                            @error('user_id')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="reason">Motivo del permiso</label>
-                            <select class="form-control" name="reason" >
-                                    <option value="Matrimonio" data-toggle="tooltip" data-placement="top" title="Artículo 144.- El servidor público puede solicitar permiso para contraer matrimonio, siempre y cuando lo haga con anterioridad a la celebración del acto."">Matrimonio</option>
-                            </select>
-                            @error('reason')
+                            @error('name')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>

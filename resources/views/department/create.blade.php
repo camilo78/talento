@@ -10,7 +10,6 @@
         <div class="card-body">
             <form action="{{ route('department.store') }}" method="post">
                 @csrf
-                <input type="hidden" value="{{ $create }}">
                 <div class="row justify-content-center">
                     <div class="col-md-6">
                         <div class="form-group">
