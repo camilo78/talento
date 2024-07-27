@@ -25,7 +25,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="user_id">{{ __('Responsible') }}</label>
-                            <select class="form-control" name="user_id" value="{{ old('user_id') }}">
+                            <select class="form-control selectpicker" name="user_id" value="{{ old('user_id') }}">
                                 @foreach (\App\User::orderBy('name')->get() as $user)
                                     <option value="{{ $user->id }}">
                                         {{ $user->fullname }}
@@ -35,6 +35,14 @@
                             @error('name')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
+                        </div>
+                    </div>
+                         <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="user_id">{{ __('Responsible') }}</label>
+                   
+                            </select>
+                          
                         </div>
                     </div>
                     <div class="col-md-12">
