@@ -39,6 +39,14 @@
                             @enderror
                         </div>
                         <div class="form-group">
+                            <label for="rtn">{{ __('RTN') }}</label>
+                            <input type="text" class="form-control @error('rtn') is-invalid @enderror" name="rtn"
+                                id="rtn" placeholder="Ingrese su RTN" autocomplete="off" value="{{ old('rtn') }}">
+                            @error('rtn')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="form-group">
                             <label for="department_id">{{ __('Departamento o Unidad') }}</label>
                             <select class="form-control @error('department_id') is-invalid @enderror" data-live-search="true"
                                 title="Departamento o Unidad" name="department_id" value="{{ old('department_id') }}">
@@ -53,6 +61,8 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
+                    </div>
+                    <div class="col-md-6">
                         <div class="form-group">
                             <label for="gender">Género</label><br>
                             <div class="form-check">
@@ -74,8 +84,6 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-                    </div>
-                    <div class="col-md-6">
                         <div class="form-group">
                             <label for="functional">{{ __('Functional Charge') }}</label>
                             <input type="text" class="form-control @error('functional') is-invalid @enderror"
@@ -175,8 +183,21 @@
     </style>
 @endpush
 @push('js')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.9/jquery.inputmask.min.js" integrity="sha512-F5Ul1uuyFlGnIT1dk2c4kB4DBdi5wnBJjVhL7gQlGh46Xn0VhvD8kgxLtjdZ5YN83gybk/aASUAlpdoWUjRR3g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
     <script>
         $('select').selectpicker();
+
+
+            $('#dni').inputmask('9999-9999-99999', {
+                // La máscara aparecerá en el input, pero no será enviada en la petición
+                removeMaskOnSubmit: true
+            });
+            $('#rtn').inputmask('9999-9999-99999-9', {
+                // La máscara aparecerá en el input, pero no será enviada en la petición
+                removeMaskOnSubmit: true
+            });
+
     </script>
 @endpush

@@ -3,7 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DepartmentController;
-use App\Http\Controllers\licenseController;
+use App\Http\Controllers\LicenseController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -35,9 +36,9 @@ Route::get('/blank', function () {
 Route::middleware('auth')->group(function() {
     Route::resource('user', UserController::class);
     Route::delete('/usuarios/{user}/desvincular/{department}', 'UserController@detachDepartment')->name('usuarios.desvincular');
+    Route::get('/search-users', [UserController::class, 'searchUsers'])->name('search.users');
     Route::resource('department', DepartmentController::class);
     Route::resource('license', LicenseController::class);
-    Route::get('/get-departments', 'LicenseController@getDepartments');
-    Route::get('/get-user', 'LicenseController@getUser');
-    Route::get('/get-boss', 'LicenseController@getBoss');
+    Route::get('/license/user/{id}/department', [LicenseController::class, 'getUserDepartment'])->name('license.user.department');
+    Route::get('/get-proof/{id}', 'LicenseController@getProof');
 });

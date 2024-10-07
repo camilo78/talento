@@ -18,7 +18,7 @@
         <div class="col-lg-4 order-lg-2">
             <div class="card shadow mb-4">
                 <div class="card-profile-image mt-4">
-                    <img class="rounded-circle" src="{{Gravatar::get(Auth::user()->email, ['size'=>200])}}" alt="{{Auth::user()->name}}">
+                    <img class="rounded-circle" src="{{Gravatar::get($user->email, ['size'=>200])}}" alt="{{Auth::user()->name}}">
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -45,7 +45,7 @@
                             </div>
                         </div>
                         <div class="col-lg-12">
-                            <table class="table table-bordered table-responsive">
+                            <table class="table table-bordered">
                                 <thead class="thead-inverse">
                                     <tr>
                                         <th>Departamento</th>
@@ -85,11 +85,15 @@
                             </div>
                             <div class="col-lg-4">
                                 <b>{{ __('Email') }}</b>
-                                <p>{{ $user->email }}</p>
+                                <p><a href="mailto:{{ $user->email }}">{{ $user->email }}</a></p>
                             </div>
                             <div class="col-lg-4">
                                 <b>{{ __('DNI') }}</b>
                                 <p>{{ $user->dni }}</p>
+                            </div>
+                            <div class="col-lg-4">
+                                <b>{{ __('RTN') }}</b>
+                                <p>{{ $user->rtn }}</p>
                             </div>
                             @if($user->functional)
                             <div class="col-lg-4">
@@ -109,9 +113,12 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-lg-12 d-flex justify-content-end mb-1">
+                            <div class="col-lg-12 d-flex flex-row-reverse mb-1">
+                                <a href="{{ route('user.edit', $user->id) }}" class="btn btn-primary ml-2"><i
+                                    class="fa-solid fa-pen-to-square"></i> Editar</a>
                                 <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn btn-secondary"><i
                                     class="fa-solid fa-arrow-left"></i> {{ __('Back') }}</a>
+
                             </div>
                         </div>
                     </div>

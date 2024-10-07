@@ -19,11 +19,13 @@ class CreateUsersTable extends Migration
             $table->boolean('gender');
             $table->string('email')->unique();
             $table->string('dni')->unique();
+            $table->string('rtn')->unique()->nullable();
             $table->string('functional')->nullable();
             $table->string('nominal')->nullable();
             $table->enum('type', ['Permanente', 'Contrato','Interinato']);
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->foreignId('profession_id')->nullable()->constrained('professions')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

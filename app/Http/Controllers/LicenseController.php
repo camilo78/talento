@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\License;
 use Illuminate\Http\Request;
-use App\Http\Requests\StorelicenseRequest;
-use App\Http\Requests\UpdatelicenseRequest;
-use App\Models\User;
-use App\Models\Department;
+use App\Http\Requests\AddUserRequest;
+use App\Http\Requests\UpdateUserRequest;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use RealRashid\SweetAlert\Facades\Alert;
+use App\Models\User;
+use App\Models\Reason;
 
 class LicenseController extends Controller
 {
@@ -17,12 +19,13 @@ class LicenseController extends Controller
      */
     public function index()
     {
-        $title = 'Eliminar Permiso';
-        $text = "¿Seguro quieres eliminar este Permiso?, esta acción no puede recuperarse.";
+        $title = 'Eliminar Licencia';
+        $text = "¿Seguro quieres eliminar esa lincencia?, esta acción no puede recuperarse.";
         confirmDelete($title, $text);
+
         return view('license.list', [
-            'title' => 'Permisos',
-            'licenses' => License::orderBy('user_id', 'desc')->get()
+            'title' => 'Licencias o Permisos',
+            'licenses' => License::get()
         ]);
     }
 
@@ -32,24 +35,27 @@ class LicenseController extends Controller
     public function create()
     {
         return view('license.create', [
-            'title' => 'Nuevo Permiso',
-            'departments' => [],
-            'users' => User::has('departments')->orderBy('name', 'desc')->get(),
+            'title' => __('Nueva Licencia'),
+            'users' => User::whereHas('departments')->get(),
+            'reasons_r' => Reason::where('type' , 'Remunerada')->get(),
+            'reasons_n' => Reason::where('type' , 'No Remunerada')->get(),
         ]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StorelicenseRequest $request)
+    public function store(Request $request)
     {
-        //
+        $license = User::create($request->validated());
+        Alert::toast('La licencia ha sido creada correctamente', 'success');
+        return redirect()->route('license.index');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(license $license)
+    public function show(string $id)
     {
         //
     }
@@ -57,7 +63,7 @@ class LicenseController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(license $license)
+    public function edit(string $id)
     {
         //
     }
@@ -65,7 +71,7 @@ class LicenseController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatelicenseRequest $request, license $license)
+    public function update(Request $request, string $id)
     {
         //
     }
@@ -73,35 +79,50 @@ class LicenseController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(license $license)
+    public function destroy(string $id)
     {
         //
     }
-
-
-    public function getDepartments(Request $request)
+    public function getUserDepartment($id)
     {
-        $userId = $request->input('user_id');
-        $user = User::find($userId);
+        // Encuentra el usuario por su ID
+        $user = User::findOrFail($id);
 
-        if ($user) {
-            $departments = $user->departments;
-            return response()->json(['departments' => $departments]);
+        // Cargar el departamento del usuario si existe
+        $department = $user->departments()->get()
+        ->where('user_id', '!=', $user->id) // Aquí se asegura que no sea jefe
+        ->first(); // Obtener solo el primer departamento que cumpla con la condición
+        if (!$department) {
+            $department = $user->departments()->first();
         }
-        return response()->json(['departments' => []]);
-    }
+        $jefe = User::findOrFail($department->user_id);
 
-    public function getUser(Request $request)
+        // Cargar el departamento del jefe si existe
+        $department_j = $jefe->departments()->get()
+        ->where('user_id', '!=', $jefe->id) // Aquí se asegura que no sea jefe
+        ->first(); // Obtener solo el primer departamento que cumpla con la condición
+        if (!$department_j) {
+            $department_j = $jefe->departments()->first();
+        }
+        $jefe_j = User::findOrFail($department_j->user_id);
+
+        // Retornar el departamento y el jefe
+        return response()->json([
+            'department' => $department,
+            'jefe' => $jefe,
+            'department_j' => $department_j,
+            'jefe_j' => $jefe_j,
+        ]);
+
+    }
+    public function getProof($id)
     {
-        $departmentId = $request->input('department_id');
-        $department = Department::find($departmentId);
+        $reason =  Reason::find($id);
 
-        if ($department) {
-            $user = $department->user;
-            return response()->json(['user_name' => $user->name]);
+        if ($reason) {
+            return response()->json($reason);
         }
 
-        return response()->json(['user_name' => 'Selecione un solicitante de permiso']);
+        return response()->json(['error' => 'Reason not found'], 404);
     }
-
 }

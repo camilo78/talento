@@ -33,6 +33,25 @@
     <!-- Favicon -->
     <link href="{{ asset('img/favicon.png') }}" rel="icon" type="image/png">
     @stack('css')
+    <style>
+        #search-results {
+            background-color: white;
+            max-height: 200px;
+            overflow-y: auto;
+            position: absolute;
+            z-index: 1000;
+        }
+
+        #search-results p {
+            padding: 10px;
+            margin: 0;
+            cursor: pointer;
+        }
+        a:hover{
+            text-decoration: none;
+            color: red
+        }
+    </style>
 </head>
 
 <body id="page-top">
@@ -70,19 +89,22 @@
             </div>
 
             <!-- Nav Item -->
-            <li class="nav-item {{ Nav::isRoute('user.index') }} {{ Nav::isRoute('user.create') }} {{ Nav::isRoute('user.edit') }}">
+            <li
+                class="nav-item {{ Nav::isRoute('user.index') }} {{ Nav::isRoute('user.create') }} {{ Nav::isRoute('user.edit') }}">
                 <a class="nav-link" href="{{ route('user.index') }}">
                     <i class="fa-solid fa-users"></i>
                     <span>{{ __('Users') }}</span>
                 </a>
             </li>
-            <li class="nav-item {{ Nav::isRoute('department.index') }} {{ Nav::isRoute('department.create') }} {{ Nav::isRoute('department.edit') }}">
+            <li
+                class="nav-item {{ Nav::isRoute('department.index') }} {{ Nav::isRoute('department.create') }} {{ Nav::isRoute('department.edit') }}">
                 <a class="nav-link" href="{{ route('department.index') }}">
                     <i class="fa-solid fa-hospital"></i>
                     <span>{{ __('Department') }}</span>
                 </a>
             </li>
-            <li class="nav-item {{ Nav::isRoute('license.index') }} {{ Nav::isRoute('license.create') }} {{ Nav::isRoute('license.edit') }}">
+            <li
+                class="nav-item {{ Nav::isRoute('license.index') }} {{ Nav::isRoute('license.create') }} {{ Nav::isRoute('license.edit') }}">
                 <a class="nav-link" href="{{ route('license.index') }}">
                     <i class="fa-solid fa-door-open"></i>
                     <span>Permisos</span>
@@ -115,19 +137,19 @@
                     </button>
 
                     <!-- Topbar Search -->
-                    <form
-                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                    <div class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                         <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small"
+                            <input type="text" class="form-control bg-light border-0 small" id="user-search"
                                 placeholder="{{ __('Search for...') }}" aria-label="Search"
                                 aria-describedby="basic-addon2">
                             <div class="input-group-append">
-                                <button class="btn btn-primary" type="button">
+                                <button class="btn btn-primary" id="resetSearch" type="button">
                                     <i class="fas fa-search fa-sm"></i>
                                 </button>
                             </div>
                         </div>
-                    </form>
+                        <div class="shadow border rounded-sm " id="search-results"></div>
+                    </div>
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
@@ -284,7 +306,8 @@
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span
                                     class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->name }}</span>
-                                    <img  class="img-profile rounded-circle avatar" src="{{Gravatar::get(Auth::user()->email)}}" alt="{{ Auth::user()->name }}">
+                                <img class="img-profile rounded-circle avatar"
+                                    src="{{ Gravatar::get(Auth::user()->email) }}" alt="{{ Auth::user()->name }}">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -369,7 +392,6 @@
         </div>
     </div>
     <style>
-
         table.table-bordered {
             border: 1px solid #4e73df;
             margin-top: 20px;
@@ -389,7 +411,44 @@
     <script src="{{ asset('vendor/bootstrap/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('vendor/jquery-easing/jquery.easing.min.js') }}"></script>
     <script src="{{ asset('js/sb-admin-2.min.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $('#user-search').on('keyup', function() {
+                let query = $(this).val(); // Get the value of the search input
 
+                if (query.length > 2) { // Perform the search only if more than 2 characters are entered
+                    $.ajax({
+                        url: "{{ route('search.users') }}", // URL for the search route
+                        type: 'GET',
+                        data: {
+                            query: query
+                        },
+                        success: function(data) {
+                            // Clear previous results
+                            $('#search-results').empty();
+
+                            if (data.length > 0) {
+                                // Iterate over the results and append them to the results list
+                                data.forEach(function(user) {
+                                    $('#search-results').append(
+                                        `<p><a class="search" id="search" href="/user/${user.id}">${user.name} <br> DNI: ${user.dni}</a></p>`);
+                                });
+                            } else {
+                                $('#search-results').append('<p>No users found</p>');
+                            }
+                        }
+                    });
+                } else {
+                    $('#search-results').empty(); // Clear the results if the search input is empty
+                }
+            });
+            // Evento para el botón de reseteo
+            $('#resetSearch').on('click', function() {
+                $('#user-search').val(''); // Limpiar el campo de búsqueda
+                $('#search-results').html(''); // Limpiar los resultados
+            });
+        });
+    </script>
     @stack('js')
     @include('sweetalert::alert')
 </body>

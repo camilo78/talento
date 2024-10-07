@@ -24,7 +24,7 @@
                         <div class="form-group">
                             <label for="name">{{ __('Name of Department') }}</label>
                             <input type="text" class="form-control @error('name') is-invalid @enderror" name="name"
-                                id="name" placeholder="{{ __('Name') }}" autocomplete="off"
+                            id="name" placeholder="{{ __('Name') }}" autocomplete="off"
                                 value="{{ $department->name }}">
                             @error('name')
                                 <span class="text-danger">{{ $message }}</span>
@@ -44,17 +44,6 @@
                                 @endforeach
                             </select>
                             @error('user_id')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="reason">Motivo del permiso</label>
-                            <select class="form-control" name="reason" >
-                                    <option value="Matrimonio" data-toggle="tooltip" data-placement="top" title="Artículo 144.- El servidor público puede solicitar permiso para contraer matrimonio, siempre y cuando lo haga con anterioridad a la celebración del acto."">Matrimonio</option>
-                            </select>
-                            @error('reason')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
@@ -206,6 +195,9 @@
             .btn-light {
                 height: 40px !important;
                 padding: 4px 8px 4px 6px !important;
+            }
+            .form-control{
+                height: 40px !important;
             }
         </style>
     @endpush

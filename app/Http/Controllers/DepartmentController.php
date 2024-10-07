@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Department;
-use App\Http\Requests\DepartmentRequest;
+use App\Http\Requests\AddDepartmentRequest;
+use App\Http\Requests\UpdateDepartmetRequest;
 use App\Models\User;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Http\Request;
@@ -39,7 +40,7 @@ class DepartmentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(DepartmentRequest $request)
+    public function store(AddDepartmentRequest $request)
     {
 
         $department = new Department();
@@ -66,28 +67,47 @@ class DepartmentController extends Controller
     {
         $title = 'Desvincular Usuario';
         $text = "¿Seguro quieres desvincular este usuario?";
+        $departmentId = $department->id;
         confirmDelete($title, $text);
         return view('department.edit', [
             'title' => __('Editar Departamento'),
             'users' => User::orderBy('name', 'desc')->get(),
-            'users_m' => User::has('departments', '<', 2)->get(),
-            'department' => $department,
+           // 'users_m' => User::has('departments', '<', 2)->get(),
+           'users_m' =>   User::has('departments', '<', 2) // Asegura que el usuario esté relacionado con como máximo 2 departamentos
+           ->whereDoesntHave('departments', function ($query) use ($departmentId) {
+               $query->where('department_id', $departmentId); // Excluye si el usuario está relacionado con el departamento de ID específico
+           })
+           ->get(),
+           'department' => $department,
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(DepartmentRequest $request, Department $department)
+    public function update(UpdateDepartmetRequest $request, Department $department)
     {
 
-        $department->user_id = $request->user_id;
-        $department->name = $request->name;
-        $department->save();
-        $users_id = $request->users_m;
-        $department->users()->attach($users_id);
+        $user_id = $request->user_id;
+        $jefeAsignado = Department::where('user_id', $user_id)->first();
 
-        Alert::toast('El departamento ha sido actualizado correctamente','success');
+        // Verificar si el usuario ya es jefe en otro departamento
+        if ($jefeAsignado && $jefeAsignado->id != $department->id && $request->user_id) {
+            Alert::toast('El usuario ya es jefe de otro departamento, por lo que debe buscar otro miembro de esta sala o departamento', 'warning');
+        } else {
+            // Si el usuario es jefe del mismo departamento o no es jefe en otro departamento
+            $department->user_id = $user_id;
+            $department->name = $request->name;
+            $department->save();
+
+            // Asociar usuarios al departamento
+            $users_id = $request->users_m;
+            $department->users()->attach($users_id); // Usar sync para evitar duplicados
+
+            Alert::toast('El departamento ha sido actualizado correctamente', 'success');
+        }
+
+
         return redirect()->route('department.edit', $department->id);
     }
 

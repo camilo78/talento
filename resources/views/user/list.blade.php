@@ -18,6 +18,9 @@
                 <th class="text-center pt-1 pb-1 align-middle">Sexo</th>
                 <th class="text-center pt-1 pb-1 align-middle">{{ __('Email') }}</th>
                 <th class="text-center pt-1 pb-1 align-middle">{{ __('DNI') }}</th>
+                <th class="text-center pt-1 pb-1 align-middle">{{ __('RTN') }}</th>
+                <th class="text-center pt-1 pb-1 align-middle">{{ __('Profeción') }}</th>
+                <th class="text-center pt-1 pb-1 align-middle">{{ __('Especialidad') }}</th>
                 <th class="text-center pt-1 pb-1 align-middle">{{ __('Functional') }}</th>
                 <th class="text-center pt-1 pb-1 align-middle">{{ __('Nominal') }}</th>
                 <th class="text-center pt-1 pb-1 align-middle">{{ __('Type') }}</th>
@@ -29,26 +32,34 @@
             @foreach ($users as $user)
                 <tr>
                     <td class="text-center pt-1 pb-1 align-middle small" scope="row">{{ $loop->iteration }}</td>
-                    <td class="pt-1 pb-1 align-middle small"><a href="{{ route('user.show', $user->id) }}">{{ $user->name }} </a></td>
+                    <td class="pt-1 pb-1 align-middle small"><a
+                            href="{{ route('user.show', $user->id) }}">{{ $user->name }} </a></td>
                     <td class="pt-1 pb-1 align-middle small">
-                        @if($user->gender == 1)
+                        @if ($user->gender == 1)
                             Hombre
                         @else
                             Mujer
                         @endif
                     </td>
-                    <td class="pt-1 pb-1 align-middle small"><a href="mailto:{{ $user->email }}">{{ $user->email }}</a></td>
+                    <td class="pt-1 pb-1 align-middle small"><a href="mailto:{{ $user->email }}">{{ $user->email }}</a>
+                    </td>
                     <td class="pt-1 pb-1 align-middle small">{{ $user->dni }}</td>
+                    <td class="pt-1 pb-1 align-middle small">{{ $user->rtn }}</td>
+                    <td class="pt-1 pb-1 align-middle small">{{ $user->profession->profession }}</td>
+                    <td class="pt-1 pb-1 align-middle small">{{ $user->profession->specialty }}</td>
                     <td class="pt-1 pb-1 align-middle small">{{ $user->functional }}</td>
                     <td class="pt-1 pb-1 align-middle small">{{ $user->nominal }}</td>
                     <td class="pt-1 pb-1 align-middle small">{{ $user->type }}</td>
                     <td class="pt-1 pb-1 align-middle small">
-                        @if($user->departments()->count() and  collect($user->departments->where('user_id', $user->id))->pluck('user_id')->first() == $user->id)
-                        {{collect($user->departments->where('user_id', $user->id))->pluck('name')->first()  }}
-                            @if($user->gender == 1)
-                            <span class="badge badge-pill badge-success">Jefe</span>
+                        @if (
+                            $user->departments()->count() and
+                                collect($user->departments->where('user_id', $user->id))->pluck('user_id')->first() ==
+                                    $user->id)
+                            {{ collect($user->departments->where('user_id', $user->id))->pluck('name')->first() }}
+                            @if ($user->gender == 1)
+                                <span class="badge badge-pill badge-success">Jefe</span>
                             @else
-                            <span class="badge badge-pill badge-success">Jefa</span>
+                                <span class="badge badge-pill badge-success">Jefa</span>
                             @endif
                         @else
                             {{ collect($user->departments)->pluck('name')->first() }}
@@ -57,15 +68,17 @@
                     </td>
                     <td class="pt-1 pb-1 align-middle">
                         <div class="d-flex justify-content-center">
-                            <a href="{{ route('user.edit', $user->id) }}" class="btn btn-sm btn-primary mr-2"><i class="fa-solid fa-pen-to-square"></i></a>
-                            <a href="{{ route('user.destroy', $user->id) }}" class="btn btn-sm btn-danger" data-confirm-delete="true"><i class="fa-solid fa-trash"></i></a>
+                            <a href="{{ route('user.edit', $user->id) }}" class="btn btn-sm btn-primary mr-2"><i
+                                    class="fa-solid fa-pen-to-square"></i></a>
+                            <a href="{{ route('user.destroy', $user->id) }}" class="btn btn-sm btn-danger"
+                                data-confirm-delete="true"><i class="fa-solid fa-trash"></i></a>
                         </div>
                     </td>
                 </tr>
             @endforeach
         </tbody>
     </table>
-        <!-- End of Main Content -->
+    <!-- End of Main Content -->
 @endsection
 @push('js')
     <script src="https://cdn.datatables.net/2.0.1/js/dataTables.js"></script>
@@ -84,15 +97,14 @@
         new DataTable('#users', {
             lengthMenu: [25, 50, 75, 100],
             dom: "<'row'<'col-sm-12  col-md-4'B><'col-sm-12 col-md-4 text-center'l><'col-sm-12 col-md-4 text-right'f>>" +
-                    "<'row'<'col-sm-12'tr>>" +
-                    "<'row small'<'col-sm-12 col-md-6'i><'col-sm-12 col-md-6'p>>",
+                "<'row'<'col-sm-12'tr>>" +
+                "<'row small'<'col-sm-12 col-md-6'i><'col-sm-12 col-md-6'p>>",
             drawCallback: function() {
                 $('.form-control').addClass('h-29');
             },
             responsive: true,
             stateSave: true,
-            language:
-                {
+            language: {
                 "sProcessing": "Procesando...",
                 "sLengthMenu": "Mostrar _MENU_ registros",
                 "sZeroRecords": "No se encontraron resultados",
@@ -116,43 +128,45 @@
                     "sSortDescending": ": Activar para ordenar la columna de manera descendente"
                 }
             },
+            "columnDefs": [{
+                "targets": [2,5,6,7], // Índices de las columnas a ocultar (empezando desde 0)
+                "visible": false,   // Ocultar las columnas
+            }],
             buttons: {
-                    buttons: [
-                        {
-                            extend: 'excelHtml5',
-                            text: '<i class="fa-regular fa-file-excel"></i> Excel',
-                            className: 'btn-sm btn btn-success',
-                            title: 'Personal Contratado Hospital General Atlántida',
-                            exportOptions: {
-                                columns: [0, 1, 2, 3, 4, 5, 6, 7]
-                            }
-                        },
-                        {
-                            extend: 'pdfHtml5',
-                            text: '<i class="fa-regular fa-file-pdf"></i> Pdf',
-                            className: 'btn-sm btn btn-danger',
-                            title: 'Personal Contratado Hospital General Atlántida',
-                            orientation: 'landscape',
-                            exportOptions: {
-                                columns: [0, 1, 2, 3, 4, 5, 6, 7]
-                            }
-                        },
-                        {
-                            extend: 'colvis',
-                            className: 'btn-sm btn btn-info',
-                            text:'<i class="fa-regular fa-eye-slash"></i> Visibilidad',
-                        },
-                        {
-                            className: 'btn-sm btn btn-primary',
-                            text:'<i class="fa-solid fa-user-plus"></i> Nuevo',
-                            action: function(e, dt, button, config) {
-                                window.location = '{{ route('user.create') }}';
-                            }
+                buttons: [{
+                        extend: 'excelHtml5',
+                        text: '<i class="fa-regular fa-file-excel"></i> Excel',
+                        className: 'btn-sm btn btn-success',
+                        title: 'Personal Contratado Hospital General Atlántida',
+                        exportOptions: {
+                            columns: [0, 1, 2, 3, 4, 5, 6, 7]
                         }
-                    ]
-                }
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        text: '<i class="fa-regular fa-file-pdf"></i> Pdf',
+                        className: 'btn-sm btn btn-danger',
+                        title: 'Personal Contratado Hospital General Atlántida',
+                        orientation: 'landscape',
+                        exportOptions: {
+                            columns: [0, 1, 2, 3, 4, 5, 6, 7]
+                        }
+                    },
+                    {
+                        extend: 'colvis',
+                        className: 'btn-sm btn btn-info',
+                        text: '<i class="fa-regular fa-eye-slash"></i> Visibilidad',
+                    },
+                    {
+                        className: 'btn-sm btn btn-primary',
+                        text: '<i class="fa-solid fa-user-plus"></i> Nuevo',
+                        action: function(e, dt, button, config) {
+                            window.location = '{{ route('user.create') }}';
+                        }
+                    }
+                ]
+            }
         });
-
     </script>
 @endpush
 @push('css')
@@ -162,14 +176,17 @@
         .h-29 {
             height: 29px;
         }
+
         table {
             width: 100%;
         }
-        .pagination{
+
+        .pagination {
             /* Alinear items desde el final */
             justify-content: flex-end !important;
         }
-        .ancho{
+
+        .ancho {
             width: 100%;
         }
     </style>

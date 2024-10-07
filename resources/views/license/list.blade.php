@@ -13,14 +13,13 @@
     <thead>
         <tr>
             <th class="text-center pt-1 pb-1 align-middle">{{ __('No.') }}</th>
-            <th class="text-center pt-1 pb-1 align-middle">Nombre</th>
+            <th class="text-center pt-1 pb-1 align-middle">Empleado</th>
+            <th class="text-center pt-1 pb-1 align-middle">Departamento</th>
             <th class="text-center pt-1 pb-1 align-middle">Motivo</th>
-            <th class="text-center pt-1 pb-1 align-middle">Departamento o Sala</th>
-            <th class="text-center pt-1 pb-1 align-middle">Fecha de Inicio</th>
+            <th class="text-center pt-1 pb-1 align-middle">Inicio del Permiso</th>
+            <th class="text-center pt-1 pb-1 align-middle">Fin del Permiso</th>
+            <th class="text-center pt-1 pb-1 align-middle">Días</th>
             <th class="text-center pt-1 pb-1 align-middle">Fecha de Finalización</th>
-            <th class="text-center pt-1 pb-1 align-middle">Dias de Permiso</th>
-            <th class="text-center pt-1 pb-1 align-middle">Jefe Inmediato</th>
-            <th class="text-center pt-1 pb-1 align-middle">Jefe Inmediato Superior</th>
             <th class="text-center pt-1 pb-1 align-middle">{{ __('Actions') }}</th>
         </tr>
     </thead>

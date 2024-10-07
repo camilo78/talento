@@ -29,7 +29,9 @@ class User extends Authenticatable
         'email',
         'password',
         'dni',
+        'rtn',
         'functional',
+        'profession_id',
         'nominal',
         'type',
     ];
@@ -75,5 +77,10 @@ class User extends Authenticatable
     {
         return $this->hasOne(License::class);
     }
+    public function profession()
+    {
+        return $this->belongsTo(Profession::class);
+    }
+
 
 }

@@ -5,7 +5,7 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
-use App\Models\Department;
+use App\Models\Profession;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
@@ -28,9 +28,11 @@ class UserFactory extends Factory
             'name' => fake()->name(),
             'gender'=> fake()->boolean(),
             'email' => fake()->unique()->safeEmail(),
-            'dni' => fake()->numerify('##############'),
+            'dni' => fake()->numerify('#############'),
+            'rtn' => fake()->numerify('##############'),
             'functional' => 'Enfermera Auxiliar',
             'nominal' => 'Auxiliar de Mantenimiento',
+            'profession_id' => Profession::inRandomOrder()->first()->id,  // Asigna una profesión aleatoria
             'type' => 'Permanente',
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('milogaqw12'),
