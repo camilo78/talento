@@ -17,20 +17,30 @@ class License extends Model
         'id',
         'user_id',
         'department_id',
-        'reason',
-        'boss',
+        'reason_id',
+        'boss_id',
         'beginning',
         'end',
         'days',
+        'days_h',
     ];
 
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
+      // Relación con el jefe del departamento
+      public function boss()
+      {
+          return $this->belongsTo(User::class, 'boss_id');
+      }
 
     public function department(): BelongsTo
     {
         return $this->belongsTo(Department::class);
+    }
+    public function reason()
+    {
+        return $this->belongsTo(Reason::class);
     }
 }

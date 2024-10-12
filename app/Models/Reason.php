@@ -10,7 +10,14 @@ class Reason extends Model
     use HasFactory;
 
     protected $fillable = [
+        'id',
         'reason',
-        'proof'
+        'proof',
+        'type',
     ];
+
+    public function licenses()
+    {
+        return $this->hasMany(License::class);
+    }
 }

@@ -17,12 +17,14 @@ return new class extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->unsignedBigInteger('reason_id');
             $table->foreign('reason_id')->references('id')->on('reasons');
-            $table->string('boss');
+            $table->unsignedBigInteger('boss_id');
+            $table->foreign('boss_id')->references('id')->on('users');
             $table->unsignedBigInteger('department_id');
             $table->foreign('department_id')->references('id')->on('departments');
             $table->date('beginning')->format('d/m/Y');
             $table->date('end')->format('d/m/Y');
             $table->string('days');
+            $table->string('days_h');
             $table->timestamps();
         });
     }

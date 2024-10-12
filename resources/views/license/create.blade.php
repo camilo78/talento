@@ -14,11 +14,13 @@
                     <div class="col-md-3">
                         <div class="form-group">
                             <label for="user_id">Solicitante del Permiso</label>
-                            <select class="form-control" id="userSelect" name="user_id" data-live-search="true"
-                                title="Selecione un solicitante del permiso">
-                                <option value="0" selected>Seleccione un solicitante del permiso</option>
+                            <select class="form-control @error('user_id') is-invalid @enderror" id="userSelect"
+                                title="Solicitante de Permiso" name="user_id" value="{{ old('user_id') }}">
                                 @foreach ($users as $user)
-                                    <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                    <option value="{{ $user->id }}"
+                                        {{ old('user_id') == $user->id ? 'selected' : ' ' }}>
+                                        {{ $user->name }}
+                                    </option>
                                 @endforeach
                             </select>
                             @error('user_id')
@@ -29,61 +31,82 @@
                     <div class="col-md-3">
                         <div class="form-group">
                             <label for="departments">Departamento o Sala</label>
-                            <input type="text" class="form-control" id="department" placeholder="Departamento o Sala"
-                                readonly>
+                            <input type="text" class="form-control" name="department" id="department" placeholder="Departamento o Sala" readonly value="{{ old('department') }}">
+                            <input type="text" value="{{ old('department_id') }}" name="department_id" id="department_id" hidden>
+                            @error('department_id')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
                             <label for="name">Jefe de Departamento o Sala</label>
-                            <input type="text" class="form-control" id="jefe" readonly>
+                            <input type="text" value="{{ old('boss') }}" class="form-control" name="boss" id="jefe" readonly>
+                            <input type="text" value="{{ old('boss_id') }}" class="form-control" name="boss_id" id="boss_id" hidden>
+                        @error('boss_id')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
                             <label for="beginning">Fecha de Inicio</label>
-                            <input type="date" class="form-control" id="beginning" name="beginning" required>
+                            <input type="date" class="form-control" value="{{ old('beginning') }}" id="beginning" name="beginning">
+                            @error('beginning')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
                         </div>
                     </div>
                     <div class="col-md-3">
                         <!-- Fecha de Fin -->
                         <div class="form-group">
                             <label for="end">Fecha de Fin</label>
-                            <input type="date" class="form-control" id="end" name="end" required>
+                            <input type="date" class="form-control" value="{{ old('end') }}" id="end" name="end">
+                        @error('end')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
                         </div>
                     </div>
                     <div class="col-md-3">
                         <!-- Días de Permiso -->
                         <div class="form-group">
                             <label for="days">Días de Permiso</label>
-                            <input type="number" class="form-control" id="days" name="days" readonly>
+                            <input type="number" class="form-control" value="{{ old('days') }}" id="days" name="days" readonly>
+                            @error('days')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                     </div>
                     <div class="col-md-3">
                         <!-- Días de Permiso -->
                         <div class="form-group">
                             <label for="days">Días hábiles de Permiso</label>
-                            <input type="number" class="form-control" id="days_h" name="days_h" readonly>
+                            <input type="number" class="form-control" value="{{ old('days_h') }}" id="days_h" name="days_h" readonly>
+                            @error('days_h')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
                             <label for="reason">Motivo del Permiso</label>
-                            <select class="form-control" id="reason" name="reason" data-live-search="true"
-                                title="Selecione un solicitante del permiso">
-                                <option value="0" selected>Seleccione un motivo del permiso</option>
+                            <select class="form-control" id="reason" name="reason_id" data-live-search="true"
+                                title="Selecione un motivo del permiso">
                                 <optgroup label="Licencias Remuneradas">
                                     @foreach ($reasons_r as $reason)
-                                        <option value="{{ $reason->id }}">{{ $reason->reason }}</option>
-                                    @endforeach
+                                    <option value="{{ $reason->id }}" {{ old('reason_id') == $reason->id ? 'selected' : '' }}>
+                                        {{ $reason->reason }}
+                                    </option>                                    @endforeach
                                 </optgroup>
                                 <optgroup label="Licencias No Remuneradas">
                                     @foreach ($reasons_n as $reason)
-                                        <option value="{{ $reason->id }}">{{ $reason->reason }}</option>
+                                    <option value="{{ $reason->id }}" {{ old('reason_id') == $reason->id ? 'selected' : '' }}>
+                                        {{ $reason->reason }}
+                                    </option>
                                     @endforeach
                                 </optgroup>
                             </select>
-                            @error('reason')
+                            @error('reason_id')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
@@ -215,10 +238,12 @@
             border: 1px solid #cbd5e0 !important;
 
         }
+
         .cont1 {
             padding-left: 100px;
             padding-right: 100px;
         }
+
         .cont {
             padding-left: 90px;
             padding-right: 90px;
@@ -348,10 +373,12 @@
                     ajaxRequest('/license/user/' + userId + '/department', function(data) {
                         if (data.department) {
                             $('#department, #department2').val(data.department.name);
-                            $('#department_j').html(data.department_j.name);
+                            $('#department_j').html(data.department.name);
+                            $('#department_id').val(data.department.id);
 
                             if (data.jefe) {
                                 $('#jefe').val(data.jefe.name);
+                                $('#boss_id').val(data.jefe.id);
                                 $('#jefe2').html(data.jefe.name);
                                 $('#jefe_j').html(data.jefe_j.name);
                             } else {
@@ -373,23 +400,28 @@
                 var end = new Date(endDate);
                 var diasHabiles = 0;
 
+                // Verifica que la fecha de inicio sea anterior o igual a la fecha de fin
                 if (start > end) {
                     return 'La fecha de inicio debe ser anterior o igual a la fecha de fin';
                 }
 
+                // Recorre los días desde la fecha de inicio hasta la fecha de fin, incluyendo ambos extremos
                 while (start <= end) {
                     var diaSemana = start.getDay();
                     var fechaActual = start.toISOString().split('T')[0]; // Formato 'YYYY-MM-DD'
 
-                    // Si es día hábil y no está en los feriados
-                    if (diaSemana >= 1 && diaSemana <= 5 && !feriados.includes(fechaActual)) {
+                    // Si es un día hábil (lunes a viernes) y no es un feriado
+                    if (diaSemana >= 0 && diaSemana <= 4 && !feriados.includes(fechaActual)) {
                         diasHabiles++;
                     }
+
+                    // Avanza al siguiente día
                     start.setDate(start.getDate() + 1);
                 }
 
-                return diasHabiles + ' días hábiles';
+                return diasHabiles;
             }
+
 
             // Formatear fecha en "24 de junio de 2024"
             function formatearFecha(fecha) {
@@ -452,13 +484,14 @@
 
                         var resultado = calcularDiasHabiles(startDate, endDate, feriados);
                         var diffDays = Math.ceil((end - start) / (1000 * 60 * 60 * 24)) + 1;
-                        var diffDaysText = diffDays + ' días ordinarios, ' + resultado;
-
+                        var diffDaysText = diffDays + ' días ordinarios, ' + resultado + ' días hábiles';
+                        start.setDate(start.getDate() + 1);
+                        end.setDate(end.getDate() + 1);
                         $('#start').val('Del ' + formatearFecha(start) + ' al ' + formatearFecha(
                             end));
                         $('#days').val(diffDays);
                         $('#days2').val(diffDaysText);
-                        console.log(feriados);
+                        $('#days_h').val(resultado);
                     });
                 } else {
                     $('#days').val('');

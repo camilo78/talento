@@ -451,6 +451,7 @@
     </script>
     @stack('js')
     @include('sweetalert::alert')
+    @stack('print')
 </body>
 
 </html>

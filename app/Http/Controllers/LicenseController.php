@@ -4,10 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\License;
 use Illuminate\Http\Request;
-use App\Http\Requests\AddUserRequest;
-use App\Http\Requests\UpdateUserRequest;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\AddLicenseRequest;;
 use RealRashid\SweetAlert\Facades\Alert;
 use App\Models\User;
 use App\Models\Reason;
@@ -45,9 +42,13 @@ class LicenseController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(AddLicenseRequest $request)
     {
-        $license = User::create($request->validated());
+        //dd($request->all());
+        $validatedData = $request->validated();
+
+        // Crear la licencia usando los datos validados
+        License::create($validatedData);
         Alert::toast('La licencia ha sido creada correctamente', 'success');
         return redirect()->route('license.index');
     }
@@ -65,7 +66,13 @@ class LicenseController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        return view('license.edit', [
+            'title' => __('Editar Licencia'),
+            'license' => License::findOrFail($id),
+            'users' => User::whereHas('departments')->get(),
+            'reasons_r' => Reason::where('type' , 'Remunerada')->get(),
+            'reasons_n' => Reason::where('type' , 'No Remunerada')->get(),
+        ]);
     }
 
     /**
