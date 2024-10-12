@@ -96,7 +96,8 @@
                                     @foreach ($reasons_r as $reason)
                                     <option value="{{ $reason->id }}" {{ old('reason_id') == $reason->id ? 'selected' : '' }}>
                                         {{ $reason->reason }}
-                                    </option>                                    @endforeach
+                                    </option>
+                                    @endforeach
                                 </optgroup>
                                 <optgroup label="Licencias No Remuneradas">
                                     @foreach ($reasons_n as $reason)
@@ -132,8 +133,8 @@
         </div>
         <div class="header mb-5">
             <h4>HOSPITAL GENERAL ATLÁNTIDA</h4>
-            <h5 class="pt-0 pb-0">USO EXCLUSIVO DE </h5>
-            <h5 class="pt-0">HOJA DE PERMISO</h5>
+            <h5 class="pt-0 pb-0">HOJA DE PERMISO</h5>
+            <h5 class="pt-0">PERMISO <span class="text-uppercase" id="type"></span></h5>
         </div>
         <div class="cont1 mb-5">
             <div class="form-group d-flex justify-content-between align-items-center">
@@ -156,6 +157,7 @@
                 <label for="motivo">MOTIVO:</label>
                 <div id="myTextarea" class="input-print1" contenteditable="true"></div>
             </div>
+            <div class="small text-justify"><span class="font-weight-bold">Nota:</span> <span id="proof"></span>.</div>
         </div>
         <div class="row">
             <div class="container">
@@ -227,109 +229,97 @@
 @push('css')
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
-    <style>
-        .filter-option {
-            position: relative !important;
-        }
+        <style>
+            .filter-option {
+                position: relative !important;
+            }
 
-        .btn-light {
-            height: 40px !important;
-            padding: 4px 8px 4px 6px !important;
-            border: 1px solid #cbd5e0 !important;
+            .btn-light {
+                height: 40px !important;
+                padding: 4px 8px 4px 6px !important;
+                border: 1px solid #cbd5e0 !important;
 
-        }
+            }
 
-        .cont1 {
-            padding-left: 100px;
-            padding-right: 100px;
-        }
+            /* Estilos generales */
+            #contenido-a-imprimir {
+                background: #FFF;
+                width: 21.59cm;
+                /* Ancho */
+                height: 27.94cm;
+                /* Alto */
+                margin: 0 auto;
+                /* Centrar en la página */
+                padding: 70px 0;
+                border: 1px solid #dedede;
+                /* Borde opcional */
+                box-sizing: border-box;
+                font-family: Arial, sans-serif;
+                font-size: 12pt;
+            }
 
-        .cont {
-            padding-left: 90px;
-            padding-right: 90px;
-        }
+            /* Estilos comunes para el contenedor */
+            .cont1,
+            .cont {
+                padding-left: 80px;
+                padding-right: 80px;
+            }
 
-        #contenido-a-imprimir {
-            background: #FFF;
-            width: 21.59cm;
-            /* Ancho */
-            height: 27.94cm;
-            /* Alto */
-            margin: 0 auto;
-            /* Centrar en la página */
-            padding: 80px 0px;
-            /* Espaciado interno */
-            border: 1px solid #dedede;
-            /* Opcional: borde para visualizar el contenedor */
-            box-sizing: border-box;
-            /* Asegura que el padding se incluya en el tamaño total */
-            font-family: Arial, sans-serif;
-            /* Fuente */
-            font-size: 12pt;
-            /* Tamaño de fuente */
-        }
+            /* Imágenes en el contenedor */
+            .container-img {
+                position: relative;
+            }
 
-        .container-img {
-            position: relative;
-        }
+            .img-left,
+            .img-right {
+                position: absolute;
+                top: 0;
+                width: 150px;
+                /* Ajusta el tamaño de la imagen */
+            }
 
-        .img-left {
-            position: absolute;
-            top: 0;
-            left: 95px;
-            width: 100px;
-            /* Ajusta el tamaño de la imagen */
-        }
+            .img-left {
+                left: 80px;
+            }
 
-        .img-right {
-            position: absolute;
-            top: 0;
-            right: 95px;
-            width: 100px;
-            /* Ajusta el tamaño de la imagen */
-        }
+            .img-right {
+                right: 80px;
+            }
 
-        .input-print {
-            border: none;
-            border-bottom: 1px solid #4a5568;
-            margin-bottom: 7px;
-            color: #4a5568;
-            width: 450px !important;
-            white-space: pre-wrap !important;
-            /* Mantiene los saltos de línea */
-        }
+            /* Estilos comunes para los campos de input */
+            .input-print,
+            .input-print1 {
+                border: none;
+                border-bottom: 1px solid #4a5568;
+                margin-bottom: 7px;
+                color: #4a5568;
+                width: 450px !important;
+                white-space: pre-wrap !important;
+                /* Mantiene los saltos de línea */
+            }
 
-        .input-print1 {
-            border: none;
-            border-bottom: 1px solid #4a5568;
-            margin-bottom: 7px;
-            color: #4a5568;
-            width: 450px !important;
-            white-space: pre-wrap !important;
-            /* Mantiene los saltos de línea */
+            .input-print:focus,
+            .input-print1:focus {
+                outline: none;
+            }
 
-        }
+            /* Encabezado y código */
+            .header {
+                text-align: center;
+                margin-bottom: 20px;
+            }
 
-        .input-print:focus {
-            outline: none;
-        }
+            .codigo {
+                text-align: right;
+                margin-top: 0;
+            }
 
-        .header {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .codigo {
-            text-align: right;
-            margin-top: 0px;
-        }
-
-
-        .form-group label {
-            display: block;
-            font-weight: bold;
-        }
-    </style>
+            /* Estilos para los labels */
+            .form-group label {
+                display: block;
+                font-weight: bold;
+            }
+        </style>
 @endpush
 @push('js')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
@@ -358,6 +348,13 @@
                     ajaxRequest('/get-proof/' + reasonId, function(data) {
                         $('#proof-display').removeClass('d-none').html(data.proof);
                         $('#myTextarea').html(data.reason);
+                        $('#proof').html(data.proof);
+                        $('#type').html(data.type);
+                        if (data.type === 'Remunerado') {
+                            $('#type').removeClass('text-primary').addClass('text-success');
+                        } else {
+                            $('#type').removeClass('text-success text-primary').addClass('text-warning');
+                        }
                     }, function() {
                         $('#proof-display').html('Error al obtener la justificación.');
                     });
@@ -484,7 +481,8 @@
 
                         var resultado = calcularDiasHabiles(startDate, endDate, feriados);
                         var diffDays = Math.ceil((end - start) / (1000 * 60 * 60 * 24)) + 1;
-                        var diffDaysText = diffDays + ' días ordinarios, ' + resultado + ' días hábiles';
+                        var diffDaysText = diffDays + ' días ordinarios, ' + resultado +
+                            ' días hábiles';
                         start.setDate(start.getDate() + 1);
                         end.setDate(end.getDate() + 1);
                         $('#start').val('Del ' + formatearFecha(start) + ' al ' + formatearFecha(
@@ -503,6 +501,7 @@
             usuarioSelect.addEventListener('change', function() {
                 nombreUsuario.value = usuarioSelect.options[usuarioSelect.selectedIndex].text;
             });
+
         });
     </script>
 @endpush

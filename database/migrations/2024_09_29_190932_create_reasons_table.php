@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('reason')->nullable();
             $table->text('proof')->nullable();
-            $table->enum('type', ['Remunerada', 'No Remunerada'])->nullable();
+            $table->enum('type', ['Remunerado', 'No Remunerado'])->nullable();
             $table->timestamps();
         });
     }

@@ -136,18 +136,17 @@
         </div>
     </div>
     <div class="d-flex justify-content-end mt-3 mr-4 mb-2">
-    <button id="exportButton" class="btn btn-warning text-dark"><i
-        class="fa-solid fa-print"></i> Imprimir</button>
-</div>
-    <div class="container mb-3" id="contenido-a-imprimir">
+        <button id="exportButton" class="btn btn-warning text-dark"><i class="fa-solid fa-print"></i> Imprimir</button>
+    </div>
+    <div class="container" id="contenido-a-imprimir">
         <div class="container-img">
             <img src="{{ asset('img/salud.png') }}" alt="Izquierda" class="img-left">
             <img src="{{ asset('img/hga.png') }}" alt="Derecha" class="img-right">
         </div>
         <div class="header mb-5">
             <h4>HOSPITAL GENERAL ATLÁNTIDA</h4>
-            <h5 class="pt-0 pb-0">USO EXCLUSIVO DE </h5>
-            <h5 class="pt-0">HOJA DE PERMISO</h5>
+            <h5 class="pt-0 pb-0">HOJA DE PERMISO</h5>
+            <h5 class="pt-0">PERMISO <span class="text-uppercase {{ $license->reason->type  == 'Remunerado' ? 'text-success' : 'text-warning' }}" id="type">{{ $license->reason->type }}</span></h5>
         </div>
         <div class="cont1 mb-5">
             <div class="form-group d-flex justify-content-between align-items-center">
@@ -174,8 +173,9 @@
             </div>
             <div class="form-group d-flex justify-content-between align-items-center">
                 <label for="motivo">MOTIVO:</label>
-                <div id="myTextarea" class="input-print1" contenteditable="true"> </div>
+                <div id="myTextarea" class="input-print1" contenteditable="true">{{ $license->reason->reason }}</div>
             </div>
+            <div class="small text-justify"><span class="font-weight-bold">Nota:</span> <span id="proof">{{ $license->reason->proof }}</span>.</div>
         </div>
         <div class="row">
             <div class="container">
@@ -199,14 +199,14 @@
                         <p class="mt-0" id="jefe_j"></p>
                     </div>
                 </div>
-                <div class=" col-md-12 d-flex justify-content-center mb-5" style="margin-top: 70px">
+                <div class=" col-md-12 d-flex justify-content-center mb-2" style="margin-top: 70px">
                     <div class="text-center">
                         <p class="mb-0">__________________________</p>
                         <p class="mt-0 mb-0">Firma del Jefe (a) de RRHH </p>
                         <p class="mt-0">P.M. Aroldo Ortíz</p>
                     </div>
                 </div>
-                <div class=" cont col-md-12 codigo">
+                <div class="cont col-md-12 codigo">
                     <p>AXGRDTH-ENF-001</p>
                 </div>
             </div>
@@ -263,7 +263,7 @@
             /* Alto */
             margin: 0 auto;
             /* Centrar en la página */
-            padding: 80px 0;
+            padding: 70px 0;
             border: 1px solid #dedede;
             /* Borde opcional */
             box-sizing: border-box;
@@ -274,13 +274,8 @@
         /* Estilos comunes para el contenedor */
         .cont1,
         .cont {
-            padding-left: 90px;
-            padding-right: 90px;
-        }
-
-        .cont1 {
-            padding-left: 100px;
-            padding-right: 100px;
+            padding-left: 80px;
+            padding-right: 80px;
         }
 
         /* Imágenes en el contenedor */
@@ -292,16 +287,16 @@
         .img-right {
             position: absolute;
             top: 0;
-            width: 100px;
+            width: 150px;
             /* Ajusta el tamaño de la imagen */
         }
 
         .img-left {
-            left: 95px;
+            left: 80px;
         }
 
         .img-right {
-            right: 95px;
+            right: 80px;
         }
 
         /* Estilos comunes para los campos de input */
@@ -341,7 +336,6 @@
 @endpush
 @push('js')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/print-js/1.6.0/print.min.js"></script>
 
     <script>
         $(document).ready(function() {
@@ -368,6 +362,9 @@
                     ajaxRequest('/get-proof/' + reasonId, function(data) {
                         $('#proof-display').removeClass('d-none').html(data.proof);
                         $('#myTextarea').html(data.reason);
+                        $('#proof').html(data.proof);
+                        $('#type').html(data.type);
+
                     }, function() {
                         $('#proof-display').html('Error al obtener la justificación.');
                     });
@@ -516,46 +513,43 @@
             });
 
         });
-
-
     </script>
 @endpush
 @push('print')
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('exportButton').addEventListener('click', function() {
-        var pdfWidth = 215.9; // Ancho de la carta en mm
-        var pdfHeight = 279.4; // Alto de la carta en mm
-        var fileName = 'documento.pdf'; // Nombre del archivo que se puede usar
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('exportButton').addEventListener('click', function() {
+                var pdfWidth = 215.9; // Ancho de la carta en mm
+                var pdfHeight = 279.4; // Alto de la carta en mm
+                var fileName = 'documento.pdf'; // Nombre del archivo que se puede usar
 
-        html2canvas(document.getElementById('contenido-a-imprimir'), {
-            scale: 100 // Aumenta la escala para mejorar la calidad
-        }).then(function(canvas) {
-            var pdf = new jsPDF('p', 'mm', 'letter'); // 'letter' para formato carta
-            var imgData = canvas.toDataURL('image/png');
+                html2canvas(document.getElementById('contenido-a-imprimir'), {
+                    scale: 3 // Aumenta la escala para mejorar la calidad
+                }).then(function(canvas) {
+                    var pdf = new jsPDF('p', 'mm', 'letter'); // 'letter' para formato carta
+                    var imgData = canvas.toDataURL('image/png');
 
-            // Agregar la imagen en coordenadas (0, 0) para que llene toda la página
-            pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+                    // Agregar la imagen en coordenadas (0, 0) para que llene toda la página
+                    pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
 
-            // Generar el PDF como un Blob
-            var blob = pdf.output('blob');
+                    // Generar el PDF como un Blob
+                    var blob = pdf.output('blob');
 
-            // Crear una URL para el Blob
-            var blobUrl = URL.createObjectURL(blob);
+                    // Crear una URL para el Blob
+                    var blobUrl = URL.createObjectURL(blob);
 
-            // Abrir el PDF en una nueva ventana
-            window.open(blobUrl);
+                    // Abrir el PDF en una nueva ventana
+                    window.open(blobUrl);
 
-            // Descargar el archivo con el nombre especificado
-            //pdf.save(fileName); // Esto descargará el archivo con el nombre especificado
+                    // Descargar el archivo con el nombre especificado
+                    //pdf.save(fileName); // Esto descargará el archivo con el nombre especificado
 
-            // Liberar la URL del Blob
-            URL.revokeObjectURL(blobUrl);
+                    // Liberar la URL del Blob
+                    URL.revokeObjectURL(blobUrl);
+                });
+            });
         });
-    });
-});
-
-</script>
+    </script>
 @endpush

@@ -35,7 +35,7 @@
                     <td class="pt-1 pb-1 align-middle">{{ $license->boss->name }}</td>
                     <td class="pt-1 pb-1 align-middle">
                         {{ $license->reason->reason }}
-                        @if ($license->reason->type == 'Remunerada')
+                        @if ($license->reason->type == 'Remunerado')
                             <span class="badge badge-success">{{ $license->reason->type }}</span>
                         @else
                             <span class="badge badge-warning">{{ $license->reason->type }}</span>

@@ -34,8 +34,8 @@ class LicenseController extends Controller
         return view('license.create', [
             'title' => __('Nueva Licencia'),
             'users' => User::whereHas('departments')->get(),
-            'reasons_r' => Reason::where('type' , 'Remunerada')->get(),
-            'reasons_n' => Reason::where('type' , 'No Remunerada')->get(),
+            'reasons_r' => Reason::where('type' , 'Remunerado')->get(),
+            'reasons_n' => Reason::where('type' , 'No Remunerado')->get(),
         ]);
     }
 
