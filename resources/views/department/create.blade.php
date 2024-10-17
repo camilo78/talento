@@ -10,7 +10,7 @@
         <div class="card-body">
             <form action="{{ route('department.store') }}" method="post">
                 @csrf
-                <div class="row justify-content-center">
+                <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="name">{{ __('Name of Department') }}</label>
@@ -21,6 +21,24 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="parent_id">Departamento Superior:</label>
+                            <select class="form-control selectpicker" data-live-search="true" id="parent_id" name="parent_id">
+                                <option value="">-- Ninguno --</option>
+                                @foreach($departments  as $department)
+                                    <option value="{{ $department->id }}" {{ old('parent_id') == $department->id ? 'selected' : '' }}>
+                                        {{ $department->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('parent_id')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="col-md-12">
                         <div class="d-flex flex-row-reverse">
                             <button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i>
                                 {{ __('Save') }}</button>
@@ -30,11 +48,10 @@
                     </div>
                 </div>
 
-        {{--                     <div class="col-md-6" id="resultado">
+                {{--                     <div class="col-md-6" id="resultado">
                     </div> --}}
-
-    </div>
-    </form>
+            </form>
+        </div>
     </div>
 
 

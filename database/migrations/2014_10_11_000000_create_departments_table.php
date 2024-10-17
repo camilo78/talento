@@ -16,6 +16,9 @@ return new class extends Migration
             $table->string('name');
             $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users');
+            // Columna que apunta al departamento superior
+            $table->unsignedBigInteger('parent_id')->nullable(); // Para el departamento superior
+            $table->foreign('parent_id')->references('id')->on('departments'); // Autorreferencia
             $table->timestamps();
         });
     }

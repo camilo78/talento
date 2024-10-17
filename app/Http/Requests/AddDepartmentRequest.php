@@ -22,7 +22,11 @@ class AddDepartmentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required',
+
+            'name' => 'required|string|max:255',
+            'user_id' => 'nullable|exists:users,id',  // Asegura que el usuario exista
+            'parent_id' => 'nullable|exists:departments,id', // parent_id es opcional, pero debe existir en la tabla departments
+
         ];
     }
 }

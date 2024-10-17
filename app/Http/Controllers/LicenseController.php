@@ -70,17 +70,26 @@ class LicenseController extends Controller
             'title' => __('Editar Licencia'),
             'license' => License::findOrFail($id),
             'users' => User::whereHas('departments')->get(),
-            'reasons_r' => Reason::where('type' , 'Remunerada')->get(),
-            'reasons_n' => Reason::where('type' , 'No Remunerada')->get(),
+            'reasons_r' => Reason::where('type' , 'Remunerado')->get(),
+            'reasons_n' => Reason::where('type' , 'No Remunerado')->get(),
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(AddLicenseRequest $request, License $license)
     {
-        //
+        // Validar los datos del formulario
+        $validatedData = $request->validated();
+
+        // Actualizar la licencia existente con los datos validados
+        $license->update($validatedData);
+
+        Alert::toast('La licencia ha sido actualizada correctamente', 'success');
+
+        // Redirigir al índice de licencias
+        return redirect()->route('license.index');
     }
 
     /**

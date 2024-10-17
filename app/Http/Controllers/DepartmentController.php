@@ -7,7 +7,7 @@ use App\Http\Requests\AddDepartmentRequest;
 use App\Http\Requests\UpdateDepartmetRequest;
 use App\Models\User;
 use RealRashid\SweetAlert\Facades\Alert;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 use function PHPUnit\Framework\isNull;
 
@@ -23,7 +23,7 @@ class DepartmentController extends Controller
         confirmDelete($title, $text);
         return view('department.list', [
             'title' => 'Departments',
-            'departments' => Department::orderBy('name', 'desc')->get()
+            'departments' => Department::get()
         ]);
     }
 
@@ -34,6 +34,8 @@ class DepartmentController extends Controller
     {
         return view('department.create', [
             'title' => __('Nuevo Departamento'),
+            'departments' => Department::get(),  // Obtén todos los departamentos
+
         ]);
     }
 
@@ -45,6 +47,7 @@ class DepartmentController extends Controller
 
         $department = new Department();
         $department->name = $request->input('name');
+        $department->parent_id = $request->input('parent_id');
         $department->save();
 
         Alert::toast('Ahora debes agregar los miembros y asignar un jefe para esta Unidad O departamento ','info');
@@ -78,6 +81,7 @@ class DepartmentController extends Controller
                $query->where('department_id', $departmentId); // Excluye si el usuario está relacionado con el departamento de ID específico
            })
            ->get(),
+           'departments' => Department::get(),  // Obtén todos los departamentos
            'department' => $department,
         ]);
     }
@@ -99,7 +103,15 @@ class DepartmentController extends Controller
             $department->user_id = $user_id;
             $department->name = $request->name;
             $department->save();
+            // Verifica cuántos departamentos ya tiene asignado el usuario
+            $userDepartmentsCount = DB::table('user_department')
+                ->where('user_id', $request->user_id)
+                ->count();
 
+            // Si ya tiene dos departamentos, se rechaza la petición
+            if ($userDepartmentsCount >= 2) {
+                return back()->withErrors(['user_id' => 'El usuario no puede estar asignado a más de dos departamentos.']);
+            }
             // Asociar usuarios al departamento
             $users_id = $request->users_m;
             $department->users()->attach($users_id); // Usar sync para evitar duplicados

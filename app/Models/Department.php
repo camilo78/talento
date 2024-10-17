@@ -22,8 +22,9 @@ class Department extends Model
      */
     protected $fillable = [
         'id',
+        'name',
         'user_id',
-        'department_id',
+        'parent_id',
 
     ];
 
@@ -52,4 +53,15 @@ class Department extends Model
         return $this->hasOne(License::class);
     }
 
+    // Relación con el departamento padre
+    public function parent()
+    {
+        return $this->belongsTo(Department::class, 'parent_id');
+    }
+
+    // Relación con los departamentos hijos (subordinados)
+    public function children()
+    {
+        return $this->hasMany(Department::class, 'parent_id');
+    }
 }

@@ -16,6 +16,7 @@
             <th class="text-center pt-1 pb-1 align-middle">{{ __('Name of Deparatament') }}</th>
             <th class="text-center pt-1 pb-1 align-middle">{{ __('Responsible') }}</th>
             <th class="text-center pt-1 pb-1 align-middle">Personal Asignado</th>
+            <th class="text-center pt-1 pb-1 align-middle">Departamento Padre</th>
             <th class="text-center pt-1 pb-1 align-middle">{{ __('Actions') }}</th>
         </tr>
     </thead>
@@ -30,6 +31,7 @@
             <td class="pt-1 pb-1 align-middle">{{ App\Models\User::whereHas('departments', function ($query) use ($department) {
                         $query->where('department_id', $department->id);
                     })->count(),}}</td>
+                    <td class="pt-1 pb-1 align-middle">{{ $department->parent->name ?? 'Sin departamento Padre' }}</td>
             <td class="pt-1 pb-1 align-middle">
                 <div class="d-flex justify-content-center">
                     <a href="{{ route('department.edit', $department->id) }}" class="btn btn-sm btn-primary mr-2"><i class="fa-solid fa-pen-to-square"></i></a>

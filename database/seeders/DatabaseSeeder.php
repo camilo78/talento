@@ -8,7 +8,8 @@ use App\Models\Profession;
 use Illuminate\Database\Seeder;
 use Database\Seeders\ReasonsTableSeeder;
 use Database\Seeders\ProfessionsSeeder;
-use Database\Seeders\UserDepartmentFactory;
+use Database\Seeders\DepartmentSeeder;
+use Database\Seeders\UserDepartmentSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -22,7 +23,7 @@ class DatabaseSeeder extends Seeder
 
         $this->call(ProfessionsSeeder::class);
 
-        $user = User::create([
+         $user = User::create([
             'name' => 'Camilo Gabriel Alvarado Ramírez',
             'gender' => '1',
             'email' => 'camilo.alvarado0501@gmail.com',
@@ -53,52 +54,8 @@ class DatabaseSeeder extends Seeder
         $user->save();
         User::factory(500)->create();
 
-        Department::create([
-            'name' => 'Dirección Ejecutiva',
-            'user_id' => User::inRandomOrder()->first()->id,
-        ]);
-        Department::create([
-            'name' => 'Subdirección de Gestión de Recursos',
-            'user_id' => User::inRandomOrder()->first()->id,
-        ]);
-
-        Department::create([
-            'name' => 'Departamento de Enfermería',
-            'user_id' => User::inRandomOrder()->first()->id,
-        ]);
-        Department::create([
-            'name' => 'Emergencia de Cirugía y Ortopedia',
-            'user_id' => User::inRandomOrder()->first()->id,
-        ]);
-        Department::create([
-            'name' => 'Emergencia de Medicina Interna',
-            'user_id' => User::inRandomOrder()->first()->id,
-        ]);
-        Department::create([
-            'name' => 'Emergencia de Gineco Obtreticia',
-            'user_id' => User::inRandomOrder()->first()->id,
-        ]);
-        Department::create([
-            'name' => 'Emergencia de Pediatría',
-            'user_id' => User::inRandomOrder()->first()->id,
-        ]);
-        Department::create([
-            'name' => 'Sala de Hospitalización de Medicina Interna Hombres',
-            'user_id' => User::inRandomOrder()->first()->id,
-        ]);
-        Department::create([
-            'name' => 'Sala de Hospitalización de Cirugía Hombres',
-            'user_id' => User::inRandomOrder()->first()->id,
-        ]);
-        Department::create([
-            'name' => 'Sala de Hospitalización de Medicina Interna Mujeres',
-            'user_id' => User::inRandomOrder()->first()->id,
-        ]);
-        Department::create([
-            'name' => 'Sala de Hospitalización de Cirugía Mujeres',
-            'user_id' => User::inRandomOrder()->first()->id,
-        ]);
-
+        $this->call(DepartmentSeeder::class);
+       // $this->call(UserDepartmentSeeder::class);
 
         $this->call(ReasonsTableSeeder::class);
 
