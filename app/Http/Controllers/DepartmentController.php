@@ -50,9 +50,8 @@ class DepartmentController extends Controller
         $department->parent_id = $request->input('parent_id');
         $department->save();
 
-        Alert::toast('Ahora debes agregar los miembros y asignar un jefe para esta Unidad O departamento ','info');
+        Alert::toast('Ahora debes agregar los miembros y asignar un jefe para esta Unidad O departamento ', 'info');
         return to_intended_route('department.index');
-
     }
 
     /**
@@ -75,14 +74,14 @@ class DepartmentController extends Controller
         return view('department.edit', [
             'title' => __('Editar Departamento'),
             'users' => User::orderBy('name', 'desc')->get(),
-           // 'users_m' => User::has('departments', '<', 2)->get(),
-           'users_m' =>   User::has('departments', '<', 2) // Asegura que el usuario esté relacionado con como máximo 2 departamentos
-           ->whereDoesntHave('departments', function ($query) use ($departmentId) {
-               $query->where('department_id', $departmentId); // Excluye si el usuario está relacionado con el departamento de ID específico
-           })
-           ->get(),
-           'departments' => Department::get(),  // Obtén todos los departamentos
-           'department' => $department,
+            // 'users_m' => User::has('departments', '<', 2)->get(),
+            'users_m' =>   User::has('departments', '<', 2) // Asegura que el usuario esté relacionado con como máximo 2 departamentos
+                ->whereDoesntHave('departments', function ($query) use ($departmentId) {
+                    $query->where('department_id', $departmentId); // Excluye si el usuario está relacionado con el departamento de ID específico
+                })
+                ->get(),
+            'departments' => Department::get(),  // Obtén todos los departamentos
+            'department' => $department,
         ]);
     }
 

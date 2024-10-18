@@ -61,6 +61,26 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
+                        <div class="form-group">
+                            <label for="profession_id">{{ __('Profesión') }}</label>
+                            <select class="form-control @error('profession_id') is-invalid @enderror" data-live-search="true"
+                                title="Selecciona una profesión" name="profession_id" value="{{ old('profession_id') }}">
+                                @foreach (\App\Models\Profession::orderBy('profession')->get() as $profession)
+                                    <option value="{{ $profession->id }}"
+                                        {{ old('profession_id') == $profession->id ? 'selected' : '' }}>
+                                        {{ $profession->profession }}
+                                        @if ($profession->specialty)
+                                        con Especialidad en {{ $profession->specialty }}
+                                        @elseif ($profession->other_studies)
+                                        , {{ $profession->other_studies }}
+                                        @endif
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('profession_id')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
@@ -84,6 +104,7 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
+
                         <div class="form-group">
                             <label for="functional">{{ __('Functional Charge') }}</label>
                             <input type="text" class="form-control @error('functional') is-invalid @enderror"

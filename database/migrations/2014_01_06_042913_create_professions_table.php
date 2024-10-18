@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('professions', function (Blueprint $table) {
             $table->id();
             $table->string('profession');  // Profesión del usuario
-            $table->string('specialty')->nullable(); // Especialidad (opcional)
+            $table->string('specialty')->nullable();
             $table->string('other_studies')->nullable(); // Otros Estudios (opcional)
             $table->timestamps();
         });

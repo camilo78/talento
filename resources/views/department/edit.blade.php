@@ -33,6 +33,23 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
+                            <label for="parent_id">Departamento Superior:</label>
+                            <select class="form-control selectpicker" data-live-search="true" id="parent_id" name="parent_id">
+                                <option value="">-- Ninguno --</option>
+                                @foreach($departments as $department_1)
+                                    <option value="{{ $department_1->id }}"
+                                        {{ (old('parent_id') ?? $department->parent_id) == $department_1->id ? 'selected' : '' }}>
+                                        {{ $department_1->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('parent_id')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
                             <label for="user_id">{{ __('Responsible') }}</label>
                             <select class="form-control" name="user_id" data-live-search="true">
                                 @foreach ($department->users as $user)
@@ -66,7 +83,7 @@
                         </div>
                         <div class="col-md-12 rounded" style="background-color: lightgoldenrodyellow" id="resultado"></div>
                     </div>
-                    <div class="col-md-6 mt-4">
+                    <div class="col-md-12">
                         <div class="d-flex flex-row-reverse flex-column">
                             <button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i>
                                 {{ __('Save') }}</button>

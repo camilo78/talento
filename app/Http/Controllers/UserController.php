@@ -27,7 +27,7 @@ class UserController extends Controller
 
         return view('user.list', [
             'title' => 'Usuarios',
-            'users' => User::with('departments')->orderBy('name', 'desc')->get()
+            'users' => User::with('departments')->get()
         ]);
     }
 
@@ -103,6 +103,7 @@ public function store(AddUserRequest $request)
         $user->functional = $request->functional;
         $user->nominal = $request->nominal;
         $user->type = $request->type;
+        $user->profession_id = $request->profession_id;
         $user->gender = $request->gender;
         $user->departments()->sync($request->department_id);
 

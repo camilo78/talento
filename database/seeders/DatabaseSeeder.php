@@ -9,7 +9,6 @@ use Illuminate\Database\Seeder;
 use Database\Seeders\ReasonsTableSeeder;
 use Database\Seeders\ProfessionsSeeder;
 use Database\Seeders\DepartmentSeeder;
-use Database\Seeders\UserDepartmentSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -23,7 +22,7 @@ class DatabaseSeeder extends Seeder
 
         $this->call(ProfessionsSeeder::class);
 
-         $user = User::create([
+        $user = User::create([
             'name' => 'Camilo Gabriel Alvarado Ramírez',
             'gender' => '1',
             'email' => 'camilo.alvarado0501@gmail.com',
@@ -64,10 +63,40 @@ class DatabaseSeeder extends Seeder
         $departments = Department::all();
 
         foreach ($users as $user) {
-            // Asigna aleatoriamente departamentos a los usuarios
-            $user->departments()->attach(
-                $departments->random(rand(1, 3))->pluck('id')->toArray()
-            );
+            // Obtener los departamentos actuales del usuario
+            $userDepartments = $user->departments;
+
+            // Si ya pertenece a un departamento
+            if ($userDepartments->isNotEmpty()) {
+                // Obtener el departamento actual
+                $currentDepartment = $userDepartments->first();
+
+                // Obtener el departamento padre del departamento actual
+                $parentDepartment = $currentDepartment->parent_id ? $departments->find($currentDepartment->parent_id) : null;
+
+                // Si el usuario ya pertenece a ambos (el departamento y su padre), no asignar más
+                if ($userDepartments->count() >= 2 || ($parentDepartment && $userDepartments->contains($parentDepartment))) {
+                    continue; // No hacer nada si ya pertenece al máximo de departamentos permitidos
+                }
+
+                // Si solo pertenece a un departamento, asignar el departamento padre (si existe)
+                if ($parentDepartment && !$userDepartments->contains($parentDepartment)) {
+                    $user->departments()->attach($parentDepartment->id);
+                }
+            } else {
+                // Si no pertenece a ningún departamento, asignar uno aleatoriamente
+                $department = $departments->random();
+
+                // Asignar el departamento aleatoriamente
+                $user->departments()->attach($department->id);
+
+                // Si ese departamento tiene un padre, también asignarlo
+                if ($department->parent_id) {
+                    $user->departments()->attach($department->parent_id);
+                }
+            }
         }
+
+
     }
 }

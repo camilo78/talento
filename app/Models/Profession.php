@@ -9,11 +9,12 @@ class Profession extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['profession', 'specialty'];
+    protected $fillable = ['id','profession', 'specialty','other_studies'];
 
     // Relación con el modelo User
     public function users()
     {
         return $this->hasMany(User::class);
     }
+
 }

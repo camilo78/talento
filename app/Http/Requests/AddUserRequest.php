@@ -31,6 +31,7 @@ class AddUserRequest extends FormRequest
             'rtn' => 'required|min:13',
             'functional' => 'nullable',
             'nominal' => 'nullable',
+            'profession_id' => 'required',
             'type' => 'required',
             'password' => 'min:8'
         ];

@@ -10,7 +10,7 @@
 
     <h1 class="h3 text-gray-800">{{ __($title) ?? __('Blank Page') }}</h1>
 
-    <table class="table table table-striped table table-bordered border-primary bg-white shadow mt-1" id="users">
+    <table class="table table-striped table-bordered border-primary bg-white shadow mt-1 w-100" id="users">
         <thead>
             <tr>
                 <th class="text-center pt-1 pb-1 align-middle">{{ __('No.') }}</th>
@@ -32,7 +32,7 @@
             @foreach ($users as $user)
                 <tr>
                     <td class="text-center pt-1 pb-1 align-middle small" scope="row">{{ $loop->iteration }}</td>
-                    <td class="pt-1 pb-1 align-middle small"><a
+                    <td class="pt-1 pb-1 align-middle small" style=" white-space: nowrap"><a
                             href="{{ route('user.show', $user->id) }}">{{ $user->name }} </a></td>
                     <td class="pt-1 pb-1 align-middle small">
                         @if ($user->gender == 1)
@@ -41,7 +41,7 @@
                             Mujer
                         @endif
                     </td>
-                    <td class="pt-1 pb-1 align-middle small"><a href="mailto:{{ $user->email }}">{{ $user->email }}</a>
+                    <td class="pt-1 pb-1 align-middle "><a href="mailto:{{ $user->email }}">{{ $user->email }}</a>
                     </td>
                     <td class="pt-1 pb-1 align-middle small">{{ $user->dni }}</td>
                     <td class="pt-1 pb-1 align-middle small">{{ $user->rtn }}</td>
@@ -98,11 +98,14 @@
             lengthMenu: [25, 50, 75, 100],
             dom: "<'row'<'col-sm-12  col-md-4'B><'col-sm-12 col-md-4 text-center'l><'col-sm-12 col-md-4 text-right'f>>" +
                 "<'row'<'col-sm-12'tr>>" +
-                "<'row small'<'col-sm-12 col-md-6'i><'col-sm-12 col-md-6'p>>",
+                "<'row '<'col-sm-12 col-md-6'i><'col-sm-12 col-md-6'p>>",
             drawCallback: function() {
                 $('.form-control').addClass('h-29');
             },
-            responsive: true,
+            responsive: true,  // Hace que la tabla sea responsive
+        columnDefs: [
+            { responsivePriority: 1, targets: -1 }  // Fija la primera columna como siempre visible
+        ],
             stateSave: true,
             language: {
                 "sProcessing": "Procesando...",
@@ -128,10 +131,6 @@
                     "sSortDescending": ": Activar para ordenar la columna de manera descendente"
                 }
             },
-            "columnDefs": [{
-                "targets": [2,5,6,7], // Índices de las columnas a ocultar (empezando desde 0)
-                "visible": false,   // Ocultar las columnas
-            }],
             buttons: {
                 buttons: [{
                         extend: 'excelHtml5',
@@ -139,7 +138,7 @@
                         className: 'btn-sm btn btn-success',
                         title: 'Personal Contratado Hospital General Atlántida',
                         exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5, 6, 7]
+                            columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
                         }
                     },
                     {
@@ -148,8 +147,9 @@
                         className: 'btn-sm btn btn-danger',
                         title: 'Personal Contratado Hospital General Atlántida',
                         orientation: 'landscape',
+                        pageSize: 'LEGAL',
                         exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5, 6, 7]
+                            columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
                         }
                     },
                     {
