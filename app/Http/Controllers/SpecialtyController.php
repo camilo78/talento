@@ -87,4 +87,16 @@ class SpecialtyController extends Controller
 
         return redirect()->route('specialties.index');
     }
+    public function getSpecialties(Request $request)
+    {
+        // Obtener el ID de la profesión seleccionada
+        $professionId = $request->input('profession_id');
+
+        // Obtener las especialidades relacionadas con la profesión
+        $specialties = Specialty::where('profession_id', $professionId)->get();
+
+        // Retornar las especialidades en formato JSON
+        return response()->json(['specialties' => $specialties]);
+    }
+
 }

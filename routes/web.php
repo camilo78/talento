@@ -42,9 +42,10 @@ Route::middleware('auth')->group(function() {
     Route::get('/search-users', [UserController::class, 'searchUsers'])->name('search.users');
     Route::resource('department', DepartmentController::class);
     Route::resource('license', LicenseController::class);
-    Route::get('/license/user/{id}/department', [LicenseController::class, 'getUserDepartment'])->name('license.user.');
+    Route::get('/license/user/{id}/department', [LicenseController::class, 'getUserDepartment'])->name('license.user');
     Route::get('/get-proof/{id}', 'LicenseController@getProof');
     Route::resource('professions', ProfessionController::class);
     Route::resource('specialties', SpecialtyController::class);
+    Route::get('/get-specialties', [SpecialtyController::class, 'getSpecialties'])->name('getSpecialties');
 
 });

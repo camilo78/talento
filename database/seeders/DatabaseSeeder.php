@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
     {
 
         $this->call(ProfessionsSeeder::class);
+        $this->call(SpecialtiesSeeder::class);
 
         $user = User::create([
             'name' => 'Camilo Gabriel Alvarado Ramírez',
