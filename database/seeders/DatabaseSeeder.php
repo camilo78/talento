@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Department;
 use App\Models\User;
 use App\Models\Profession;
+use App\Models\Specialty;
 use Illuminate\Database\Seeder;
 use Database\Seeders\ReasonsTableSeeder;
 use Database\Seeders\ProfessionsSeeder;
@@ -21,7 +22,6 @@ class DatabaseSeeder extends Seeder
     {
 
         $this->call(ProfessionsSeeder::class);
-        $this->call(SpecialtiesSeeder::class);
 
         $user = User::create([
             'name' => 'Camilo Gabriel Alvarado Ramírez',
@@ -29,7 +29,8 @@ class DatabaseSeeder extends Seeder
             'email' => 'camilo.alvarado0501@gmail.com',
             'dni' => '0501197809263',
             'rtn' => '05011978092632',
-            'profession_id' => Profession::inRandomOrder()->first()->id,  // Asigna una profesión aleatoria
+            'profession_id' => Profession::inRandomOrder()->first()->id,
+            // Asigna una profesión aleatoria
             'functional' => 'Subdirector de Gestión de Recursos',
             'nominal' => '',
             'type' => 'Contrato',
@@ -53,6 +54,7 @@ class DatabaseSeeder extends Seeder
 
         $user->save();
         User::factory(500)->create();
+        $this->call(SpecialtiesSeeder::class);
 
         $this->call(DepartmentSeeder::class);
        // $this->call(UserDepartmentSeeder::class);

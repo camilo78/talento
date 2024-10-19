@@ -274,6 +274,8 @@
                     $('#specialty').empty();
                 }
             });
+
+
             $('#dni').inputmask('9999-9999-99999', {
                 // La máscara aparecerá en el input, pero no será enviada en la petición
                 removeMaskOnSubmit: true

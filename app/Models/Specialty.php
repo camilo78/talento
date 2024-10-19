@@ -20,4 +20,9 @@ class Specialty extends Model
     {
         return $this->belongsTo(Profession::class);
     }
+
+    public function users()
+    {
+        return $this->hasMany(User::class);
+    }
 }

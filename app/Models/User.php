@@ -32,6 +32,7 @@ class User extends Authenticatable
         'rtn',
         'functional',
         'profession_id',
+        'specialty_id',
         'nominal',
         'type',
     ];
@@ -81,6 +82,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Profession::class);
     }
-
+    public function Specialty()
+    {
+        return $this->belongsTo(Specialty::class);
+    }
 
 }

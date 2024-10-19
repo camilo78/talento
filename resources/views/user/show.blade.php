@@ -105,16 +105,10 @@
                                 <b>Profesión</b>
                                 <p>{{ $user->profession->profession }}</p>
                             </div>
-                            @if($user->profession->specialty)
+                            @if($user->specialty)
                             <div class="col-lg-4">
                                 <b>Especialidad</b>
-                                <p>{{ $user->profession->specialty }}</p>
-                            </div>
-                            @endif
-                            @if($user->profession->other_studies)
-                            <div class="col-lg-4">
-                                <b>Otros Estudios</b>
-                                <p>{{ $user->profession->other_studies }}</p>
+                                <p>{{$user->specialty->name}}</p>
                             </div>
                             @endif
                             @if($user->nominal)

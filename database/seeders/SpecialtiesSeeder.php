@@ -3,12 +3,14 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
+use App\Models\User;
+use App\Models\Specialty;
 
 class SpecialtiesSeeder extends Seeder
 {
     public function run()
     {
+        // Definimos las especialidades
         $specialties = [
             ['name' => 'Cardiología', 'profession_id' => 5],
             ['name' => 'Pediatría', 'profession_id' => 5],
@@ -40,6 +42,22 @@ class SpecialtiesSeeder extends Seeder
             ['name' => 'Reumatología', 'profession_id' => 5],
         ];
 
-        DB::table('specialties')->insert($specialties);
+        // Insertamos las especialidades si no existen
+        foreach ($specialties as $specialty) {
+            Specialty::firstOrCreate($specialty);
+        }
+
+        // Obtenemos los usuarios cuya profesión es "médico general" (id 5)
+        $users = User::where('profession_id', 5)->get();
+
+        // Asignamos una especialidad aleatoria a cada usuario
+        foreach ($users as $user) {
+            // Seleccionamos una especialidad aleatoria de la lista
+            $randomSpecialty = Specialty::where('profession_id', 5)->inRandomOrder()->first();
+
+            // Asignamos la especialidad al usuario
+            $user->specialty_id = $randomSpecialty->id;
+            $user->save();
+        }
     }
 }

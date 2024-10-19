@@ -46,7 +46,7 @@
                     <td class="pt-1 pb-1 align-middle small">{{ $user->dni }}</td>
                     <td class="pt-1 pb-1 align-middle small">{{ $user->rtn }}</td>
                     <td class="pt-1 pb-1 align-middle small">{{ $user->profession->profession }}</td>
-                    <td class="pt-1 pb-1 align-middle small">{{ $user->profession->specialty }}</td>
+                    <td class="pt-1 pb-1 align-middle small">{{ $user->specialty->name ?? '' }}</td>
                     <td class="pt-1 pb-1 align-middle small">{{ $user->functional }}</td>
                     <td class="pt-1 pb-1 align-middle small">{{ $user->nominal }}</td>
                     <td class="pt-1 pb-1 align-middle small">{{ $user->type }}</td>
