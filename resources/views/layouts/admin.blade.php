@@ -110,19 +110,39 @@
                     <span>Permisos</span>
                 </a>
             </li>
-            <!-- Divider -->
-            <hr class="sidebar-divider d-none d-md-block">
+
+
+        <hr class="sidebar-divider d-none d-md-block ">
+
+        <div class="sidebar-heading">
+            Ajustes
+        </div>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+                    aria-expanded="true" aria-controls="collapseTwo">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>Generales</span>
+                </a>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Parametros Generales:</h6>
+                        <a class="collapse-item" href="{{ route('professions.index') }}">Profesiones</a>
+                        <a class="collapse-item" href="cards.html">Justificantes</a>
+                        <a class="collapse-item" href="cards.html">Ajustes App</a>
+                    </div>
+                </div>
+            </li>
 
             <!-- Sidebar Toggler (Sidebar) -->
-            <div class="text-center d-none d-md-inline">
+            <div class="text-center d-none d-md-inline mt-2 footer mt-auto">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
             </div>
-
         </ul>
         <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
-        <div id="content-wrapper" class="d-flex flex-column mt">
+        <div id="content-wrapper" class="d-flex flex-column">
 
             <!-- Main Content -->
             <div id="content">

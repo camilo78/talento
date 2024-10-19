@@ -132,4 +132,5 @@ class DepartmentController extends Controller
         }
         return to_intended_route('department.index');
     }
+
 }

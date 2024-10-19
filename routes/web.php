@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\LicenseController;
+use App\Http\Controllers\ProfessionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,6 +40,7 @@ Route::middleware('auth')->group(function() {
     Route::get('/search-users', [UserController::class, 'searchUsers'])->name('search.users');
     Route::resource('department', DepartmentController::class);
     Route::resource('license', LicenseController::class);
-    Route::get('/license/user/{id}/department', [LicenseController::class, 'getUserDepartment'])->name('license.user.department');
+    Route::get('/license/user/{id}/department', [LicenseController::class, 'getUserDepartment'])->name('license.user.');
     Route::get('/get-proof/{id}', 'LicenseController@getProof');
+    Route::resource('professions', ProfessionController::class);
 });

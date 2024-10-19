@@ -14,9 +14,9 @@
         <tr>
             <th class="text-center pt-1 pb-1 align-middle">{{ __('No.') }}</th>
             <th class="text-center pt-1 pb-1 align-middle">{{ __('Name of Deparatament') }}</th>
-            <th class="text-center pt-1 pb-1 align-middle">{{ __('Responsible') }}</th>
-            <th class="text-center pt-1 pb-1 align-middle">Personal Asignado</th>
             <th class="text-center pt-1 pb-1 align-middle">Departamento Padre</th>
+            <th class="text-center pt-1 pb-1 align-middle">{{ __('Responsible') }}</th>
+            <th class="text-center pt-1 pb-1 align-middle">Personal</th>
             <th class="text-center pt-1 pb-1 align-middle">{{ __('Actions') }}</th>
         </tr>
     </thead>
@@ -25,13 +25,9 @@
         <tr>
             <td class="text-center pt-1 pb-1 align-middle" scope="row">{{ $loop->iteration }}</td>
             <td class="pt-1 pb-1 align-middle">{{ $department->name }}</td>
-            <td class="pt-1 pb-1 align-middle">
-                {{$department->user()->pluck('name')->first()}}
-            </td>
-            <td class="pt-1 pb-1 align-middle">{{ App\Models\User::whereHas('departments', function ($query) use ($department) {
-                        $query->where('department_id', $department->id);
-                    })->count(),}}</td>
-                    <td class="pt-1 pb-1 align-middle">{{ $department->parent->name ?? 'Sin departamento Padre' }}</td>
+            <td class="pt-1 pb-1 align-middle">{{ $department->parent->name ?? 'Sin departamento Padre' }}</td>
+            <td class="pt-1 pb-1 align-middle">{{$department->user()->pluck('name')->first()}}</td>
+            <td class="pt-1 pb-1 align-middle text-center">{{ App\Models\User::whereHas('departments', function ($query) use ($department) {$query->where('department_id', $department->id);})->count(),}}</td>
             <td class="pt-1 pb-1 align-middle">
                 <div class="d-flex justify-content-center">
                     <a href="{{ route('department.edit', $department->id) }}" class="btn btn-sm btn-primary mr-2"><i class="fa-solid fa-pen-to-square"></i></a>
@@ -42,8 +38,6 @@
         @endforeach
     </tbody>
 </table>
-
-
 <!-- End of Main Content -->
 @endsection
 @push('js')
@@ -61,8 +55,8 @@
 <script src="https://cdn.datatables.net/responsive/3.0.0/js/responsive.bootstrap4.js"></script>
 <script>
     new DataTable('#department', {
-        lengthMenu: [25, 50, 75, 100],
-        dom: "<'row'<'col-sm-12  col-md-4'B><'col-sm-12 col-md-4 text-center'l><'col-sm-12 col-md-4 text-right'f>>" +
+        lengthMenu: [25, 50, 75, 100]
+        , dom: "<'row'<'col-sm-12  col-md-4'B><'col-sm-12 col-md-4 text-center'l><'col-sm-12 col-md-4 text-right'f>>" +
             "<'row'<'col-sm-12'tr>>" +
             "<'row small'<'col-sm-12 col-md-6'i><'col-sm-12 col-md-6'p>>"
         , drawCallback: function() {
@@ -101,7 +95,7 @@
                     , className: 'btn-sm btn btn-success'
                     , title: 'Personal Contratado Hospital General Atlántida'
                     , exportOptions: {
-                        columns: [0, 1, 2]
+                        columns: [0, 1, 2, 3, 4]
                     }
                 }
                 , {
@@ -109,8 +103,14 @@
                     , text: '<i class="fa-regular fa-file-pdf"></i> Pdf'
                     , className: 'btn-sm btn btn-danger'
                     , title: 'Personal Contratado Hospital General Atlántida'
+                    , customize: function(doc) {
+                        var colCount = doc.content[1].table.body[0].length;
+                        for (i = 0; i < doc.content[1].table.body.length; i++) {
+                            doc.content[1].table.body[i][4].alignment = 'center'; // Columna 4 centrada (índice 3)
+                        }
+                    }
                     , exportOptions: {
-                        columns: [0, 1, 2]
+                        columns: [0, 1, 2, 3, 4]
                     }
                 }
                 , {

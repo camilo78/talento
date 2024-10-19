@@ -9,7 +9,7 @@ class Profession extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['id','profession', 'specialty','other_studies'];
+    protected $fillable = ['id','profession'];
 
     // Relación con el modelo User
     public function users()

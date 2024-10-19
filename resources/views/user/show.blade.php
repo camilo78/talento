@@ -101,6 +101,22 @@
                                 <p>{{ $user->functional }}</p>
                             </div>
                             @endif
+                            <div class="col-lg-4">
+                                <b>Profesión</b>
+                                <p>{{ $user->profession->profession }}</p>
+                            </div>
+                            @if($user->profession->specialty)
+                            <div class="col-lg-4">
+                                <b>Especialidad</b>
+                                <p>{{ $user->profession->specialty }}</p>
+                            </div>
+                            @endif
+                            @if($user->profession->other_studies)
+                            <div class="col-lg-4">
+                                <b>Otros Estudios</b>
+                                <p>{{ $user->profession->other_studies }}</p>
+                            </div>
+                            @endif
                             @if($user->nominal)
                             <div class="col-lg-4">
                                 <b>{{ __('Nominal Charge') }}</b>
