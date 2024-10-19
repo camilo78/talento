@@ -11,11 +11,17 @@
                         <div class="form-group">
                             <label for="profession" class="form-label">Profesión</label>
                             <input type="text" class="form-control" id="profession" name="profession" required>
+                            @error('profession')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
-                        <div class="d-flex flex-row-reverse mt-5">
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-primary">Guardar</button>
-                            </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="d-flex flex-row-reverse mt-4">
+                            <button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i>
+                                Guardar</button>
+                            <a href="{{ redirect()->getUrlGenerator()->previous() }}" class="btn btn-secondary mr-2"><i
+                                    class="fa-solid fa-arrow-left"></i> {{ __('Back') }}</a>
                         </div>
                     </div>
                 </div>

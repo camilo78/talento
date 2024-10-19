@@ -91,7 +91,7 @@
                 buttons: [
                     {
                         className: 'btn-sm btn btn-primary',
-                        text: '<i class="fa-solid fa-user-graduate"></i> Nuevo',
+                        text: '<i class="fa-solid fa-user-graduate"></i> Nueva Profesión',
                         action: function(e, dt, button, config) {
                             window.location = '{{ route('professions.create') }}';
                         }

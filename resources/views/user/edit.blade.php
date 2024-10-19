@@ -175,8 +175,7 @@
                         <div class="d-flex flex-row-reverse mt-5">
                             <button type="submit" class="btn btn-primary ml-2"><i class="fa-solid fa-floppy-disk"></i>
                                 {{ __('Save') }}</button>
-                            <a href="{{ route('user.index') }}" class="btn btn-secondary"><i
-                                    class="fa-solid fa-arrow-left"></i> {{ __('Back') }}</a>
+                            <a href="{{ route('user.index') }}" class="btn btn-secondary"><i class="fa-solid fa-arrow-left"></i> {{ __('Back') }}</a>
                         </div>
                     </div>
                 </div>

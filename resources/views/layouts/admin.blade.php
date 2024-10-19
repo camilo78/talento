@@ -124,10 +124,11 @@
                     <i class="fas fa-fw fa-cog"></i>
                     <span>Generales</span>
                 </a>
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div id="collapseTwo" class="collapse" style="z-index: 999999" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Parametros Generales:</h6>
                         <a class="collapse-item" href="{{ route('professions.index') }}">Profesiones</a>
+                        <a class="collapse-item" href="{{ route('specialties.index') }}">Especialidades</a>
                         <a class="collapse-item" href="cards.html">Justificantes</a>
                         <a class="collapse-item" href="cards.html">Ajustes App</a>
                     </div>

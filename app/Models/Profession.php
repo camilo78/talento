@@ -17,4 +17,10 @@ class Profession extends Model
         return $this->hasMany(User::class);
     }
 
+        // Relación con la tabla de especialidades
+        public function specialties()
+        {
+            return $this->hasMany(Specialty::class);
+        }
+
 }

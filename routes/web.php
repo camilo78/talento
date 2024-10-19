@@ -5,6 +5,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\LicenseController;
 use App\Http\Controllers\ProfessionController;
+use App\Http\Controllers\SpecialtyController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -43,4 +45,6 @@ Route::middleware('auth')->group(function() {
     Route::get('/license/user/{id}/department', [LicenseController::class, 'getUserDepartment'])->name('license.user.');
     Route::get('/get-proof/{id}', 'LicenseController@getProof');
     Route::resource('professions', ProfessionController::class);
+    Route::resource('specialties', SpecialtyController::class);
+
 });
