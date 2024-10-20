@@ -64,14 +64,29 @@ class LicenseController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(License $license)
     {
+
+         $jefe = $user = User::findOrFail($license->boss->id);
+
+         // Cargar el departamento del jefe si existe
+         $department_j = $jefe->departments()->get()
+         ->where('user_id', '!=', $jefe->id) // Aquí se asegura que no sea jefe
+         ->first(); // Obtener solo el primer departamento que cumpla con la condición
+         if (!$department_j) {
+             $department_j = $jefe->departments()->first();
+         }
+         $jefe_j = User::findOrFail($department_j->user_id);
+        // Redirigir al índice de licencias
+
         return view('license.edit', [
             'title' => __('Editar Licencia'),
-            'license' => License::findOrFail($id),
+            'license' => License::findOrFail($license->id),
             'users' => User::whereHas('departments')->get(),
             'reasons_r' => Reason::where('type' , 'Remunerado')->get(),
             'reasons_n' => Reason::where('type' , 'No Remunerado')->get(),
+            'jefe_j' => $jefe_j,
+            'department_j' => $department_j,
         ]);
     }
 
@@ -82,13 +97,11 @@ class LicenseController extends Controller
     {
         // Validar los datos del formulario
         $validatedData = $request->validated();
-
         // Actualizar la licencia existente con los datos validados
         $license->update($validatedData);
 
         Alert::toast('La licencia ha sido actualizada correctamente', 'success');
 
-        // Redirigir al índice de licencias
         return redirect()->route('license.index');
     }
 

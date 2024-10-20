@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use App\Models\Department;
 use App\Models\User;
 use App\Models\Profession;
-use App\Models\Specialty;
 use Illuminate\Database\Seeder;
 use Database\Seeders\ReasonsTableSeeder;
 use Database\Seeders\ProfessionsSeeder;
@@ -61,44 +60,45 @@ class DatabaseSeeder extends Seeder
 
         $this->call(ReasonsTableSeeder::class);
 
-        // Ejemplo: Asignar usuarios a departamentos
-        $users = User::all();
-        $departments = Department::all();
+// Ejemplo: Asignar usuarios a departamentos
+$users = User::all();
+$departments = Department::all();
 
-        foreach ($users as $user) {
-            // Obtener los departamentos actuales del usuario
-            $userDepartments = $user->departments;
+foreach ($users as $user) {
+    // Obtener los departamentos actuales del usuario
+    $userDepartments = $user->departments;
 
-            // Si ya pertenece a un departamento
-            if ($userDepartments->isNotEmpty()) {
-                // Obtener el departamento actual
-                $currentDepartment = $userDepartments->first();
+    // Si el usuario ya pertenece a uno o dos departamentos
+    if ($userDepartments->isNotEmpty()) {
+        // Obtener el departamento actual del usuario
+        $currentDepartment = $userDepartments->first();
 
-                // Obtener el departamento padre del departamento actual
-                $parentDepartment = $currentDepartment->parent_id ? $departments->find($currentDepartment->parent_id) : null;
+        // Obtener el departamento padre del actual, si existe
+        $parentDepartment = $currentDepartment->parent_id ? $departments->find($currentDepartment->parent_id) : null;
 
-                // Si el usuario ya pertenece a ambos (el departamento y su padre), no asignar más
-                if ($userDepartments->count() >= 2 || ($parentDepartment && $userDepartments->contains($parentDepartment))) {
-                    continue; // No hacer nada si ya pertenece al máximo de departamentos permitidos
-                }
-
-                // Si solo pertenece a un departamento, asignar el departamento padre (si existe)
-                if ($parentDepartment && !$userDepartments->contains($parentDepartment)) {
-                    $user->departments()->attach($parentDepartment->id);
-                }
-            } else {
-                // Si no pertenece a ningún departamento, asignar uno aleatoriamente
-                $department = $departments->random();
-
-                // Asignar el departamento aleatoriamente
-                $user->departments()->attach($department->id);
-
-                // Si ese departamento tiene un padre, también asignarlo
-                if ($department->parent_id) {
-                    $user->departments()->attach($department->parent_id);
-                }
-            }
+        // Si el usuario ya pertenece al máximo de departamentos permitidos o ya está en el departamento padre, continuar
+        if ($userDepartments->count() >= 2 || ($parentDepartment && $userDepartments->contains($parentDepartment))) {
+            continue; // No asignar más departamentos
         }
+
+        // Si solo pertenece a un departamento y el padre existe, asignar el departamento padre
+        if ($parentDepartment && !$userDepartments->contains($parentDepartment)) {
+            $user->departments()->attach($parentDepartment->id);
+        }
+    } else {
+        // Si no pertenece a ningún departamento, asignar uno aleatorio
+        $department = $departments->random();
+
+        // Asignar el departamento aleatorio
+        $user->departments()->attach($department->id);
+
+        // Si el departamento tiene un padre, asignar también el departamento padre
+        if ($department->parent_id) {
+            $user->departments()->attach($department->parent_id);
+        }
+    }
+}
+
 
 
     }

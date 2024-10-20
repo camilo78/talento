@@ -370,7 +370,7 @@
                     ajaxRequest('/license/user/' + userId + '/department', function(data) {
                         if (data.department) {
                             $('#department, #department2').val(data.department.name);
-                            $('#department_j').html(data.department.name);
+                            $('#department_j').html(data.department_j.name);
                             $('#department_id').val(data.department.id);
 
                             if (data.jefe) {

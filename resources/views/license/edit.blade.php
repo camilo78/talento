@@ -194,9 +194,9 @@
                     <div class="text-center">
                         <p class="mb-0">________________________</p>
                         <p class="mt-0 mb-0">Vo Bo. <span class="text-truncate" id="department_j"
-                                style="width: 10px"></span>
+                                style="width: 10px">{{ $department_j->name }}</span>
                         </p>
-                        <p class="mt-0" id="jefe_j"></p>
+                        <p class="mt-0" id="jefe_j">{{ $jefe_j->name }}</p>
                     </div>
                 </div>
                 <div class=" col-md-12 d-flex justify-content-center mb-2" style="margin-top: 70px">
@@ -380,7 +380,7 @@
                     ajaxRequest('/license/user/' + userId + '/department', function(data) {
                         if (data.department) {
                             $('#department, #department2').val(data.department.name);
-                            $('#department_j').html(data.department.name);
+                            $('#department_j').html(data.department_j.name);
                             $('#department_id').val(data.department.id);
 
                             if (data.jefe) {
