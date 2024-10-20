@@ -13,6 +13,8 @@ class Reason extends Model
         'id',
         'reason',
         'proof',
+        'max_days',
+        'max_working_days',
         'type',
     ];
 

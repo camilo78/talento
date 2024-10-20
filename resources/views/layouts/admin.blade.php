@@ -129,8 +129,7 @@
                         <h6 class="collapse-header">Parametros Generales:</h6>
                         <a class="collapse-item" href="{{ route('professions.index') }}">Profesiones</a>
                         <a class="collapse-item" href="{{ route('specialties.index') }}">Especialidades</a>
-                        <a class="collapse-item" href="cards.html">Justificantes</a>
-                        <a class="collapse-item" href="cards.html">Ajustes App</a>
+                        <a class="collapse-item" href="{{ route('reasons.index') }}">Justificantes</a>
                     </div>
                 </div>
             </li>

@@ -37,8 +37,6 @@ class SpecialtyController extends Controller
             'name.max' => 'El campo nombre de la especialidad no puede ser mayor a :max caracteres.',
             'profession_id.required' => 'El campo profesión es obligatorio.',
             'profession_id.exists:professions,id' => 'El campo profesión debe estar definido.',
-
-
         ];
         $validated = $this->validate($request, $rules, $messages);
 

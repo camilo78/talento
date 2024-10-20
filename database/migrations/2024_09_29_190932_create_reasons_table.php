@@ -13,9 +13,11 @@ return new class extends Migration
     {
         Schema::create('reasons', function (Blueprint $table) {
             $table->id();
-            $table->string('reason')->nullable();
-            $table->text('proof')->nullable();
-            $table->enum('type', ['Remunerado', 'No Remunerado'])->nullable();
+            $table->string('reason');
+            $table->text('proof');
+            $table->enum('type', ['Remunerado', 'No Remunerado']);
+            $table->integer('max_days')->nullable(); // Campo para el máximo de días
+            $table->integer('max_working_days')->nullable(); // Campo para el máximo de días hábiles
             $table->timestamps();
         });
     }
