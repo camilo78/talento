@@ -133,6 +133,7 @@
                     </div>
                 </div>
             </form>
+            <div class="alert alert-secondary text-justify mt-2" id="proof-display">{{ $license->reason->proof }}</div>
         </div>
     </div>
     <div class="d-flex justify-content-end mt-3 mr-4 mb-2">
@@ -179,18 +180,18 @@
         </div>
         <div class="row">
             <div class="container">
-                <div class="col-md-12 d-flex justify-content-center mb-5" style="margin-top: 20px">
+                <div class="cont col-md-12 d-flex justify-content-between align-items-center mb-5" style="margin-top: 20px">
                     <div class="text-center">
                         <p class="mb-0">________________________</p>
                         <p class="mt-0">Firma del Empleado (a)</p>
                     </div>
-                </div>
-                <div class="cont col-md-12 d-flex justify-content-between align-items-center" style="margin-top: 10px">
                     <div class="text-center">
                         <p class="mb-0">________________________</p>
                         <p class="mt-0 mb-0">Vo Bo. Jefe de Sala o Depto.</p>
                         <p class="mt-0" id="jefe2">{{ $license->boss->name }}</p>
                     </div>
+                </div>
+                <div class="cont col-md-12 d-flex justify-content-between align-items-center" style="margin-top: 10px">
                     <div class="text-center">
                         <p class="mb-0">________________________</p>
                         <p class="mt-0 mb-0">Vo Bo. <span class="text-truncate" id="department_j"
@@ -198,12 +199,17 @@
                         </p>
                         <p class="mt-0" id="jefe_j">{{ $jefe_j->name }}</p>
                     </div>
-                </div>
-                <div class=" col-md-12 d-flex justify-content-center mb-2" style="margin-top: 70px">
                     <div class="text-center">
                         <p class="mb-0">__________________________</p>
                         <p class="mt-0 mb-0">Firma del Jefe (a) de RRHH </p>
                         <p class="mt-0">P.M. Aroldo Ortíz</p>
+                    </div>
+                </div>
+                <div class=" col-md-12 d-flex justify-content-center mb-2" style="margin-top: 70px">
+                    <div class="text-center">
+                        <p class="mb-0">__________________________</p>
+                        <p class="mt-0 mb-0">Director (a) Ejecutiva </p>
+                        <p class="mt-0">Dra. Sylvia Elaine Bardales</p>
                     </div>
                 </div>
                 <div class="cont col-md-12 codigo">

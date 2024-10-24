@@ -161,7 +161,7 @@
                     text: '<i class="fa-regular fa-eye-slash"></i> Visibilidad',
                 }, {
                     className: 'btn-sm btn btn-primary',
-                    text: '<i class="fa-solid fa-user-plus"></i> Nuevo',
+                    text: '<i class="fa-solid fa-plus"></i> Nuevo',
                     action: function(e, dt, button, config) {
                         window.location = '{{ route('license.create') }}';
                     }

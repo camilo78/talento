@@ -161,18 +161,18 @@
         </div>
         <div class="row">
             <div class="container">
-                <div class="col-md-12 d-flex justify-content-center mb-5" style="margin-top: 20px">
+                <div class="cont col-md-12 d-flex justify-content-between align-items-center mb-5" style="margin-top: 20px">
                     <div class="text-center">
                         <p class="mb-0">________________________</p>
                         <p class="mt-0">Firma del Empleado (a)</p>
                     </div>
-                </div>
-                <div class="cont col-md-12 d-flex justify-content-between align-items-center" style="margin-top: 10px">
                     <div class="text-center">
                         <p class="mb-0">________________________</p>
                         <p class="mt-0 mb-0">Vo Bo. Jefe de Sala o Depto.</p>
                         <p class="mt-0" id="jefe2"></p>
                     </div>
+                </div>
+                <div class="cont col-md-12 d-flex justify-content-between align-items-center" style="margin-top: 10px">
                     <div class="text-center">
                         <p class="mb-0">________________________</p>
                         <p class="mt-0 mb-0">Vo Bo. <span class="text-truncate" id="department_j"
@@ -180,12 +180,17 @@
                         </p>
                         <p class="mt-0" id="jefe_j"></p>
                     </div>
-                </div>
-                <div class=" col-md-12 d-flex justify-content-center mb-5" style="margin-top: 70px">
                     <div class="text-center">
                         <p class="mb-0">__________________________</p>
                         <p class="mt-0 mb-0">Firma del Jefe (a) de RRHH </p>
                         <p class="mt-0">P.M. Aroldo Ortíz</p>
+                    </div>
+                </div>
+                <div class=" col-md-12 d-flex justify-content-center mb-5" style="margin-top: 70px">
+                    <div class="text-center">
+                        <p class="mb-0">__________________________</p>
+                        <p class="mt-0 mb-0">Director (a) Ejecutiva </p>
+                        <p class="mt-0">Dra. Sylvia Elaine Bardales</p>
                     </div>
                 </div>
                 <div class=" cont col-md-12 codigo">
@@ -340,7 +345,16 @@
                     }
                 });
             }
+    // Asigna un valor al select sin que el usuario lo cambie
+    var oldReasonId = "{{ old('reason_id', '') }}"; // Esto viene del backend si usas old()
 
+    if (oldReasonId) {
+        // Si existe un valor anterior cargado (por ejemplo, después de una validación fallida)
+        $('#reason').val(oldReasonId).trigger('change');
+    } else {
+        // Si no hay valor cargado, puedes asignar uno por defecto si lo deseas
+        $('#reason').val(2).trigger('change'); // Cargar la opción con value=2
+    }
             // Manejo del select "reason"
             $('#reason').on('change', function() {
                 var reasonId = $(this).val();

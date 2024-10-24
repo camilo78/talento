@@ -29,11 +29,11 @@ class License extends Model
     {
         return $this->belongsTo(User::class);
     }
-      // Relación con el jefe del departamento
-      public function boss()
-      {
-          return $this->belongsTo(User::class, 'boss_id');
-      }
+    // Relación con el jefe del departamento
+    public function boss()
+    {
+        return $this->belongsTo(User::class, 'boss_id');
+    }
 
     public function department(): BelongsTo
     {
