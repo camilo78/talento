@@ -52,12 +52,12 @@ class LicenseController extends Controller
         $reason = Reason::findOrFail($validatedData['reason_id']);
 
         // Comparar los días ordinarios con el límite, solo si existe un límite en la base de datos
-        if (!is_null($reason->max_days) && $validatedData['days'] >= $reason->max_days) {
+        if (!is_null($reason->max_days) && $validatedData['days'] >= $reason->max_days + 1) {
             return back()->withErrors(['days' => 'Los días ordinarios exceden el máximo permitido para este motivo.'])->withInput();
         }
 
         // Comparar los días hábiles con el límite, solo si existe un límite en la base de datos
-        if (!is_null($reason->max_working_days) && $validatedData['days_h'] >= $reason->max_working_days) {
+        if (!is_null($reason->max_working_days) && $validatedData['days_h'] >= $reason->max_working_days + 1) {
             return back()->withErrors(['days_h' => 'Los días hábiles exceden el máximo permitido para este motivo.'])->withInput();
         }
 
@@ -118,12 +118,12 @@ class LicenseController extends Controller
         $reason = Reason::findOrFail($validatedData['reason_id']);
 
         // Comparar los días ordinarios con el límite, solo si existe un límite en la base de datos
-        if (!is_null($reason->max_days) && $validatedData['days'] >= $reason->max_days) {
+        if (!is_null($reason->max_days) && $validatedData['days'] >= $reason->max_days + 1) {
             return back()->withErrors(['days' => 'Los días ordinarios exceden el máximo permitido para este motivo.'])->withInput();
         }
 
         // Comparar los días hábiles con el límite, solo si existe un límite en la base de datos
-        if (!is_null($reason->max_working_days) && $validatedData['days_h'] >= $reason->max_working_days) {
+        if (!is_null($reason->max_working_days) && $validatedData['days_h'] >= $reason->max_working_days + 1) {
             return back()->withErrors(['days_h' => 'Los días hábiles exceden el máximo permitido para este motivo.'])->withInput();
         }
         $license->update($validatedData);

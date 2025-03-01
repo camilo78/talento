@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\License;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -25,13 +26,14 @@ class HomeController extends Controller
     public function index()
     {
         $users = User::count();
+        $licenses = License::count();
 
         $widget = [
             'users' => $users,
+            'licenses' => $licenses,
             //...
         ];
-        alert('Title','Lorem Lorem Lorem', 'success');
-        return view('home', compact('widget'));
+       return view('home', compact('widget'));
 
     }
 }

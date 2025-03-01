@@ -23,7 +23,6 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'id',
         'name',
         'gender',
         'email',
@@ -82,7 +81,7 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Profession::class);
     }
-    public function Specialty()
+    public function specialty()
     {
         return $this->belongsTo(Specialty::class);
     }

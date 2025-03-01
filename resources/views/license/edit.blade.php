@@ -522,40 +522,36 @@
     </script>
 @endpush
 @push('print')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('exportButton').addEventListener('click', function() {
-                var pdfWidth = 215.9; // Ancho de la carta en mm
-                var pdfHeight = 279.4; // Alto de la carta en mm
-                var fileName = 'documento.pdf'; // Nombre del archivo que se puede usar
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('exportButton').addEventListener('click', function() {
+            var pdfWidth = 215.9; // Ancho de la carta en mm
+            var pdfHeight = 279.4; // Alto de la carta en mm
+            var fileName = 'documento.pdf'; // Nombre del archivo
 
-                html2canvas(document.getElementById('contenido-a-imprimir'), {
-                    scale: 3 // Aumenta la escala para mejorar la calidad
-                }).then(function(canvas) {
-                    var pdf = new jsPDF('p', 'mm', 'letter'); // 'letter' para formato carta
-                    var imgData = canvas.toDataURL('image/png');
+            html2canvas(document.getElementById('contenido-a-imprimir'), {
+                scale: 3,
+                useCORS: true,
+                logging: false
+            }).then(function(canvas) {
+                var { jsPDF } = window.jspdf; // Usar la versión moderna de jsPDF
+                var pdf = new jsPDF('p', 'mm', 'letter');
+                var imgData = canvas.toDataURL('image/png');
 
-                    // Agregar la imagen en coordenadas (0, 0) para que llene toda la página
-                    pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+                pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
 
-                    // Generar el PDF como un Blob
-                    var blob = pdf.output('blob');
+                var blob = pdf.output('blob');
+                var blobUrl = URL.createObjectURL(blob);
 
-                    // Crear una URL para el Blob
-                    var blobUrl = URL.createObjectURL(blob);
+                window.open(blobUrl);
 
-                    // Abrir el PDF en una nueva ventana
-                    window.open(blobUrl);
-
-                    // Descargar el archivo con el nombre especificado
-                    //pdf.save(fileName); // Esto descargará el archivo con el nombre especificado
-
-                    // Liberar la URL del Blob
-                    URL.revokeObjectURL(blobUrl);
-                });
+                // Revocar la URL después de 5 segundos
+                setTimeout(() => URL.revokeObjectURL(blobUrl), 5000);
             });
         });
-    </script>
+    });
+</script>
+
 @endpush
