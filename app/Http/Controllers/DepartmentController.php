@@ -95,9 +95,7 @@ class DepartmentController extends Controller
         $jefeAsignado = Department::where('user_id', $user_id)->first();
 
         // Verificar si el usuario ya es jefe en otro departamento
-        if ($jefeAsignado && $jefeAsignado->id != $department->id && $request->user_id) {
-            Alert::toast('El usuario ya es jefe de otro departamento, por lo que debe buscar otro miembro de esta sala o departamento', 'warning');
-        } else {
+
             // Si el usuario es jefe del mismo departamento o no es jefe en otro departamento
             $department->user_id = $user_id;
             $department->name = $request->name;
@@ -116,7 +114,7 @@ class DepartmentController extends Controller
             $department->users()->attach($users_id); // Usar sync para evitar duplicados
 
             Alert::toast('El departamento ha sido actualizado correctamente', 'success');
-        }
+
 
 
         return redirect()->route('department.edit', $department->id);
