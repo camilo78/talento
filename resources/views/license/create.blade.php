@@ -186,15 +186,15 @@
                         <p class="mt-0">P.M. Aroldo Ortíz</p>
                     </div>
                 </div>
-                <div class=" col-md-12 d-flex justify-content-center mb-5" style="margin-top: 70px">
+                <div class=" col-md-12 d-flex justify-content-center mb-2" style="margin-top: 70px">
                     <div class="text-center">
                         <p class="mb-0">__________________________</p>
                         <p class="mt-0 mb-0">Director (a) Ejecutiva </p>
                         <p class="mt-0">Dra. Sylvia Elaine Bardales</p>
                     </div>
                 </div>
-                <div class=" cont col-md-12 codigo">
-                    <p>AXGRDTH-ENF-001</p>
+                <div class="cont col-md-12 codigo">
+                    <p style="font-size: 11px">AXGRDTH-ENF-001</p>
                 </div>
             </div>
         </div>

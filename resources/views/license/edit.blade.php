@@ -213,7 +213,7 @@
                     </div>
                 </div>
                 <div class="cont col-md-12 codigo">
-                    <p>AXGRDTH-ENF-001</p>
+                    <p style="font-size: 11px">AXGRDTH-ENF-001</p>
                 </div>
             </div>
         </div>

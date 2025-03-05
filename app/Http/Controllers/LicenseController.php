@@ -62,10 +62,11 @@ class LicenseController extends Controller
         }
 
         // Crear la licencia si las validaciones pasan
-        License::create($validatedData);
+        $license = License::create($validatedData);
         Alert::toast('Permiso, licencia ha sido creada correctamente', 'success');
 
-        return redirect()->route('license.index');
+        // Redirigir a la vista de edición de la licencia recién creada
+        return redirect()->route('license.edit', ['license' => $license]);
     }
 
 

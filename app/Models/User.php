@@ -59,9 +59,8 @@ class User extends Authenticatable
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function departments(): BelongsToMany
-    {
-        return $this->belongsToMany(Department::class, 'user_department', 'user_id', 'department_id');
+    public function departments() {
+        return $this->belongsToMany(Department::class, 'user_department');
     }
 
     /**
